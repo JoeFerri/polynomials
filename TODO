@@ -1,0 +1,67 @@
+Alt + 126 ~ ; Alt + 96  `
+TODO|FIXME|FIX|BUG|UGLY|HACK|NOTE|IDEA|REVIEW|DEBUG|OPTIMIZE
+@critical @high @low @today
+
+'Todo: Open' // Open or create your project's todo file
+'Todo: Open Embedded' // Open embedded todos
+'Todo: Toggle Box' // Toggle todo's box symbol
+'Todo: Toggle Done' // Toggle todo's done symbol
+'Todo: Toggle Cancelled' // Toggle todo's cancelled symbol
+'Todo: Toggle Start' // Toggle a todo as started
+'Todo: Toggle Timer' // Toggle the timer
+'Todo: Archive' // Archive finished todos
+'Todo: Embedded View - Filter' // Filter the embedded todos view
+'Todo: Embedded View - Clear Filter' // Clear the filter in the embedded todos view
+'Todo: Embedded View - Toggle View All Files' // Toggle between viewing all files or only the current one
+
+'Cmd/Ctrl+Enter' // Triggers `Todo: Toggle Box`
+'Alt+Enter' // Triggers `Todo: Toggle Box`
+'Alt+D' // Triggers `Todo: Toggle Done`
+'Alt+C' // Triggers `Todo: Toggle Cancelled`
+'Alt+S' // Triggers `Todo: Toggle Start`
+'Cmd/Ctrl+Shift+A' // Triggers  `Todo: Archive`
+
+Statistics Tokens
+The following tokens can be used in todo.statistics.project.text, todo.statistics.statusbar.text and todo.statistics.statusbar.tooltip, they will be replaced with the value they represent.
+
+Token	Value
+[comments]	Number of comments
+[projects]	Number of projects
+[tags]	Number of tags
+[pending]	Number of pending todos
+[done]	Number of done todos
+[cancelled]	Number of cancelled todos
+[finished]	Number of finished todos
+[all]	Number of todos
+[percentage]	Percentage of finished todos
+[est]	Estimated time left
+[est-total]	Total estimated time
+[est-finished]	Estimated time of finished todos
+[est-finished-percentage]	Percentage of estimated time in finished todos
+[lasted]	Time the task lasted
+[wasted]	Time wasted on task
+[elapsed]	Sum of [lasted] and [wasted]
+
+todo ----------------------------------------------------
+@secure           @structure    @implement        @edit
+@note             @creare       @not-implemented
+@documentation    @improve
+
+type ---------------------
+@property         @method
+@class            @code
+
+Vettoriale:
+           level       todo         type             description                                     created                started/done          cancelled/done     lasted/wasted
+  All:
+    ☐   @critical  @secure                 esempio di todo sulla sicurezza iniziato          @created(21-03-17 21:02) @started(21-03-17 21:03)
+
+
+
+/------------------------------------------------------------------------------------------------------------/
+
+Archive:
+           level       todo         type             description                                     created                started/done          cancelled/done     lasted/wasted
+  All:
+    ✔   @low        @create      @method    esempio di todo archiviato                       @created(20-04-18 15:20) @started(20-04-18 15:20) @done(20-04-18 15:57) @lasted(38m) @project(Test)
+  
