@@ -71,9 +71,9 @@ none
 # examples
 *under development*
 
-# Licenza 
+# License 
 
-## Licenza generale 
+## General license 
 
 GNU Lesser General Public License v3.0 only
 
