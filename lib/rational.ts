@@ -3,6 +3,7 @@
  */
 
 import { Sign } from "./sign";
+import { undnumber } from "./type";
 
 
 
@@ -18,8 +19,16 @@ export class Rational {
     this.s = s != undefined ? s : (n >= 0 ? Sign.plus : Sign.minus);
   }
 
+  value() : undnumber {
+    return this.s.value * this.n / this.d;
+  }
+
   equals(r: Rational) : boolean {
     return this.n == r.n && this.d == r.d && this.s == r.s;
+  }
+
+  toString(with_sign: boolean = false) : string {
+    return `${with_sign ? this.s.sign : this.s.signpm()}${this.n}/${this.d}`;
   }
 
   static readonly zero = new Rational(0);

@@ -36,7 +36,18 @@ export type charL =
 
 export type charlit = gcharl | gcharL | charl | charL;
 
+/**
+ * [0] → character;
+ * [1] → literal value;
+ */
 export type charnum = [charlit, number];
+
+/**
+ * [0] → character;
+ * [1] → index;
+ * [2] → literal value;
+ */
+export type charindexnum = [charlit, number, number];
 
 export const gchars = {
   Alfa:      "Α", alfa:   	"α",

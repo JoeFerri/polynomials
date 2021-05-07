@@ -2,9 +2,10 @@
  * @author Giuseppe Ferri
  */
 
-import { charlit } from "./char";
-import { equalsExp, Exp } from "./exp";
+import { charindexnum, charlit } from "./char";
+import { equalsExp, Exp, valueExp } from "./exp";
 import { Literal } from "./literal";
+import { undnumber } from "./type";
 
 
 
@@ -17,8 +18,20 @@ export class ExpLiteral extends Literal {
     this.exp = exp != undefined ? exp : 1;
   }
 
-  equals(l: ExpLiteral) : boolean {
-    return super.equals(l) && equalsExp(this.exp,l.exp);
+  value(cns: charindexnum[]) : undnumber {
+    let
+      v: undnumber = super.value(cns),
+      e: undnumber = valueExp(this.exp,cns);
+
+    return v != undefined && e != undefined ? v ** e : undefined;
+  }
+
+  equals(l: ExpLiteral, cns: charindexnum[] = []) : boolean {
+    return super.equals(l,cns) && equalsExp(this.exp,l.exp,cns);
+  }
+
+  toString() : string {
+    return super.toString() + (equalsExp(this.exp,1) ? '' : '^' + this.exp.toString());
   }
 
   static readonly x = new ExpLiteral('x');

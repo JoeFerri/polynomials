@@ -9,29 +9,33 @@ export abstract class Sign {
   abstract value: 1 | -1;
   abstract sign: '+' | '-';
 
-  toString() {
+  signpm() : '' | '-' {
+    return this.value >= 0 ? '' : '-';
+  }
+
+  toString() : string {
     return this.sign;
   }
 
-  static readonly plus = new class extends Sign {
+  static readonly plus = new class PlusSign extends Sign {
 
-    get value() {
-      return 1 as 1;
+    get value() : 1 | -1 {
+      return 1;
     }
   
-    get sign() {
-      return '+' as '+';
+    get sign(): '+' | '-' {
+      return '+';
     }
   }
   
-  static readonly minus = new class extends Sign {
+  static readonly minus = new class MinusSign extends Sign {
   
-    get value() {
-      return -1 as -1;
+    get value() : 1 | -1 {
+      return -1;
     }
   
-    get sign() {
-      return '-' as '-';
+    get sign(): '+' | '-' {
+      return '-';
     }
   }
 }
