@@ -13,10 +13,12 @@ export class Complex {
   readonly a: ExpRational;
   readonly b: ExpRational;
 
+
   constructor(a: ExpRational, b?: ExpRational) {
     this.a = a;
     this.b = b != undefined ? b : ExpRational.zero;
   }
+
 
   /**
    * The real value of the complex number.
@@ -35,9 +37,11 @@ export class Complex {
     return a != undefined && b == 0 ? a : undefined;
   }
 
+
   equals(z: Complex, cns: charindexnum[] = []) : boolean {
     return this.a.equals(z.a,cns) && this.b.equals(z.b,cns); 
   }
+
 
   toString(with_sign: boolean = false) : string {
     let bv: undnumber = this.b.value(), b: string = '';
@@ -50,6 +54,7 @@ export class Complex {
     return `${this.a.toString(with_sign)}${b}`;
   }
 
+
   // ℂ    DOUBLE-STRUCK CAPITAL C' (U+2102)
   private static readonly iList = [
     'i',
@@ -59,16 +64,20 @@ export class Complex {
     'ⅈ'  // DOUBLE-STRUCK ITALIC SMALL I' (U+2148)
   ];
 
+
   static get i() : string {
     return Complex.iList[Complex.iCode];
   }
 
+
   private static _iCode: 0|1|2|3|4 = 1;
   
+
   static get iCode(): 0|1|2|3|4 {
     return Complex._iCode;
   }
 
+  
   static set iCode(id: 0|1|2|3|4) {
     Complex.iCode = id;
   }

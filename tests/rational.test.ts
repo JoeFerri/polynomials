@@ -9,11 +9,6 @@ import { expect, should } from 'chai';
 should();
 
 
-// zero
-// one
-// mone
-// infinity
-// minfinity
 
 describe(`Rational`, function() {
 

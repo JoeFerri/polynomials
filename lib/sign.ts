@@ -9,13 +9,16 @@ export abstract class Sign {
   abstract value: 1 | -1;
   abstract sign: '+' | '-';
 
+
   signpm() : '' | '-' {
     return this.value >= 0 ? '' : '-';
   }
 
+
   toString() : string {
     return this.sign;
   }
+
 
   static readonly plus = new class PlusSign extends Sign {
 
@@ -27,6 +30,7 @@ export abstract class Sign {
       return '+';
     }
   }
+  
   
   static readonly minus = new class MinusSign extends Sign {
   

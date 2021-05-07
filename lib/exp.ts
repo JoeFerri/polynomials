@@ -15,6 +15,7 @@ import { undnumber } from "./type";
  */
 export type Exp = number | Monomial;
 
+
 export function equalsExp(exp1: Exp, exp2: Exp, cns: charindexnum[] = []) : boolean {
   let e1: undnumber, e2: undnumber;
 
@@ -27,6 +28,7 @@ export function equalsExp(exp1: Exp, exp2: Exp, cns: charindexnum[] = []) : bool
 
   return e1 != undefined && e2 != undefined ? e1 == e2 : exp1.toString() == exp2.toString();
 }
+
 
 export function valueExp(exp: Exp, cns: charindexnum[] = []) : undnumber {
   return typeof exp === "number" ? exp : exp.value(cns);

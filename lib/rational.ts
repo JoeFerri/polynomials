@@ -19,6 +19,7 @@ export class Rational {
   readonly d: number;
   readonly s: Sign;
 
+
   constructor(n: number, d: number = 1, s?: Sign) {
 
     s = s != undefined ? s : (getSign(n,d) == 1 ? Sign.plus : Sign.minus);
@@ -50,13 +51,16 @@ export class Rational {
     this.s = s;
   }
 
+
   value() : undnumber {
     return this.s.value * this.n / this.d;
   }
 
+
   equals(r: Rational) : boolean {
     return this.n == r.n && this.d == r.d && this.s == r.s;
   }
+
 
   toString(with_sign: boolean = false) : string {
     let
@@ -67,6 +71,7 @@ export class Rational {
     return (ss + sn + sd).toLowerCase();
   }
 
+  
   static readonly zero = new Rational(0);
   static readonly one = new Rational(1);
   static readonly mone = new Rational(-1);

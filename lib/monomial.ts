@@ -14,10 +14,12 @@ export class Monomial {
   readonly z: Complex;
   private literals: ExpLiteral[];
 
+
   constructor(z: Complex, ...literals: ExpLiteral[]) {
     this.z = z;
     this.literals = [...literals];
   }
+
 
   value(cns: charindexnum[] = []) : undnumber {
     let
@@ -28,9 +30,11 @@ export class Monomial {
     return vz != undefined && vl != undefined ? vz * vl : undefined;
   }
 
+
   literalsTrack() : string {
     return this.literals.map( l => l.toString() ).sort( (l1,l2) => l1.localeCompare(l2) ).join('')
   }
+
 
   equals(m: Monomial, cns: charindexnum[] = []) : boolean {
     let
@@ -42,6 +46,7 @@ export class Monomial {
     return this.z.equals(m.z,cns) && vThis == vThat && lThis == lThat;
   }
 
+  
   toString() : string {
     return this.z.toString() + this.literalsTrack();
   }

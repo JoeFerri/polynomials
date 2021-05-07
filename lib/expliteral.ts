@@ -13,10 +13,12 @@ export class ExpLiteral extends Literal {
 
   readonly exp: Exp;
 
+  
   constructor(char: charlit, index?: number, exp?: Exp) {
     super(char,index);
     this.exp = exp != undefined ? exp : 1;
   }
+
 
   value(cns: charindexnum[]) : undnumber {
     let
@@ -26,14 +28,17 @@ export class ExpLiteral extends Literal {
     return v != undefined && e != undefined ? v ** e : undefined;
   }
 
+
   equals(l: ExpLiteral, cns: charindexnum[] = []) : boolean {
     return super.equals(l,cns) && equalsExp(this.exp,l.exp,cns);
   }
+
 
   toString() : string {
     return super.toString() + (equalsExp(this.exp,1) ? '' : '^' + this.exp.toString());
   }
 
+  
   static readonly x = new ExpLiteral('x');
   static readonly y = new ExpLiteral('y');
   static readonly k = new ExpLiteral('k');
