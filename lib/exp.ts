@@ -3,8 +3,6 @@
  */
 
 import { ExpRational } from ".";
-import { charindexnum } from "./char";
-import { undnumber } from "./type";
 
 
 
@@ -19,20 +17,20 @@ export type Exp = number | ExpRational;
  * check by value
  * <undefined>,<n> → false
  */
-export function equalsExp(exp1: Exp, exp2: Exp, cns: charindexnum[] = []) : boolean {
-  let e1: undnumber, e2: undnumber;
+export function equalsExp(exp1: Exp, exp2: Exp) : boolean {
+  let e1: number, e2: number;
 
   if (exp1 instanceof ExpRational)
-    e1 = exp1.value(cns);
+    e1 = exp1.value();
   else e1 = exp1;
   if (exp2 instanceof ExpRational)
-    e2 = exp2.value(cns);
+    e2 = exp2.value();
   else e2 = exp2;
 
-  return e1 != undefined && e2 != undefined ? e1 == e2 : false;
+  return e1 == e2;
 }
 
 
-export function valueExp(exp: Exp, cns: charindexnum[] = []) : undnumber {
-  return typeof exp === "number" ? exp : exp.value(cns);
+export function valueExp(exp: Exp) : number {
+  return typeof exp === "number" ? exp : exp.value();
 }

@@ -2,7 +2,6 @@
  * @author Giuseppe Ferri
  */
 
-import { charindexnum } from "./char";
 import { ExpRational } from "./exprational";
 import { undnumber } from "./type";
 
@@ -26,20 +25,20 @@ export class Complex {
    * Since the function returns a real number,
    * if the imaginary part is other than 0,
    * then there is no point in returning a numeric value.
-   * @param [cns] 
+   * 
    * @returns a real number or undefined 
    */
-  value(cns: charindexnum[] = []) : undnumber {
+  value() : undnumber {
     let
-      a: undnumber = this.a.value(cns),
-      b: undnumber = this.b.value(cns);
+      a: undnumber = this.a.value(),
+      b: undnumber = this.b.value();
 
-    return a != undefined && b == 0 ? a : undefined;
+    return b == 0 ? a : undefined;
   }
 
 
-  equals(z: Complex, cns: charindexnum[] = []) : boolean {
-    return this.a.equals(z.a,cns) && this.b.equals(z.b,cns); 
+  equals(z: Complex) : boolean {
+    return this.a.equals(z.a) && this.b.equals(z.b); 
   }
 
 
@@ -77,7 +76,7 @@ export class Complex {
     return Complex._iCode;
   }
 
-  
+
   static set iCode(id: 0|1|2|3|4) {
     Complex.iCode = id;
   }

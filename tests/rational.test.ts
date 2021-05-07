@@ -38,21 +38,21 @@ describe(`Rational`, function() {
   });
 
   it(`#value()`, function() {
-    (zero.value() as number).should.to.be.equal(0);
-    (one.value() as number).should.to.be.equal(1);
-    (mone.value() as number).should.to.be.equal(-1);
-    (infinity.value() as number).should.to.be.equal(Infinity);
-    (minfinity.value() as number).should.to.be.equal(-Infinity);
+    zero.value().should.to.be.equal(0);
+    one.value().should.to.be.equal(1);
+    mone.value().should.to.be.equal(-1);
+    infinity.value().should.to.be.equal(Infinity);
+    minfinity.value().should.to.be.equal(-Infinity);
 
-    (r1.value() as number).should.to.be.equal(1/2);
-    (r2.value() as number).should.to.be.equal(2);
-    (r3.value() as number).should.to.be.equal(-1/2);
-    (r4.value() as number).should.to.be.equal(1/2);
-    (r5.value() as number).should.to.be.equal(3/2);
-    (r6.value() as number).should.to.be.equal(0);
-    (r7.value() as number).should.to.be.equal(Infinity);
-    (r8.value() as number).should.to.be.equal(-Infinity);
-    (r9.value() as number).should.to.be.equal(0);
+    r1.value().should.to.be.equal(1/2);
+    r2.value().should.to.be.equal(2);
+    r3.value().should.to.be.equal(-1/2);
+    r4.value().should.to.be.equal(1/2);
+    r5.value().should.to.be.equal(3/2);
+    r6.value().should.to.be.equal(0);
+    r7.value().should.to.be.equal(Infinity);
+    r8.value().should.to.be.equal(-Infinity);
+    r9.value().should.to.be.equal(0);
   });
 
   it(`#equals()`, function() {

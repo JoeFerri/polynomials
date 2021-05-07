@@ -5,8 +5,6 @@
 import { Sign } from "./sign";
 import { Rational } from "./rational";
 import { equalsExp, Exp, valueExp } from "./exp";
-import { undnumber } from "./type";
-import { charindexnum } from "./char";
 import { UndefinedError } from "./error";
 
 
@@ -26,9 +24,8 @@ export class ExpRational extends Rational {
   }
 
 
-  value(cns: charindexnum[] = []) : undnumber {
-    let exp: undnumber = valueExp(this.exp,cns);
-    return exp != undefined ? (super.value() as number) ** exp : undefined;
+  value() : number {
+    return super.value() ** valueExp(this.exp);
   }
 
 
@@ -40,12 +37,10 @@ export class ExpRational extends Rational {
    * but equals() considers all these objects to be different.
    * 
    * @param r 
-   * @param [cns] 
    * @returns true if internal structures equals 
    */
-  equals(r: ExpRational, cns: charindexnum[] = []) : boolean {
-    let v: boolean = cns.length > 0 ? equalsExp(this.exp,r.exp,cns) : true;
-    return super.equals(r) && this.exp.toString() == r.exp.toString() && v;
+  equals(r: ExpRational) : boolean {
+    return super.equals(r) && this.exp.toString() == r.exp.toString();
   }
 
 

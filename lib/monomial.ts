@@ -23,7 +23,7 @@ export class Monomial {
 
   value(cns: charindexnum[] = []) : undnumber {
     let
-      vz = this.z.value(cns),
+      vz = this.z.value(),
       vl = this.literals
         .map( l => l.value(cns) )
         .reduce( (prev,curr) => prev != undefined && curr != undefined ? prev * curr : undefined);
@@ -43,10 +43,10 @@ export class Monomial {
       lThis = this.literalsTrack(),
       lThat = m.literalsTrack();
 
-    return this.z.equals(m.z,cns) && vThis == vThat && lThis == lThat;
+    return this.z.equals(m.z) && vThis == vThat && lThis == lThat;
   }
 
-  
+
   toString() : string {
     return this.z.toString() + this.literalsTrack();
   }

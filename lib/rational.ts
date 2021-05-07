@@ -5,7 +5,6 @@
 import { UndefinedError } from "./error";
 import { euclAlg } from "./math";
 import { Sign } from "./sign";
-import { undnumber } from "./type";
 
 
 
@@ -52,7 +51,7 @@ export class Rational {
   }
 
 
-  value() : undnumber {
+  value() : number {
     return this.s.value * this.n / this.d;
   }
 
@@ -71,7 +70,7 @@ export class Rational {
     return (ss + sn + sd).toLowerCase();
   }
 
-  
+
   static readonly zero = new Rational(0);
   static readonly one = new Rational(1);
   static readonly mone = new Rational(-1);

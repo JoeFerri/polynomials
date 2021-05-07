@@ -23,15 +23,14 @@ export class ExpLiteral extends Literal {
   value(cns: charindexnum[]) : undnumber {
     let
       v: undnumber = super.value(cns),
-      e: undnumber = valueExp(this.exp,cns);
+      e: number = valueExp(this.exp);
 
-    return v != undefined && e != undefined ? v ** e : undefined;
+    return v != undefined ? v ** e : undefined;
   }
 
 
   equals(l: ExpLiteral, cns: charindexnum[] = []) : boolean {
-    let v: boolean = cns.length > 0 ? equalsExp(this.exp,l.exp,cns) : true;
-    return super.equals(l,cns) && v;
+    return super.equals(l,cns) && this.exp.toString() == l.exp.toString();;
   }
 
 
