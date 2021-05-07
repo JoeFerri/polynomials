@@ -19,7 +19,7 @@ export class ExpRational extends Rational {
   constructor(n: number, d: number = 1, s?: Sign, exp?: Exp) {
     super(n,d,s);
     
-    if (exp != undefined && exp == 0 && super.n == 0)
+    if (exp != undefined && equalsExp(exp,0) && super.n == 0)
       throw new UndefinedError();
 
     this.exp = exp != undefined && super.n != 0 && super.n != Infinity ? exp : 1;
@@ -44,7 +44,8 @@ export class ExpRational extends Rational {
    * @returns true if internal structures equals 
    */
   equals(r: ExpRational, cns: charindexnum[] = []) : boolean {
-    return super.equals(r) && equalsExp(this.exp,r.exp,cns);
+    let v: boolean = cns.length > 0 ? equalsExp(this.exp,r.exp,cns) : true;
+    return super.equals(r) && this.exp.toString() == r.exp.toString() && v;
   }
 
 
@@ -55,10 +56,13 @@ export class ExpRational extends Rational {
     let s = super.toString(with_sign);
     if (this.d != 1)
       s = '(' + s + ')';
-    return `${s}^${this.exp.toString()}`;
+    let e = this.exp.toString();
+    if (e.includes('/'))
+      e = '(' + e + ')';
+    return `${s}^${e}`;
   }
 
-  
+
   static readonly zero = new ExpRational(0);
   static readonly one = new ExpRational(1);
   static readonly mone = new ExpRational(-1);

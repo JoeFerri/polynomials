@@ -30,7 +30,8 @@ export class ExpLiteral extends Literal {
 
 
   equals(l: ExpLiteral, cns: charindexnum[] = []) : boolean {
-    return super.equals(l,cns) && equalsExp(this.exp,l.exp,cns);
+    let v: boolean = cns.length > 0 ? equalsExp(this.exp,l.exp,cns) : true;
+    return super.equals(l,cns) && v;
   }
 
 
@@ -38,7 +39,7 @@ export class ExpLiteral extends Literal {
     return super.toString() + (equalsExp(this.exp,1) ? '' : '^' + this.exp.toString());
   }
 
-  
+
   static readonly x = new ExpLiteral('x');
   static readonly y = new ExpLiteral('y');
   static readonly k = new ExpLiteral('k');

@@ -9,11 +9,6 @@ import { expect, should } from 'chai';
 should();
 
 
-// zero
-// one
-// mone
-// infinity
-// minfinity
  
 describe(`ExpRational`, function() {
 
@@ -26,6 +21,14 @@ describe(`ExpRational`, function() {
     e6 = new $$.ExpRational(-2,3,undefined,0),
     e7 = new $$.ExpRational(4,1,undefined,2.5),
     e8 = new $$.ExpRational(4,1,undefined,-2.5),
+
+    exp1 = new $$.ExpRational(5,2),
+    exp2 = new $$.ExpRational(-5,2),
+    exp3 = new $$.ExpRational(2),
+
+    ee1 = new $$.ExpRational(4,1,undefined,exp1),
+    ee2 = new $$.ExpRational(4,1,undefined,exp2),
+    ee3 = new $$.ExpRational(4,1,undefined,exp3),
 
     r1 = new $$.ExpRational(1,2),
     r2 = new $$.ExpRational(2,1),
@@ -66,6 +69,10 @@ describe(`ExpRational`, function() {
     (e6.value() as number).should.to.be.equal(1);
     (e7.value() as number).should.to.be.equal(32);
     (e8.value() as number).should.to.be.equal(1/32);
+
+    (ee1.value() as number).should.to.be.equal(32);
+    (ee2.value() as number).should.to.be.equal(1/32);
+    (ee3.value() as number).should.to.be.equal(16);
 
     (r1.value() as number).should.to.be.equal(1/2);
     (r2.value() as number).should.to.be.equal(2);
@@ -108,6 +115,10 @@ describe(`ExpRational`, function() {
     e4.toString().should.to.be.equal("(-3/2)^3");
     e5.toString().should.to.be.equal("(2/3)^0");
     e6.toString().should.to.be.equal("(-2/3)^0");
+    
+    ee1.toString().should.to.be.equal("4^(5/2)");
+    ee2.toString().should.to.be.equal("4^(-5/2)");
+    ee3.toString().should.to.be.equal("4^2");
 
     r1.toString().should.to.be.equal("1/2");
     r2.toString().should.to.be.equal("2");
