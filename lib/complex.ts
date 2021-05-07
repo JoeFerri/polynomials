@@ -78,6 +78,6 @@ export class Complex {
 
 
   static set iCode(id: 0|1|2|3|4) {
-    Complex.iCode = id;
+    Complex._iCode = id;
   }
 }
