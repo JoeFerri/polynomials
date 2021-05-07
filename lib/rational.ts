@@ -2,10 +2,16 @@
  * @author Giuseppe Ferri
  */
 
+import { UndefinedError } from "./error";
+import { euclAlg } from "./math";
 import { Sign } from "./sign";
 import { undnumber } from "./type";
 
 
+
+let getSign = (n: number, d: number) : 1 | -1 => {
+  return (n >= 0 && d >= 0) || (n < 0 && d < 0) ? 1 : -1;
+}
 
 export class Rational {
 
@@ -13,10 +19,35 @@ export class Rational {
   readonly d: number;
   readonly s: Sign;
 
-  constructor(n: number, d?: number, s?: Sign) {
-    this.n = Math.abs(n);
-    this.d = d != undefined ? Math.abs(n) : 1;
-    this.s = s != undefined ? s : (n >= 0 ? Sign.plus : Sign.minus);
+  constructor(n: number, d: number = 1, s?: Sign) {
+
+    s = s != undefined ? s : (getSign(n,d) == 1 ? Sign.plus : Sign.minus);
+    n = Math.abs(n);
+    d = Math.abs(d);
+
+    if ((n == 0 && d == 0) || (n == Infinity && d == Infinity))
+      throw new UndefinedError();
+
+    if (d === 0 || n == Infinity) { // ±n/0   ±∞/n
+      n = Infinity;
+      d = 1;
+  
+    } else if (d == Infinity || n === 0) { // ±n/∞    0/±n
+      n = 0;
+      d = 1;
+      s = Sign.plus;
+    } else {
+      // Greatest Common Divisor
+      let gcd = euclAlg(n,d);
+  
+      // simplify
+      n = n/gcd;
+      d = d/gcd;
+    }
+
+    this.n = n;
+    this.d = d;
+    this.s = s;
   }
 
   value() : undnumber {
@@ -28,7 +59,12 @@ export class Rational {
   }
 
   toString(with_sign: boolean = false) : string {
-    return `${with_sign ? this.s.sign : this.s.signpm()}${this.n}/${this.d}`;
+    let
+      ss = with_sign ? this.s.sign : this.s.signpm(),
+      sn = this.n != 0 ? this.n : '0',
+      sd = this.d != 1 ? ('/' + this.d) : '';
+      
+    return (ss + sn + sd).toLowerCase();
   }
 
   static readonly zero = new Rational(0);
