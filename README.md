@@ -54,7 +54,7 @@ see package.json file for versions:
     $ npm run coverage
 
 ## Documentation
-For the documentation see the notes inside the source code.
+For the documentation see the notes inside the source code or [wiki page](https://github.com/JoeFerri/polynomials/wiki)
 
 ## Structure of the project
 *under development*
