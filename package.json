@@ -1,6 +1,8 @@
 {
   "name": "polynomials",
   "version": "0.1.0",
+  "homepage": "https://github.com/JoeFerri/polynomials",
+  "bugs": "https://github.com/JoeFerri/polynomials/issues",
   "description": "Library for polynomial and vector calculus.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,8 +18,13 @@
     "polynomial",
     "vector"
   ],
-  "author": "Giuseppe Ferri",
+  "author": "Giuseppe Ferri <joeferri83prog@libero.it> (https://jfprogrammer.altervista.org/)",
   "license": "LGPL-3.0-only",
+  "readmeFilename": "README.md",
+  "repository": {
+      "type": "git",
+      "url": "git://github.com/JoeFerri/polynomials.git"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.17",
     "@types/mocha": "^8.2.2",
