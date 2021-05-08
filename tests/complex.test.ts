@@ -29,9 +29,9 @@ describe(`Complex`, function() {
       e7    = new $$.Complex(new $$.ExpRational(4,1,undefined,2.5)),
       e8    = new $$.Complex(new $$.ExpRational(4,1,undefined,-2.5)),
 
-      exp1  = new $$.ExpRational(5,2),
-      exp2  = new $$.ExpRational(-5,2),
-      exp3  = new $$.ExpRational(2),
+      exp1  = new $$.Rational(5,2),
+      exp2  = new $$.Rational(-5,2),
+      exp3  = new $$.Rational(2),
 
       ee1   = new $$.Complex(new $$.ExpRational(4,1,undefined,exp1)),
       ee2   = new $$.Complex(new $$.ExpRational(4,1,undefined,exp2)),

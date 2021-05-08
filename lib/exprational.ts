@@ -43,7 +43,7 @@ export class ExpRational extends Rational {
    * @returns true if internal structures equals 
    */
   equals(r: ExpRational) : boolean {
-    return super.equals(r) && this.exp.toString() == r.exp.toString();
+    return super.equals(r) && equalsExp(this.exp,r.exp);
   }
 
 
