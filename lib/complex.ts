@@ -5,6 +5,7 @@
  * Copyright (c) 2021, Giuseppe Ferri (joeferri83prog@libero.it)
  */
 
+import { Sign } from ".";
 import { ExpRational } from "./exprational";
 import { undnumber } from "./type";
 
@@ -46,14 +47,27 @@ export class Complex {
 
 
   toString(with_sign: boolean = false) : string {
-    let bv: undnumber = this.b.value(), b: string = '';
-    if (bv != 0) {
-      if (bv == undefined || (bv != 1 && bv != -1))
-        b = this.b.toString(true);
-      else b = `${this.b.s.sign}`;
-      b += Complex.i;
+    let
+      va: number = this.a.value(),
+      vb: number = this.b.value(),
+      sa: string = this.a.toString(with_sign),
+      sb: string = this.b.toString(),
+      s: string = '';
+
+    if (va == 0 && vb == 0)
+      return sa;
+
+    if (va != 0)
+      s = sa;
+    if (vb != 0) {
+      if (va != 0 || (va == 0 && vb == -1))
+        s += (va != 0 ? ' ' : '') + Sign.byN(vb).sign;
+      if (Math.abs(vb) != 1)
+        s += sb;
+      s += Complex.iChar;
     }
-    return `${this.a.toString(with_sign)}${b}`;
+
+    return s;
   }
 
 
@@ -67,7 +81,7 @@ export class Complex {
   ];
 
 
-  static get i() : string {
+  static get iChar() : string {
     return Complex.iList[Complex.iCode];
   }
 
@@ -83,4 +97,14 @@ export class Complex {
   static set iCode(id: 0|1|2|3|4) {
     Complex._iCode = id;
   }
+
+
+  static readonly zero = new Complex(ExpRational.zero);
+  static readonly one = new Complex(ExpRational.one);
+  static readonly mone = new Complex(ExpRational.mone);
+  static readonly infinity = new Complex(ExpRational.infinity);
+  static readonly minfinity = new Complex(ExpRational.minfinity);
+  
+  static readonly i = new Complex(ExpRational.zero,ExpRational.one);
+  static readonly mi = new Complex(ExpRational.zero,ExpRational.mone);
 }

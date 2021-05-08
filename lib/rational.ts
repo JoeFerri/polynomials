@@ -11,10 +11,6 @@ import { Sign } from "./sign";
 
 
 
-let getSign = (n: number, d: number) : 1 | -1 => {
-  return (n >= 0 && d >= 0) || (n < 0 && d < 0) ? 1 : -1;
-}
-
 export class Rational {
 
   readonly n: number;
@@ -24,7 +20,7 @@ export class Rational {
 
   constructor(n: number, d: number = 1, s?: Sign) {
 
-    s = s != undefined ? s : (getSign(n,d) == 1 ? Sign.plus : Sign.minus);
+    s = s != undefined ? s : Sign.byND(n,d);
     n = Math.abs(n);
     d = Math.abs(d);
 

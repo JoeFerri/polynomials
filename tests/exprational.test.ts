@@ -49,6 +49,8 @@ describe(`ExpRational`, function() {
     infinity = $$.ExpRational.infinity,
     minfinity = $$.ExpRational.minfinity;
 
+
+    
   it(`#constructor()`, function() {
     expect(() => new $$.ExpRational(0,0)).to.throw();
     expect(() => new $$.ExpRational(Infinity,Infinity)).to.throw();
