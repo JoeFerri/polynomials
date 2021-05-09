@@ -1,0 +1,29 @@
+/* http://www.cs.man.ac.uk/~pjj/bnf/bnf.html */
+
+digit ::= '1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'
+
+natural ::= digit+ ('0'|digit)*
+
+Sign ::= '+' | '-'
+
+Rational ::= Sign? natural ('/' natural)?
+
+SRational ::= Sign natural ('/' natural)?
+
+Exp ::= natural | Rational
+
+ExpRational ::= (Rational | '(' Rational ')') ('^' (Exp | '(' Exp ')'))?
+
+SExpRational ::= (SRational | '(' SRational ')') ('^' (Exp | '(' Exp ')'))?
+
+i ::= 'i' | '𝑖' | '𝒾' | '𝓲' | 'ⅈ'
+
+Complex ::= (ExpRational SExpRational i) | ExpRational | (ExpRational i) | (Sign? i) 
+
+charlit ::= gcharl | gcharL | charl | charL
+
+Literal ::= charlit ('_' natural)?
+
+ExpLiteral ::= Literal ('^' (Exp | '(' Exp ')'))?
+
+Monomial ::= Complex ExpLiteral*
