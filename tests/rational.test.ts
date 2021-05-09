@@ -16,6 +16,14 @@ should();
 describe(`Rational`, function() {
 
   let
+    m1 = new $$.Rational(1,2),
+    m2 = new $$.Rational(2,4),
+    m3 = new $$.Rational(-2,-4),
+    m4 = new $$.Rational(2,3),
+    m5 = new $$.Rational(4,6),
+    m6 = new $$.Rational(-4,-6),
+    m7 = new $$.Rational(20,30),
+
     r1 = new $$.Rational(1,2),
     r2 = new $$.Rational(2,1),
     r3 = new $$.Rational(-1,2),
@@ -56,6 +64,15 @@ describe(`Rational`, function() {
     r7.value().should.to.be.equal(Infinity);
     r8.value().should.to.be.equal(-Infinity);
     r9.value().should.to.be.equal(0);
+    
+    m1.value().should.to.be.equal(1/2);
+    m2.value().should.to.be.equal(1/2);
+    m3.value().should.to.be.equal(1/2);
+    
+    m4.value().should.to.be.equal(2/3);
+    m5.value().should.to.be.equal(2/3);
+    m6.value().should.to.be.equal(2/3);
+    m7.value().should.to.be.equal(2/3);
   });
 
   it(`#equals()`, function() {
@@ -68,6 +85,14 @@ describe(`Rational`, function() {
     r1.equals(r1).should.to.be.equal(true);
     r1.equals(r3).should.to.be.equal(false);
     r1.equals(r4).should.to.be.equal(true);
+
+    m1.equals(m1).should.to.be.equal(true);
+    m1.equals(m2).should.to.be.equal(true);
+    m1.equals(m3).should.to.be.equal(true);
+    m4.equals(m4).should.to.be.equal(true);
+    m4.equals(m5).should.to.be.equal(true);
+    m4.equals(m6).should.to.be.equal(true);
+    m4.equals(m7).should.to.be.equal(true);
   });
 
   it(`#toString()`, function() {
