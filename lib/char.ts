@@ -93,6 +93,14 @@ export function cinoptToCNS(cins: cinopt[] = []) : charindexnum[] {
 }
 
 
+export function charindexnumOpts(cns: charindexnum[]|cinopt[] = []) : charindexnum[] {
+  let _cns: charindexnum[] = [];
+  if (cns.length > 0)
+    _cns = iscinopt(cns[0]) ? cinoptToCNS(cns as cinopt[]) : cns as charindexnum[];
+  return _cns;
+}
+
+
 export const gchars = {
   Alfa:      "Α", alfa:   	"α",
   Beta:      "Β", beta:   	"β",

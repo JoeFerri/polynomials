@@ -5,7 +5,7 @@
  * Copyright (c) 2021, Giuseppe Ferri (joeferri83prog@libero.it)
  */
 
-import { charlit, charindexnum, cinopt, iscinopt, cinoptToCNS } from "./char";
+import { charlit, charindexnum, cinopt, iscinopt, cinoptToCNS, charindexnumOpts } from "./char";
 import { undnumber } from "./type";
 
 
@@ -23,17 +23,16 @@ export class Literal {
 
 
   value(cns: charindexnum[]|cinopt[] = []) : undnumber {
-    if (cns.length > 0) {
-    let _cns: charindexnum[] = iscinopt(cns[0]) ? cinoptToCNS(cns as cinopt[]) : cns as charindexnum[];
-    for (let cn of _cns)
+    cns = charindexnumOpts(cns);
+    for (let cn of cns)
       if (cn[0] == this.char && cn[1] == this.index)
         return cn[2];
-    }
     return undefined;
   }
 
 
-  equals(l: Literal, cns: charindexnum[] = []) : boolean {
+  equals(l: Literal, cns: charindexnum[]|cinopt[] = []) : boolean {
+    cns = charindexnumOpts(cns);
     return this.char == l.char && this.index == l.index && this.value(cns) == l.value(cns);
   }
 
