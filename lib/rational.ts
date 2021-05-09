@@ -18,7 +18,7 @@ export class Rational {
   readonly s: Sign;
 
 
-  constructor(n: number, d: number = 1, s?: Sign) {
+  constructor(n: number, d: number = 1, s?: Sign, simplify: boolean = true) {
 
     s = s != undefined ? s : Sign.byND(n,d);
     n = Math.abs(n);
@@ -35,7 +35,7 @@ export class Rational {
       n = 0;
       d = 1;
       s = Sign.plus;
-    } else {
+    } else if (simplify) {
       // Greatest Common Divisor
       let gcd = euclAlg(n,d);
   

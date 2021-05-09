@@ -17,8 +17,8 @@ export class ExpRational extends Rational {
   readonly exp: Exp;
 
 
-  constructor(n: number, d: number = 1, s?: Sign, exp?: Exp) {
-    super(n,d,s);
+  constructor(n: number, d: number = 1, s?: Sign, exp?: Exp, simplify: boolean = true) {
+    super(n,d,s,simplify);
     
     if (exp != undefined && equalsExp(exp,0) && super.n == 0)
       throw new UndefinedError();
