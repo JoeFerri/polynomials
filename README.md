@@ -66,7 +66,8 @@ For the documentation see the notes inside the source code or [wiki page](https:
 none
 
 ### Code of conduct
-[Codice di condotta](code_of_conduct.md)
+[ENG](code_of_conduct-eng.md)
+[ITA](code_of_conduct-ita.md)
 
 # examples
 *under development*
