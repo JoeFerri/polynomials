@@ -5,7 +5,7 @@
  * Copyright (c) 2021, Giuseppe Ferri (joeferri83prog@libero.it)
  */
 
-import { charindexnum, charlit } from "./char";
+import { charindexnum, charindexnumOpts, charlit, cinopt } from "./char";
 import { equalsExp, Exp, valueExp } from "./exp";
 import { Literal } from "./literal";
 import { undnumber } from "./type";
@@ -23,7 +23,8 @@ export class ExpLiteral extends Literal {
   }
 
 
-  value(cns: charindexnum[]) : undnumber {
+  value(cns: charindexnum[]|cinopt[] = []) : undnumber {
+    cns = charindexnumOpts(cns);
     let
       v: undnumber = super.value(cns),
       e: number = valueExp(this.exp);
@@ -32,7 +33,8 @@ export class ExpLiteral extends Literal {
   }
 
 
-  equals(l: ExpLiteral, cns: charindexnum[] = []) : boolean {
+  equals(l: ExpLiteral, cns: charindexnum[]|cinopt[] = []) : boolean {
+    cns = charindexnumOpts(cns);
     return super.equals(l,cns) && this.exp.toString() == l.exp.toString();;
   }
 
