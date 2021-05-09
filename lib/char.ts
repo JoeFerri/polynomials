@@ -56,6 +56,43 @@ export type charnum = [charlit, number];
 export type charindexnum = [charlit, number, number];
 
 
+/**
+ * c → character;
+ * i → index;
+ * n → literal value;
+ */
+export type cinopt = {c: charlit, i?: number, n: number};
+
+
+export function iscinopt(obj: charindexnum|cinopt) : obj is cinopt {
+  return obj != undefined && !Array.isArray(obj);
+}
+
+
+export function charnumToCIN(cn: charnum[] = []) : charindexnum[] {
+  let cns: charindexnum[] = [];
+  for (let t of cn)
+    cns.push([t[0],0,t[1]]);
+  return cns;
+}
+
+
+export function charnumIndexToCN(cns: charindexnum[] = []) : charnum[] {
+  let cn: charnum[] = [];
+  for (let t of cns)
+    cn.push([t[0],t[2]]);
+  return cn;
+}
+
+
+export function cinoptToCNS(cins: cinopt[] = []) : charindexnum[] {
+  let cns: charindexnum[] = [];
+  for (let t of cins)
+    cns.push([t.c,t.i != undefined ? t.i : 0,t.n]);
+  return cns;
+}
+
+
 export const gchars = {
   Alfa:      "Α", alfa:   	"α",
   Beta:      "Β", beta:   	"β",
