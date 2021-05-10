@@ -8,6 +8,12 @@
 
 > Library for polynomial and vector calculus.
 
+---
+
+**Polynomial** `::= Monomial SMonomial*`
+
+[![Polynomial](https://jfprogrammer.altervista.org/polynomials/diagram/Polynomial.png)](https://github.com/JoeFerri/polynomials/wiki/EBNF-Grammar)
+
 # Index
 
 - [How to get started](#how-to-get-started)
