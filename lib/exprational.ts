@@ -56,7 +56,7 @@ export class ExpRational extends Rational {
     if (this.d != 1)
       s = '(' + s + ')';
     let e = this.exp.toString();
-    if (e.includes('/'))
+    if (e.includes('/') || e.includes('-'))
       e = '(' + e + ')';
     return `${s}^${e}`;
   }

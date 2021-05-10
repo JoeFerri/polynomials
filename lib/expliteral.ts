@@ -42,8 +42,14 @@ export class ExpLiteral extends Literal {
 
 
   toString() : string {
-    return super.toString() +
-      (this.exp.equals(Rational.one) ? '' : '^' + this.exp.toString());
+    if (this.exp.equals(Rational.one))
+      return super.toString();
+
+    let s = super.toString();
+    let e = this.exp.toString();
+    if (e.includes('/') || e.includes('-'))
+      e = '(' + e + ')';
+    return `${s}^${e}`;
   }
 
 

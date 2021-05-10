@@ -24,10 +24,14 @@ describe(`ExpRational`, function() {
     e6 = new $$.ExpRational(-2,3,undefined,0),
     e7 = new $$.ExpRational(4,1,undefined,2.5),
     e8 = new $$.ExpRational(4,1,undefined,-2.5),
+    e9 = new $$.ExpRational(1,2,undefined,-2),
 
     exp1 = new $$.Rational(5,2),
     exp2 = new $$.Rational(-5,2),
     exp3 = new $$.Rational(2),
+
+    exp4 = new $$.Rational(0,-2),
+    e0 = new $$.ExpRational(1,2,undefined,exp4),
 
     ee1 = new $$.ExpRational(4,1,undefined,exp1),
     ee2 = new $$.ExpRational(4,1,undefined,exp2),
@@ -120,6 +124,9 @@ describe(`ExpRational`, function() {
     e4.toString().should.to.be.equal("(-3/2)^3");
     e5.toString().should.to.be.equal("(2/3)^0");
     e6.toString().should.to.be.equal("(-2/3)^0");
+    e9.toString().should.to.be.equal("(1/2)^(-2)");
+
+    e0.toString().should.to.be.equal("(1/2)^(-0)");
     
     ee1.toString().should.to.be.equal("4^(5/2)");
     ee2.toString().should.to.be.equal("4^(-5/2)");
