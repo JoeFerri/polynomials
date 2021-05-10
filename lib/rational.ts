@@ -34,7 +34,6 @@ export class Rational {
     } else if (d == Infinity || n === 0) { // ±n/∞    0/±n
       n = 0;
       d = 1;
-      s = Sign.plus;
     } else if (simplify) {
       // Greatest Common Divisor
       let gcd = euclAlg(n,d);
@@ -63,7 +62,7 @@ export class Rational {
   toString(with_sign: boolean = false) : string {
     let
       ss = with_sign ? this.s.sign : this.s.signpm(),
-      sn = this.n != 0 ? this.n : '0',
+      sn = this.n,
       sd = this.d != 1 ? ('/' + this.d) : '';
       
     return (ss + sn + sd).toLowerCase();
