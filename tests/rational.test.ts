@@ -33,6 +33,9 @@ describe(`Rational`, function() {
     r7 = new $$.Rational(2,0),
     r8 = new $$.Rational(Infinity,-5),
     r9 = new $$.Rational(5,Infinity),
+
+    z1 = new $$.Rational(0,-2),
+    z2 = new $$.Rational(-2,Infinity),
     
     zero = $$.Rational.zero,
     one = $$.Rational.one,
@@ -54,6 +57,11 @@ describe(`Rational`, function() {
     mone.value().should.to.be.equal(-1);
     infinity.value().should.to.be.equal(Infinity);
     minfinity.value().should.to.be.equal(-Infinity);
+
+    z1.value().should.to.be.equal(0);
+    z2.value().should.to.be.equal(0);
+    z1.s.should.to.be.equal($$.Sign.minus);
+    z2.s.should.to.be.equal($$.Sign.minus);
 
     r1.value().should.to.be.equal(1/2);
     r2.value().should.to.be.equal(2);
@@ -101,6 +109,9 @@ describe(`Rational`, function() {
     mone.toString().should.to.be.equal("-1");
     infinity.toString().should.to.be.equal("infinity");
     minfinity.toString().should.to.be.equal("-infinity");
+    
+    z1.toString().should.to.be.equal("-0");
+    z2.toString().should.to.be.equal("-0");
 
     r1.toString().should.to.be.equal("1/2");
     r2.toString().should.to.be.equal("2");
