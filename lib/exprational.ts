@@ -7,28 +7,29 @@
 
 import { Sign } from "./sign";
 import { Rational } from "./rational";
-import { equalsExp, Exp, valueExp } from "./exp";
+import { Exp } from "./exp";
 import { UndefinedError } from "./error";
 
 
 
 export class ExpRational extends Rational {
 
-  readonly exp: Exp;
+  readonly exp: Rational;
 
 
   constructor(n: number, d: number = 1, s?: Sign, exp?: Exp, simplify: boolean = true) {
     super(n,d,s,simplify);
     
-    if (exp != undefined && equalsExp(exp,0) && super.n == 0)
+    if (exp != undefined && ((exp instanceof Rational && exp.value() == 0) || exp == 0) && super.n == 0)
       throw new UndefinedError();
 
-    this.exp = exp != undefined && super.n != 0 && super.n != Infinity ? exp : 1;
+    this.exp = exp != undefined && super.n != 0 && super.n != Infinity ?
+      (exp instanceof Rational ? exp : new Rational(exp)) : Rational.one;
   }
 
 
   value() : number {
-    return super.value() ** valueExp(this.exp);
+    return super.value() ** this.exp.value();
   }
 
 
@@ -43,12 +44,12 @@ export class ExpRational extends Rational {
    * @returns true if internal structures equals 
    */
   equals(r: ExpRational) : boolean {
-    return super.equals(r) && equalsExp(this.exp,r.exp);
+    return super.equals(r) && this.exp.equals(r.exp);
   }
 
 
   toString(with_sign: boolean = false) : string {
-    if (equalsExp(this.exp,1))
+    if (this.exp.equals(Rational.one))
       return super.toString();
 
     let s = super.toString(with_sign);

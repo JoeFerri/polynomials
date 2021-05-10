@@ -5,8 +5,9 @@
  * Copyright (c) 2021, Giuseppe Ferri (joeferri83prog@libero.it)
  */
 
+import { Rational } from "./rational";
 import { charindexnum, charindexnumOpts, charlit, cinopt } from "./char";
-import { equalsExp, Exp, valueExp } from "./exp";
+import { Exp } from "./exp";
 import { Literal } from "./literal";
 import { undnumber } from "./type";
 
@@ -14,12 +15,13 @@ import { undnumber } from "./type";
 
 export class ExpLiteral extends Literal {
 
-  readonly exp: Exp;
+  readonly exp: Rational;
 
   
   constructor(char: charlit, index?: number, exp?: Exp) {
     super(char,index);
-    this.exp = exp != undefined ? exp : 1;
+    this.exp = exp != undefined ?
+      (exp instanceof Rational ? exp : new Rational(exp)) : Rational.one;
   }
 
 
@@ -27,7 +29,7 @@ export class ExpLiteral extends Literal {
     cns = charindexnumOpts(cns);
     let
       v: undnumber = super.value(cns),
-      e: number = valueExp(this.exp);
+      e: number = this.exp.value();
 
     return v != undefined ? v ** e : undefined;
   }
@@ -35,12 +37,13 @@ export class ExpLiteral extends Literal {
 
   equals(l: ExpLiteral, cns: charindexnum[]|cinopt[] = []) : boolean {
     cns = charindexnumOpts(cns);
-    return super.equals(l,cns) && this.exp.toString() == l.exp.toString();;
+    return super.equals(l,cns) && this.exp.equals(l.exp);
   }
 
 
   toString() : string {
-    return super.toString() + (equalsExp(this.exp,1) ? '' : '^' + this.exp.toString());
+    return super.toString() +
+      (this.exp.equals(Rational.one) ? '' : '^' + this.exp.toString());
   }
 
 

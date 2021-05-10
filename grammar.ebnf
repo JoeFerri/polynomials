@@ -12,18 +12,24 @@ SRational ::= Sign natural ('/' natural)?
 
 Exp ::= natural | Rational
 
-ExpRational ::= (Rational | '(' Rational ')') ('^' (Exp | '(' Exp ')'))?
+ExpRational ::= (Rational | '(' Rational ')') ('^' (Rational | '(' Rational ')'))?
 
-SExpRational ::= (SRational | '(' SRational ')') ('^' (Exp | '(' Exp ')'))?
+SExpRational ::= (SRational | '(' SRational ')') ('^' (Rational | '(' Rational ')'))?
 
 i ::= 'i' | '𝑖' | '𝒾' | '𝓲' | 'ⅈ'
 
-Complex ::= (ExpRational SExpRational i) | ExpRational | (ExpRational i) | (Sign? i) 
+Complex ::= (ExpRational SExpRational i) | ExpRational | (ExpRational i) | (Sign? i)
+
+SComplex ::= (SExpRational SExpRational i) | SExpRational | (SExpRational i) | (Sign i)
 
 charlit ::= gcharl | gcharL | charl | charL
 
 Literal ::= charlit ('_' natural)?
 
-ExpLiteral ::= Literal ('^' (Exp | '(' Exp ')'))?
+ExpLiteral ::= Literal ('^' (Rational | '(' Rational ')'))?
 
 Monomial ::= Complex ExpLiteral*
+
+SMonomial ::= SComplex ExpLiteral*
+
+Polynomial ::= Monomial SMonomial*
