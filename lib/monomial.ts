@@ -33,16 +33,24 @@ export class Monomial {
     return vz != undefined && vl != undefined ? vz * vl : undefined;
   }
 
+  
+  private track: string|undefined = undefined;
 
   literalsTrack() : string {
-    return this.literals.map( l => l.toString() ).sort( (l1,l2) => l1.localeCompare(l2) ).join('')
+    if (this.track == undefined)
+      this.track =
+        this.literals
+          .map( l => l.toString() )
+          .sort( (l1,l2) => l1.localeCompare(l2) )
+          .join('');
+    return this.track;
   }
 
 
   equals(m: Monomial, cns: charindexnum[] = []) : boolean {
     let
-      vThis = this.value(cns), //! is it necessary?
-      vThat = m.value(cns), //! is it necessary?
+      vThis = this.value(cns),
+      vThat = m.value(cns),
       lThis = this.literalsTrack(),
       lThat = m.literalsTrack();
 
