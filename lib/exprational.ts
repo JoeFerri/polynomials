@@ -20,7 +20,12 @@ export class ExpRational extends Rational {
   constructor(n: number, d: number = 1, s?: Sign, exp?: Exp, simplify: boolean = true) {
     super(n,d,s,simplify);
     
-    if (exp != undefined && ((exp instanceof Rational && exp.value() == 0) || exp == 0) && super.n == 0)
+    if (exp != undefined && (
+        (((exp instanceof Rational && exp.value() == 0) || exp == 0) && 
+          ((super.n == 0 || super.n == Infinity) && super.s == Sign.plus)) || // (0⁺)^(+∞) ; +∞^0
+        (((exp instanceof Rational && exp.value() == Infinity) || exp == Infinity) && super.n == 1) // 1^±∞
+      )
+    )
       throw new UndefinedError();
 
     this.exp = exp != undefined && super.n != 0 && super.n != Infinity ?
