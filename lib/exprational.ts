@@ -68,6 +68,7 @@ export class ExpRational extends Rational {
 
 
   static readonly zero = new ExpRational(0);
+  static readonly mzero = new ExpRational(0,-1);
   static readonly one = new ExpRational(1);
   static readonly mone = new ExpRational(-1);
   static readonly infinity = new ExpRational(Infinity);

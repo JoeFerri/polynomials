@@ -96,6 +96,7 @@ export class Monomial {
 
 
   static readonly zero      = new Monomial(Complex.zero);
+  static readonly mzero     = new Monomial(Complex.mzero);
   static readonly one       = new Monomial(Complex.one);
   static readonly mone      = new Monomial(Complex.mone);
   static readonly infinity  = new Monomial(Complex.infinity);

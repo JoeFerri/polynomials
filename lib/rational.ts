@@ -70,6 +70,7 @@ export class Rational {
 
 
   static readonly zero = new Rational(0);
+  static readonly mzero = new Rational(0,-1);
   static readonly one = new Rational(1);
   static readonly mone = new Rational(-1);
   static readonly infinity = new Rational(Infinity);

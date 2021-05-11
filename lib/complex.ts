@@ -100,6 +100,7 @@ export class Complex {
 
 
   static readonly zero = new Complex(ExpRational.zero);
+  static readonly mzero = new Complex(ExpRational.mzero);
   static readonly one = new Complex(ExpRational.one);
   static readonly mone = new Complex(ExpRational.mone);
   static readonly infinity = new Complex(ExpRational.infinity);
