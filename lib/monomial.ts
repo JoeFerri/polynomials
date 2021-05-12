@@ -8,11 +8,13 @@
 import { charindexnum, charindexnumOpts, cinopt } from "./char";
 import { Complex } from "./complex";
 import { ExpLiteral } from "./expliteral";
+import { Sign } from "./sign";
 import { undnumber } from "./type";
+import { Comparable } from "./utils";
 
 
 
-export class Monomial {
+export class Monomial implements Comparable<Monomial> {
 
   readonly z: Complex;
   private literals: ExpLiteral[];
@@ -20,7 +22,7 @@ export class Monomial {
 
   constructor(z: Complex, ...literals: ExpLiteral[]) {
     this.z = z;
-    this.literals = [...literals];
+    this.literals = literals.sort( (l1,l2) => l1.compare(l2) ); // literals must be sorted
   }
 
 
@@ -42,7 +44,6 @@ export class Monomial {
     if (this.track == undefined)
       this.track =
         this.literals
-          .sort(literalsSort)
           .map( l => l.toString() )
           .join(Monomial.dotChar);
     return this.track;
@@ -51,18 +52,59 @@ export class Monomial {
 
   equals(m: Monomial, cns: charindexnum[] = []) : boolean {
     let
-      vThis = this.value(cns),
-      vThat = m.value(cns),
-      lThis = this.literalsTrack(),
-      lThat = m.literalsTrack();
+      vThis: undnumber = this.value(cns),
+      vThat:undnumber = m.value(cns),
+      lThis: string = this.literalsTrack(),
+      lThat: string = m.literalsTrack();
 
     return this.z.equals(m.z) && vThis == vThat && lThis == lThat;
   }
 
+  // monomials: x^3 2x^3 -2x^3 x_1^3 x_2^3 x^2 x_3 x y z
+  // m1:   x^3⋅x^2
+  // m2:  2⋅y^3
+  // m3:  2⋅x^3
+  // m4: -2⋅x^3
+  // m4: -2⋅x^3⋅y
+  compare(m: Monomial) : number {
+    let
+      i: number = 0,
+      comp: number,
+      len1: number = this.literals.length,
+      len2: number = m.literals.length,
+      lenMin: number = Math.min(len1,len2);
 
-  toString() : string {
-    let track = this.literalsTrack();
-    return this.z.toString() + (track != '' ? Monomial.dotChar + track : '');
+    while(i < lenMin) {
+      comp = this.literals[i].compare(m.literals[i]); // compare only the literal part
+      if (comp != 0)
+        return comp;
+      i++;
+    }
+
+    // same literal part
+    if (len1 == len2)
+      return this.z.compare(m.z);
+    // different literal part
+    return len1 - len2;
+  }
+
+  toString(with_sign: boolean = false) : string {
+    let
+      tostring: string = "",
+      track = this.literalsTrack(),
+      sv = this.z.value(),
+      sz = this.z.toString(with_sign),
+      isOne = sv != undefined ? Math.abs(sv) == 1 : false;
+
+      if (!isOne) {
+        tostring = sz + (track != '' ? Monomial.dotChar : '') + track;
+      } else {
+        if (track != '')
+          tostring = (with_sign || this.z.s == Sign.minus ? this.z.s.sign : '') + track;
+        else
+          tostring = sz;
+      }
+    return tostring;
   }
 
 
@@ -114,24 +156,4 @@ export class Monomial {
   static readonly x3 = new Monomial(Complex.one, new ExpLiteral('x',undefined,3));
   static readonly y3 = new Monomial(Complex.one, new ExpLiteral('y',undefined,3));
   static readonly z3 = new Monomial(Complex.one, new ExpLiteral('z',undefined,3));
-}
-
-
-function literalsSort(l1: ExpLiteral, l2: ExpLiteral) : number { 
-  let locCompChar = l1.char.localeCompare(l2.char);
-  let locCompIndex = l1.index - l2.index;
-
-  // x != y
-  // alphabetical ordering
-  if (locCompChar != 0)
-    return locCompChar;
-
-  // x_1 != x_2
-  // lexicographic ordering
-  if (locCompIndex != 0)
-    return locCompIndex;
-  
-  // x_1^3 != x_1^2 != x_1
-  // major powers on the left
-  return l2.exp.value() - l1.exp.value();
 }

@@ -16,9 +16,11 @@
  export * from "./literal";
  export * from "./math";
  export * from "./monomial";
+ export * from "./polynomial";
  export * from "./rational";
  export * from "./real";
  export * from "./sign";
  export * from "./type";
+ export * from "./utils";
  
 export {};

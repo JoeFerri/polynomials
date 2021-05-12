@@ -8,10 +8,11 @@
 import { Sign } from ".";
 import { ExpRational } from "./exprational";
 import { undnumber } from "./type";
+import { Comparable } from "./utils";
 
 
 
-export class Complex {
+export class Complex implements Comparable<Complex> {
 
   readonly a: ExpRational;
   readonly b: ExpRational;
@@ -20,6 +21,20 @@ export class Complex {
   constructor(a: ExpRational, b?: ExpRational) {
     this.a = a;
     this.b = b != undefined ? b : ExpRational.zero;
+  }
+
+
+  /**
+   * Contract:
+   * if the real part is different from zero,
+   * or both the real part and the imaginary part are equal to zero,
+   * then it returns the sign of the real part;
+   * otherwise it returns the sign of the imaginary part.
+   */
+  get s() : Sign {
+    if (this.a.value() != 0 || this.b.value() == 0)
+      return this.a.s;
+    return this.b.s;
   }
 
 
@@ -34,8 +49,8 @@ export class Complex {
    */
   value() : undnumber {
     let
-      a: undnumber = this.a.value(),
-      b: undnumber = this.b.value();
+      a: number = this.a.value(),
+      b: number = this.b.value();
 
     return b == 0 ? a : undefined;
   }
@@ -43,6 +58,20 @@ export class Complex {
 
   equals(z: Complex) : boolean {
     return this.a.equals(z.a) && this.b.equals(z.b); 
+  }
+
+
+  /**
+   * Warning:
+   * complex numbers cannot be sorted in a way compatible with arithmetic operations;
+   * however, it is decided to implement this function to make
+   * the lexicographic ordering of polynomes consistent.
+   */
+  compare(z: Complex) : number {
+    let compAA = this.a.compare(z.a);
+    let compBB = this.b.compare(z.b);
+
+    return compAA != 0 ? compAA : compBB;
   }
 
 

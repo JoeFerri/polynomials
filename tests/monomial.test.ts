@@ -9,7 +9,6 @@
 
 import * as $$ from "../lib/index";
 import { expect, should } from 'chai';
-import { ExpRational } from "../lib/index";
 should();
 
 
@@ -28,9 +27,9 @@ describe(`Monomial`, function() {
     x_2 = new $$.ExpLiteral('x',2),
     x_3 = new $$.ExpLiteral('x',3,5),
     
-    z2 = new $$.Complex(new ExpRational(2)),
-    zm3 = new $$.Complex(new ExpRational(-3)),
-    z23 = new $$.Complex(new ExpRational(2,3)),
+    z2 = new $$.Complex(new $$.ExpRational(2)),
+    zm3 = new $$.Complex(new $$.ExpRational(-3)),
+    z23 = new $$.Complex(new $$.ExpRational(2,3)),
 
     mono1 = new $$.Monomial(z2),                //? 2
     mono2 = new $$.Monomial(zm3),               //? -3
@@ -105,10 +104,3 @@ describe(`Monomial`, function() {
   });
 
 });
-
-// mono1 = new $$.Monomial(z2),            //? 2
-// mono2 = new $$.Monomial(zm3),           //? -3
-// mono3 = new $$.Monomial(z23),           //? 2/3
-// mono4 = new $$.Monomial(z2,x,y),        //? 2⋅x⋅y
-// mono5 = new $$.Monomial(zm3,x,x3,x2),   //? -3⋅x^3⋅x^2⋅x
-// mono6 = new $$.Monomial(z23,x_1,x_2),   //? 2/3⋅x_1⋅x_2

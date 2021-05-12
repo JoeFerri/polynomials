@@ -8,10 +8,11 @@
 import { UndefinedError } from "./error";
 import { euclAlg } from "./math";
 import { Sign } from "./sign";
+import { Comparable } from "./utils";
 
 
 
-export class Rational {
+export class Rational implements Comparable<Rational> {
 
   readonly n: number;
   readonly d: number;
@@ -56,6 +57,11 @@ export class Rational {
 
   equals(r: Rational) : boolean {
     return this.n == r.n && this.d == r.d && this.s == r.s;
+  }
+
+
+  compare(r: Rational) : number {
+    return this.value() - r.value();
   }
 
 

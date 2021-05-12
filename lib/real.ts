@@ -42,6 +42,7 @@
  
  
    static readonly zero = new Real(ExpRational.zero);
+   static readonly mzero = new Real(ExpRational.mzero);
    static readonly one = new Real(ExpRational.one);
    static readonly mone = new Real(ExpRational.mone);
    static readonly infinity = new Real(ExpRational.infinity);

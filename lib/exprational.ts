@@ -9,10 +9,11 @@ import { Sign } from "./sign";
 import { Rational } from "./rational";
 import { Exp } from "./exp";
 import { UndefinedError } from "./error";
+import { Comparable } from "./utils";
 
 
 
-export class ExpRational extends Rational {
+export class ExpRational extends Rational implements Comparable<ExpRational> {
 
   readonly exp: Rational;
 
@@ -50,6 +51,11 @@ export class ExpRational extends Rational {
    */
   equals(r: ExpRational) : boolean {
     return super.equals(r) && this.exp.equals(r.exp);
+  }
+
+
+  compare(r: ExpRational) : number {
+    return this.value() - r.value();
   }
 
 

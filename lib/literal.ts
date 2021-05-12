@@ -7,10 +7,11 @@
 
 import { charlit, charindexnum, cinopt, iscinopt, cinoptToCNS, charindexnumOpts } from "./char";
 import { undnumber } from "./type";
+import { Comparable } from "./utils";
 
 
 
-export class Literal {
+export class Literal implements Comparable<Literal> {
 
   readonly char: charlit;
   readonly index: number; // 0 means "no index"
@@ -34,6 +35,21 @@ export class Literal {
   equals(l: Literal, cns: charindexnum[]|cinopt[] = []) : boolean {
     cns = charindexnumOpts(cns);
     return this.char == l.char && this.index == l.index && this.value(cns) == l.value(cns);
+  }
+
+
+  compare(l: Literal) : number {
+    let locCompChar = this.char.localeCompare(l.char);
+    let locCompIndex = this.index - l.index;
+  
+    // x != y
+    // alphabetical ordering
+    if (locCompChar != 0)
+      return locCompChar;
+  
+    // x_1 != x_2
+    // lexicographic ordering
+    return locCompIndex;
   }
 
 

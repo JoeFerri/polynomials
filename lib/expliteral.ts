@@ -10,10 +10,11 @@ import { charindexnum, charindexnumOpts, charlit, cinopt } from "./char";
 import { Exp } from "./exp";
 import { Literal } from "./literal";
 import { undnumber } from "./type";
+import { Comparable } from "./utils";
 
 
 
-export class ExpLiteral extends Literal {
+export class ExpLiteral extends Literal implements Comparable<ExpLiteral> {
 
   readonly exp: Rational;
 
@@ -41,15 +42,31 @@ export class ExpLiteral extends Literal {
   }
 
 
-  toString() : string {
-    if (this.exp.equals(Rational.one))
-      return super.toString();
+  compare(l: ExpLiteral) : number {
+    let superComp = super.compare(l);
 
-    let s = super.toString();
-    let e = this.exp.toString();
-    if (e.includes('/') || e.includes('-'))
-      e = '(' + e + ')';
-    return `${s}^${e}`;
+    // x_1^3 != x_1^2 != x_1
+    // major powers on the left
+    return superComp != 0 ? superComp : l.exp.value() - this.exp.value();
+  }
+
+
+  private tostring: string|undefined = undefined;
+
+
+  toString() : string {
+    if (this.tostring == undefined) {
+      if (this.exp.equals(Rational.one))
+        this.tostring = super.toString();
+      else {
+        let s = super.toString();
+        let e = this.exp.toString();
+        if (e.includes('/') || e.includes('-'))
+          e = '(' + e + ')';
+        this.tostring = `${s}^${e}`;
+      }
+    }
+    return this.tostring;
   }
 
 
