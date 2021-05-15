@@ -13,6 +13,7 @@
  export * from "./exp";
  export * from "./expliteral";
  export * from "./exprational";
+ export * from "./factorial";
  export * from "./literal";
  export * from "./math";
  export * from "./monomial";
