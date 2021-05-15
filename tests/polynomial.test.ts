@@ -32,7 +32,7 @@ describe(`Polynomial`, function() {
     p5 = new $$.Polynomial(new $$.Monomial($$.Complex.mone,$$.ExpLiteral.x)),
     
     zero = $$.Polynomial.zero,
-    mzero = $$.Polynomial.mzero,
+    // mzero = $$.Polynomial.mzero,
     one = $$.Polynomial.one,
     mone = $$.Polynomial.mone,
     infinity = $$.Polynomial.infinity,
@@ -57,7 +57,7 @@ describe(`Polynomial`, function() {
 
   it(`#toString()`, function() {
     zero.toString().should.to.be.equal("0");
-    mzero.toString().should.to.be.equal("-0");
+    // mzero.toString().should.to.be.equal("-0");
     one.toString().should.to.be.equal("1");
     mone.toString().should.to.be.equal("-1");
     infinity.toString().should.to.be.equal("infinity");

@@ -6,6 +6,7 @@
  */
 
 import { UndefinedError } from "./error";
+import { undnumber } from "./type";
 
 
 
@@ -42,4 +43,28 @@ export function euclAlg(a: number, b: number, opt: EuclFlag = EuclFlag.GCD) : nu
 export enum EuclFlag {
   GCD, // Greatest Common Divisor
   LCD  // Least Common Multiple
+}
+
+export interface Evaluable {
+  value() : number;
+}
+
+export interface UndEvaluable {
+  value() : undnumber;
+}
+
+
+/**
+ * isInteger(Infinity) → false
+ */
+export function isInteger(n: number|Evaluable|UndEvaluable, res: {value: number} = {value: 0}) {
+  res.value = typeof n === "number" ? n : (n.value() != undefined ? (n.value() as number) : 1.1); 
+  return Number(res.value) === res.value && res.value % 1 === 0;
+}
+
+/**
+ * isNatural(Infinity) → false
+ */
+export function isNatural(n: number|Evaluable|UndEvaluable, res: {value: number} = {value: 0}) {
+  return isInteger(n,res) && res.value >= 0;
 }

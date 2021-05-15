@@ -6,13 +6,14 @@
  */
 
 import { charindexnum, charindexnumOpts, cinopt } from "./char";
+import { UndEvaluable } from "./math";
 import { Monomial } from "./monomial";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
 
 
 
-export class Polynomial implements Comparable<Polynomial> {
+export class Polynomial implements Comparable<Polynomial>, UndEvaluable {
 
   readonly monomials: Monomial[] = [];
 
@@ -58,7 +59,7 @@ export class Polynomial implements Comparable<Polynomial> {
 
 
   static readonly zero      = new Polynomial(Monomial.zero);
-  static readonly mzero     = new Polynomial(Monomial.mzero);
+  // static readonly mzero     = new Polynomial(Monomial.mzero);
   static readonly one       = new Polynomial(Monomial.one);
   static readonly mone      = new Polynomial(Monomial.mone);
   static readonly infinity  = new Polynomial(Monomial.infinity);

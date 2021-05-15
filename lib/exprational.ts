@@ -19,6 +19,54 @@ export class ExpRational extends Rational implements Comparable<ExpRational> {
 
 
   constructor(n: number, d: number = 1, s?: Sign, exp?: Exp, simplify: boolean = true) {
+
+    if (simplify) {
+      let
+        _exp: number = exp instanceof Rational ? exp.value() : (exp as number),
+        v: number = n/d;
+
+      if (_exp == Infinity && 1 < v && v <= Infinity) {
+        n = Infinity;
+        d = 1;
+        s = undefined;
+      }
+      else if (_exp == -Infinity && 1 < v && v <= Infinity) {
+        n = 0;
+        d = 1;
+        s = undefined;
+      }
+      else if (_exp == Infinity && 0 <= v && v < 1) {
+        n = 0;
+        d = 1;
+        s = undefined;
+      }
+      else if (_exp == -Infinity && 0 <= v && v < 1) {
+        n = Infinity;
+        d = 1;
+        s = undefined;
+      }
+      else if (v == 0 && 0 < _exp && _exp <= Infinity) {
+        n = 0;
+        d = 1;
+        s = undefined;
+      }
+      else if (v == Infinity && 0 < _exp && _exp <= Infinity) {
+        n = Infinity;
+        d = 1;
+        s = undefined;
+      }
+      else if (v == 0 && -Infinity <= _exp && _exp < 0) {
+        n = Infinity;
+        d = 1;
+        s = undefined;
+      }
+      else if (v == Infinity && -Infinity <= _exp && _exp < 0) {
+        n = 0;
+        d = 1;
+        s = undefined;
+      }
+    }
+
     super(n,d,s,simplify);
     
     if (exp != undefined && (
@@ -74,7 +122,7 @@ export class ExpRational extends Rational implements Comparable<ExpRational> {
 
 
   static readonly zero = new ExpRational(0);
-  static readonly mzero = new ExpRational(0,-1);
+  // static readonly mzero = new ExpRational(0,-1);
   static readonly one = new ExpRational(1);
   static readonly mone = new ExpRational(-1);
   static readonly infinity = new ExpRational(Infinity);

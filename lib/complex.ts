@@ -5,14 +5,15 @@
  * Copyright (c) 2021, Giuseppe Ferri (joeferri83prog@libero.it)
  */
 
-import { Sign } from ".";
+import { Sign } from "./sign";
 import { ExpRational } from "./exprational";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
+import { UndEvaluable } from "./math";
 
 
 
-export class Complex implements Comparable<Complex> {
+export class Complex implements Comparable<Complex>, UndEvaluable {
 
   readonly a: ExpRational;
   readonly b: ExpRational;
@@ -129,7 +130,7 @@ export class Complex implements Comparable<Complex> {
 
 
   static readonly zero = new Complex(ExpRational.zero);
-  static readonly mzero = new Complex(ExpRational.mzero);
+  // static readonly mzero = new Complex(ExpRational.mzero);
   static readonly one = new Complex(ExpRational.one);
   static readonly mone = new Complex(ExpRational.mone);
   static readonly infinity = new Complex(ExpRational.infinity);

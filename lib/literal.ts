@@ -6,12 +6,13 @@
  */
 
 import { charlit, charindexnum, cinopt, iscinopt, cinoptToCNS, charindexnumOpts } from "./char";
+import { UndEvaluable } from "./math";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
 
 
 
-export class Literal implements Comparable<Literal> {
+export class Literal implements Comparable<Literal>, UndEvaluable {
 
   readonly char: charlit;
   readonly index: number; // 0 means "no index"

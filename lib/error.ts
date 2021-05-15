@@ -19,3 +19,17 @@ export class UndefinedError extends Error {
     this.name = 'UndefinedError'
   }
 }
+
+
+export class NumericError extends TypeError {
+  constructor(message?: string) {
+    super(message);
+
+    // only available on V8
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, NumericError);
+    }
+
+    this.name = 'NumericError'
+  }
+}

@@ -5,8 +5,8 @@
  * Copyright (c) 2021, Giuseppe Ferri (joeferri83prog@libero.it)
  */
 
-import { UndefinedError } from "./error";
-import { euclAlg } from "./math";
+import { NumericError, UndefinedError } from "./error";
+import { euclAlg, isInteger } from "./math";
 import { Sign } from "./sign";
 import { Comparable } from "./utils";
 
@@ -25,6 +25,9 @@ export class Rational implements Comparable<Rational> {
     n = Math.abs(n);
     d = Math.abs(d);
 
+    if ((!isInteger(n) && n != Infinity) || (!isInteger(d) && d != Infinity))
+      throw new NumericError();
+
     if ((n == 0 && d == 0) || (n == Infinity && d == Infinity))
       throw new UndefinedError();
 
@@ -35,6 +38,7 @@ export class Rational implements Comparable<Rational> {
     } else if (d == Infinity || n === 0) { // ±n/∞    0/±n
       n = 0;
       d = 1;
+      s = Sign.plus;
     } else if (simplify) {
       // Greatest Common Divisor
       let gcd = euclAlg(n,d);
@@ -76,7 +80,7 @@ export class Rational implements Comparable<Rational> {
 
 
   static readonly zero = new Rational(0);
-  static readonly mzero = new Rational(0,-1);
+  // static readonly mzero = new Rational(0,-1);
   static readonly one = new Rational(1);
   static readonly mone = new Rational(-1);
   static readonly infinity = new Rational(Infinity);

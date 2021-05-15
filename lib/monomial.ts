@@ -8,13 +8,14 @@
 import { charindexnum, charindexnumOpts, cinopt } from "./char";
 import { Complex } from "./complex";
 import { ExpLiteral } from "./expliteral";
+import { UndEvaluable } from "./math";
 import { Sign } from "./sign";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
 
 
 
-export class Monomial implements Comparable<Monomial> {
+export class Monomial implements Comparable<Monomial>, UndEvaluable {
 
   readonly z: Complex;
   private literals: ExpLiteral[];
@@ -138,7 +139,7 @@ export class Monomial implements Comparable<Monomial> {
 
 
   static readonly zero      = new Monomial(Complex.zero);
-  static readonly mzero     = new Monomial(Complex.mzero);
+  // static readonly mzero     = new Monomial(Complex.mzero);
   static readonly one       = new Monomial(Complex.one);
   static readonly mone      = new Monomial(Complex.mone);
   static readonly infinity  = new Monomial(Complex.infinity);
