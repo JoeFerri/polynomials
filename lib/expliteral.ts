@@ -19,10 +19,10 @@ export class ExpLiteral extends Literal implements Comparable<ExpLiteral> {
   readonly exp: Rational;
 
   
-  constructor(char: charlit, index?: number, exp?: Exp) {
-    super(char,index);
-    this.exp = exp != undefined ?
-      (exp instanceof Rational ? exp : new Rational(exp)) : Rational.one;
+  constructor(opt: {char: charlit, index?: number, exp?: Exp}) {
+    super(opt);
+    this.exp = opt.exp != undefined ?
+      (opt.exp instanceof Rational ? opt.exp : new Rational({n: opt.exp})) : Rational.one;
   }
 
 
@@ -70,8 +70,8 @@ export class ExpLiteral extends Literal implements Comparable<ExpLiteral> {
   }
 
 
-  static readonly x = new ExpLiteral('x');
-  static readonly y = new ExpLiteral('y');
-  static readonly k = new ExpLiteral('k');
-  static readonly z = new ExpLiteral('z');
+  static readonly x = new ExpLiteral({char: 'x'});
+  static readonly y = new ExpLiteral({char: 'y'});
+  static readonly k = new ExpLiteral({char: 'k'});
+  static readonly z = new ExpLiteral({char: 'z'});
 }

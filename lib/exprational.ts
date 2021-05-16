@@ -18,8 +18,16 @@ export class ExpRational extends Rational implements Comparable<ExpRational> {
   readonly exp: Rational;
 
 
-  constructor(n: number, d: number = 1, s?: Sign, exp?: Exp, simplify: boolean = true) {
+  // constructor(n: number, d: number = 1, s?: Sign, exp?: Exp, simplify: boolean = true) {
+  constructor(opt: {n: number, d?: number, s?: Sign, simplify?: boolean, exp?: Exp}) {
 
+    let
+      n = opt.n,
+      d = opt.d != undefined ? opt.d : 1,
+      s = opt.s,
+      simplify = opt.simplify != undefined ? opt.simplify : true,
+      exp = opt.exp;
+    
     if (simplify) {
       let
         _exp: number = exp instanceof Rational ? exp.value() : (exp as number),
@@ -67,7 +75,7 @@ export class ExpRational extends Rational implements Comparable<ExpRational> {
       }
     }
 
-    super(n,d,s,simplify);
+    super({n: n, d: d, s: s, simplify: simplify});
     
     if (exp != undefined && (
         (((exp instanceof Rational && exp.value() == 0) || exp == 0) && 
@@ -78,7 +86,7 @@ export class ExpRational extends Rational implements Comparable<ExpRational> {
       throw new UndefinedError();
 
     this.exp = exp != undefined && super.n != 0 && super.n != Infinity ?
-      (exp instanceof Rational ? exp : new Rational(exp)) : Rational.one;
+      (exp instanceof Rational ? exp : new Rational({n: exp})) : Rational.one;
   }
 
 
@@ -121,10 +129,10 @@ export class ExpRational extends Rational implements Comparable<ExpRational> {
   }
 
 
-  static readonly zero = new ExpRational(0);
+  static readonly zero = new ExpRational({n: 0});
   // static readonly mzero = new ExpRational(0,-1);
-  static readonly one = new ExpRational(1);
-  static readonly mone = new ExpRational(-1);
-  static readonly infinity = new ExpRational(Infinity);
-  static readonly minfinity = new ExpRational(-Infinity);
+  static readonly one = new ExpRational({n: 1});
+  static readonly mone = new ExpRational({n: -1});
+  static readonly infinity = new ExpRational({n: Infinity});
+  static readonly minfinity = new ExpRational({n: -Infinity});
 }

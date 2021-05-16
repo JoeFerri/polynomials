@@ -18,8 +18,8 @@
  export class Real extends Complex {
  
  
-   constructor(a: ExpRational) {
-     super(a);
+   constructor(opt: {a: ExpRational}) {
+     super({a: opt.a});
    }
  
  
@@ -41,11 +41,11 @@
    }
  
  
-   static readonly zero = new Real(ExpRational.zero);
+   static readonly zero = new Real({a: ExpRational.zero});
   //  static readonly mzero = new Real(ExpRational.mzero);
-   static readonly one = new Real(ExpRational.one);
-   static readonly mone = new Real(ExpRational.mone);
-   static readonly infinity = new Real(ExpRational.infinity);
-   static readonly minfinity = new Real(ExpRational.minfinity);
+   static readonly one = new Real({a: ExpRational.one});
+   static readonly mone = new Real({a: ExpRational.mone});
+   static readonly infinity = new Real({a: ExpRational.infinity});
+   static readonly minfinity = new Real({a: ExpRational.minfinity});
  }
  

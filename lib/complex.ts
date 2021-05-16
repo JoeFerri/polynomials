@@ -19,9 +19,9 @@ export class Complex implements Comparable<Complex>, UndEvaluable {
   readonly b: ExpRational;
 
 
-  constructor(a: ExpRational, b?: ExpRational) {
-    this.a = a;
-    this.b = b != undefined ? b : ExpRational.zero;
+  constructor(opt: {a: ExpRational, b?: ExpRational}) {
+    this.a = opt.a;
+    this.b = opt.b != undefined ? opt.b : ExpRational.zero;
   }
 
 
@@ -129,13 +129,13 @@ export class Complex implements Comparable<Complex>, UndEvaluable {
   }
 
 
-  static readonly zero = new Complex(ExpRational.zero);
+  static readonly zero = new Complex({a: ExpRational.zero});
   // static readonly mzero = new Complex(ExpRational.mzero);
-  static readonly one = new Complex(ExpRational.one);
-  static readonly mone = new Complex(ExpRational.mone);
-  static readonly infinity = new Complex(ExpRational.infinity);
-  static readonly minfinity = new Complex(ExpRational.minfinity);
+  static readonly one = new Complex({a: ExpRational.one});
+  static readonly mone = new Complex({a: ExpRational.mone});
+  static readonly infinity = new Complex({a: ExpRational.infinity});
+  static readonly minfinity = new Complex({a: ExpRational.minfinity});
   
-  static readonly i = new Complex(ExpRational.zero,ExpRational.one);
-  static readonly mi = new Complex(ExpRational.zero,ExpRational.mone);
+  static readonly i = new Complex({a: ExpRational.zero, b: ExpRational.one});
+  static readonly mi = new Complex({a: ExpRational.zero, b: ExpRational.mone});
 }

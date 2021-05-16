@@ -18,13 +18,13 @@ export class Factorial extends ExpRational implements Comparable<Factorial> {
   readonly k: number;
 
 
-  constructor(k: number) {
+  constructor(opt: {k: number}) {
 
-    if (!isNatural(k) && k != Infinity)
+    if (!isNatural(opt.k) && opt.k != Infinity)
       throw new NumericError();
 
-    super(fact(k),1);
-    this.k = k;
+    super({n: fact(opt.k)});
+    this.k = opt.k;
   }
 
 

@@ -5,7 +5,7 @@
  * Copyright (c) 2021, Giuseppe Ferri (joeferri83prog@libero.it)
  */
 
-import { charlit, charindexnum, cinopt, iscinopt, cinoptToCNS, charindexnumOpts } from "./char";
+import { charlit, charindexnum, cinopt, charindexnumOpts } from "./char";
 import { UndEvaluable } from "./math";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
@@ -18,9 +18,9 @@ export class Literal implements Comparable<Literal>, UndEvaluable {
   readonly index: number; // 0 means "no index"
 
 
-  constructor(char: charlit, index?: number) {
-    this.char = char;
-    this.index = index != undefined ? index : 0;
+  constructor(opt: {char: charlit, index?: number}) {
+    this.char = opt.char;
+    this.index = opt.index != undefined ? opt.index : 0;
   }
 
 
@@ -58,53 +58,53 @@ export class Literal implements Comparable<Literal>, UndEvaluable {
     return this.char + (this.index != 0 ? '_' + this.index : '');
   }
 
-  static readonly x_1 = new Literal('x',1);
-  static readonly x_2 = new Literal('x',2);
-  static readonly x_3 = new Literal('x',3);
-  static readonly x_4 = new Literal('x',4);
-  static readonly x_5 = new Literal('x',5);
-  static readonly x_6 = new Literal('x',6);
-  static readonly x_7 = new Literal('x',7);
-  static readonly x_8 = new Literal('x',8);
-  static readonly x_9 = new Literal('x',9);
+  static readonly x_1 = new Literal({char: 'x', index: 1});
+  static readonly x_2 = new Literal({char: 'x', index: 2});
+  static readonly x_3 = new Literal({char: 'x', index: 3});
+  static readonly x_4 = new Literal({char: 'x', index: 4});
+  static readonly x_5 = new Literal({char: 'x', index: 5});
+  static readonly x_6 = new Literal({char: 'x', index: 6});
+  static readonly x_7 = new Literal({char: 'x', index: 7});
+  static readonly x_8 = new Literal({char: 'x', index: 8});
+  static readonly x_9 = new Literal({char: 'x', index: 9});
 
-  static readonly y_1 = new Literal('y',1);
-  static readonly y_2 = new Literal('y',2);
-  static readonly y_3 = new Literal('y',3);
-  static readonly y_4 = new Literal('y',4);
-  static readonly y_5 = new Literal('y',5);
-  static readonly y_6 = new Literal('y',6);
-  static readonly y_7 = new Literal('y',7);
-  static readonly y_8 = new Literal('y',8);
-  static readonly y_9 = new Literal('y',9);
+  static readonly y_1 = new Literal({char: 'y', index: 1});
+  static readonly y_2 = new Literal({char: 'y', index: 2});
+  static readonly y_3 = new Literal({char: 'y', index: 3});
+  static readonly y_4 = new Literal({char: 'y', index: 4});
+  static readonly y_5 = new Literal({char: 'y', index: 5});
+  static readonly y_6 = new Literal({char: 'y', index: 6});
+  static readonly y_7 = new Literal({char: 'y', index: 7});
+  static readonly y_8 = new Literal({char: 'y', index: 8});
+  static readonly y_9 = new Literal({char: 'y', index: 9});
 
-  static readonly z_1 = new Literal('z',1);
-  static readonly z_2 = new Literal('z',2);
-  static readonly z_3 = new Literal('z',3);
-  static readonly z_4 = new Literal('z',4);
-  static readonly z_5 = new Literal('z',5);
-  static readonly z_6 = new Literal('z',6);
-  static readonly z_7 = new Literal('z',7);
-  static readonly z_8 = new Literal('z',8);
-  static readonly z_9 = new Literal('z',9);
+  static readonly z_1 = new Literal({char: 'z', index: 1});
+  static readonly z_2 = new Literal({char: 'z', index: 2});
+  static readonly z_3 = new Literal({char: 'z', index: 3});
+  static readonly z_4 = new Literal({char: 'z', index: 4});
+  static readonly z_5 = new Literal({char: 'z', index: 5});
+  static readonly z_6 = new Literal({char: 'z', index: 6});
+  static readonly z_7 = new Literal({char: 'z', index: 7});
+  static readonly z_8 = new Literal({char: 'z', index: 8});
+  static readonly z_9 = new Literal({char: 'z', index: 9});
   
-  static readonly x = new Literal('x');
-  static readonly y = new Literal('y');
-  static readonly k = new Literal('k');
-  static readonly z = new Literal('z');
+  static readonly x = new Literal({char: 'x'});
+  static readonly y = new Literal({char: 'y'});
+  static readonly k = new Literal({char: 'k'});
+  static readonly z = new Literal({char: 'z'});
 
-  static readonly X = new Literal('X');
-  static readonly Y = new Literal('Y');
-  static readonly K = new Literal('K');
-  static readonly Z = new Literal('Z');
+  static readonly X = new Literal({char: 'X'});
+  static readonly Y = new Literal({char: 'Y'});
+  static readonly K = new Literal({char: 'K'});
+  static readonly Z = new Literal({char: 'Z'});
 
-  static readonly alfa    = new Literal('α');
-  static readonly beta    = new Literal('β');
-  static readonly gamma   = new Literal('γ');
-  static readonly delta   = new Literal('δ');
-  static readonly lambda  = new Literal('λ');
-  static readonly rho     = new Literal('ρ');
-  static readonly sigma   = new Literal('σ');
-  static readonly tau     = new Literal('τ');
-  static readonly omega   = new Literal('ω');
+  static readonly alfa    = new Literal({char: 'α'});
+  static readonly beta    = new Literal({char: 'β'});
+  static readonly gamma   = new Literal({char: 'γ'});
+  static readonly delta   = new Literal({char: 'δ'});
+  static readonly lambda  = new Literal({char: 'λ'});
+  static readonly rho     = new Literal({char: 'ρ'});
+  static readonly sigma   = new Literal({char: 'σ'});
+  static readonly tau     = new Literal({char: 'τ'});
+  static readonly omega   = new Literal({char: 'ω'});
 }
