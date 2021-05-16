@@ -19,9 +19,13 @@ export class Rational implements Comparable<Rational> {
   readonly s: Sign;
 
 
-  constructor(n: number, d: number = 1, s?: Sign, simplify: boolean = true) {
-
-    s = s != undefined ? s : Sign.byND(n,d);
+  // constructor(n: number, d: number = 1, s?: Sign, simplify: boolean = true) {
+  constructor(opt: {n: number, d?: number, s?: Sign, simplify?: boolean}) {
+    let
+      simplify = opt.simplify != undefined ? opt.simplify : true,
+      n = opt.n,
+      d = opt.d != undefined ? opt.d : 1,
+      s = opt.s != undefined ? opt.s : Sign.byND(n,d);
     n = Math.abs(n);
     d = Math.abs(d);
 
@@ -79,10 +83,10 @@ export class Rational implements Comparable<Rational> {
   }
 
 
-  static readonly zero = new Rational(0);
+  static readonly zero = new Rational({n: 0});
   // static readonly mzero = new Rational(0,-1);
-  static readonly one = new Rational(1);
-  static readonly mone = new Rational(-1);
-  static readonly infinity = new Rational(Infinity);
-  static readonly minfinity = new Rational(-Infinity);
+  static readonly one = new Rational({n: 1});
+  static readonly mone = new Rational({n: -1});
+  static readonly infinity = new Rational({n: Infinity});
+  static readonly minfinity = new Rational({n: -Infinity});
 }
