@@ -6,6 +6,7 @@
  */
 
 import { charindexnum, charindexnumOpts, cinopt } from "./char";
+import { UndefinedError } from "./error";
 import { UndEvaluable } from "./math";
 import { Monomial } from "./monomial";
 import { undnumber } from "./type";
@@ -18,8 +19,11 @@ export class Polynomial implements Comparable<Polynomial>, UndEvaluable {
   readonly monomials: Monomial[] = [];
 
 
-  constructor(...monomials: Monomial[]) {
-    this.monomials = monomials.sort( (m1,m2) => m1.compare(m2) );
+  constructor(opt: {monomials: Monomial[]}) {
+    this.monomials = [...(opt.monomials || [])].sort( (m1,m2) => m1.compare(m2) );
+
+    if (this.monomials.length == 0)
+      throw new UndefinedError();
   }
 
 
@@ -58,28 +62,23 @@ export class Polynomial implements Comparable<Polynomial>, UndEvaluable {
   }
 
 
-  static readonly zero      = new Polynomial(Monomial.zero);
+  static readonly zero      = new Polynomial({monomials: [Monomial.zero]});
   // static readonly mzero     = new Polynomial(Monomial.mzero);
-  static readonly one       = new Polynomial(Monomial.one);
-  static readonly mone      = new Polynomial(Monomial.mone);
-  static readonly infinity  = new Polynomial(Monomial.infinity);
-  static readonly minfinity = new Polynomial(Monomial.minfinity);
+  static readonly one       = new Polynomial({monomials: [Monomial.one]});
+  static readonly mone      = new Polynomial({monomials: [Monomial.mone]});
+  static readonly infinity  = new Polynomial({monomials: [Monomial.infinity]});
+  static readonly minfinity = new Polynomial({monomials: [Monomial.minfinity]});
   
-  static readonly x = new Polynomial(Monomial.x);
-  static readonly y = new Polynomial(Monomial.y);
-  static readonly k = new Polynomial(Monomial.k);
-  static readonly z = new Polynomial(Monomial.z);
+  static readonly x = new Polynomial({monomials: [Monomial.x]});
+  static readonly y = new Polynomial({monomials: [Monomial.y]});
+  static readonly k = new Polynomial({monomials: [Monomial.k]});
+  static readonly z = new Polynomial({monomials: [Monomial.z]});
   
-  static readonly x2 = new Polynomial(Monomial.x2);
-  static readonly y2 = new Polynomial(Monomial.y2);
-  static readonly z2 = new Polynomial(Monomial.z2);
+  static readonly x2 = new Polynomial({monomials: [Monomial.x2]});
+  static readonly y2 = new Polynomial({monomials: [Monomial.y2]});
+  static readonly z2 = new Polynomial({monomials: [Monomial.z2]});
   
-  static readonly x3 = new Polynomial(Monomial.x3);
-  static readonly y3 = new Polynomial(Monomial.y3);
-  static readonly z3 = new Polynomial(Monomial.z3);
-}
-
-
-function monomialsSort(m1: Monomial, m2: Monomial) : number {
-  return m1.toString().localeCompare(m2.toString());
+  static readonly x3 = new Polynomial({monomials: [Monomial.x3]});
+  static readonly y3 = new Polynomial({monomials: [Monomial.y3]});
+  static readonly z3 = new Polynomial({monomials: [Monomial.z3]});
 }

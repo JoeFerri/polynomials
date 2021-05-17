@@ -21,9 +21,9 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
   private literals: ExpLiteral[];
 
 
-  constructor(z: Complex, ...literals: ExpLiteral[]) {
-    this.z = z;
-    this.literals = literals.sort( (l1,l2) => l1.compare(l2) ); // literals must be sorted
+  constructor(opt: {z: Complex, literals?: ExpLiteral[]}) {
+    this.z = opt.z;
+    this.literals = [...(opt.literals || [])].sort( (l1,l2) => l1.compare(l2) ); // literals must be sorted
   }
 
 
@@ -138,23 +138,23 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
   }
 
 
-  static readonly zero      = new Monomial(Complex.zero);
+  static readonly zero      = new Monomial({z: Complex.zero});
   // static readonly mzero     = new Monomial(Complex.mzero);
-  static readonly one       = new Monomial(Complex.one);
-  static readonly mone      = new Monomial(Complex.mone);
-  static readonly infinity  = new Monomial(Complex.infinity);
-  static readonly minfinity = new Monomial(Complex.minfinity);
+  static readonly one       = new Monomial({z: Complex.one});
+  static readonly mone      = new Monomial({z: Complex.mone});
+  static readonly infinity  = new Monomial({z: Complex.infinity});
+  static readonly minfinity = new Monomial({z: Complex.minfinity});
   
-  static readonly x = new Monomial(Complex.one, ExpLiteral.x);
-  static readonly y = new Monomial(Complex.one, ExpLiteral.y);
-  static readonly k = new Monomial(Complex.one, ExpLiteral.k);
-  static readonly z = new Monomial(Complex.one, ExpLiteral.z);
+  static readonly x = new Monomial({z: Complex.one, literals: [ExpLiteral.x]});
+  static readonly y = new Monomial({z: Complex.one, literals: [ExpLiteral.y]});
+  static readonly k = new Monomial({z: Complex.one, literals: [ExpLiteral.k]});
+  static readonly z = new Monomial({z: Complex.one, literals: [ExpLiteral.z]});
   
-  static readonly x2 = new Monomial(Complex.one, new ExpLiteral('x',undefined,2));
-  static readonly y2 = new Monomial(Complex.one, new ExpLiteral('y',undefined,2));
-  static readonly z2 = new Monomial(Complex.one, new ExpLiteral('z',undefined,2));
+  static readonly x2 = new Monomial({z: Complex.one, literals: [new ExpLiteral({char: 'x', exp: 2})]});
+  static readonly y2 = new Monomial({z: Complex.one, literals: [new ExpLiteral({char: 'y', exp: 2})]});
+  static readonly z2 = new Monomial({z: Complex.one, literals: [new ExpLiteral({char: 'z', exp: 2})]});
   
-  static readonly x3 = new Monomial(Complex.one, new ExpLiteral('x',undefined,3));
-  static readonly y3 = new Monomial(Complex.one, new ExpLiteral('y',undefined,3));
-  static readonly z3 = new Monomial(Complex.one, new ExpLiteral('z',undefined,3));
+  static readonly x3 = new Monomial({z: Complex.one, literals: [new ExpLiteral({char: 'x', exp: 3})]});
+  static readonly y3 = new Monomial({z: Complex.one, literals: [new ExpLiteral({char: 'y', exp: 3})]});
+  static readonly z3 = new Monomial({z: Complex.one, literals: [new ExpLiteral({char: 'z', exp: 3})]});
 }
