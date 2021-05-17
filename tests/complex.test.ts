@@ -20,32 +20,32 @@ describe(`Complex`, function() {
   describe(`like Real`, function() {
 
     let
-      e1    = new $$.Complex(new $$.ExpRational(1,2,undefined,2)),
-      e2    = new $$.Complex(new $$.ExpRational(-1,2,undefined,2)),
-      e3    = new $$.Complex(new $$.ExpRational(3,2,undefined,2)),
-      e4    = new $$.Complex(new $$.ExpRational(-3,2,undefined,3)),
-      e5    = new $$.Complex(new $$.ExpRational(2,3,undefined,0)),
-      e6    = new $$.Complex(new $$.ExpRational(-2,3,undefined,0)),
+      e1    = new $$.Complex({a: new $$.ExpRational({n:  1, d: 2, exp: 2}) }),
+      e2    = new $$.Complex({a: new $$.ExpRational({n: -1, d: 2, exp: 2}) }),
+      e3    = new $$.Complex({a: new $$.ExpRational({n:  3, d: 2, exp: 2}) }),
+      e4    = new $$.Complex({a: new $$.ExpRational({n: -3, d: 2, exp: 3}) }),
+      e5    = new $$.Complex({a: new $$.ExpRational({n:  2, d: 3, exp: 0}) }),
+      e6    = new $$.Complex({a: new $$.ExpRational({n: -2, d: 3, exp: 0}) }),
       // e7    = new $$.Complex(new $$.ExpRational(4,1,undefined,2.5)), // TODO
       // e8    = new $$.Complex(new $$.ExpRational(4,1,undefined,-2.5)), // TODO
 
-      exp1  = new $$.Rational(5,2),
-      exp2  = new $$.Rational(-5,2),
-      exp3  = new $$.Rational(2),
+      exp1  = new $$.Rational({n: 5, d: 2}),
+      exp2  = new $$.Rational({n: -5, d: 2}),
+      exp3  = new $$.Rational({n: 2}),
 
-      ee1   = new $$.Complex(new $$.ExpRational(4,1,undefined,exp1)),
-      ee2   = new $$.Complex(new $$.ExpRational(4,1,undefined,exp2)),
-      ee3   = new $$.Complex(new $$.ExpRational(4,1,undefined,exp3)),
+      ee1   = new $$.Complex({a: new $$.ExpRational({n: 4, d: 1, exp: exp1}) }),
+      ee2   = new $$.Complex({a: new $$.ExpRational({n: 4, d: 1, exp: exp2}) }),
+      ee3   = new $$.Complex({a: new $$.ExpRational({n: 4, d: 1, exp: exp3}) }),
 
-      r1    = new $$.Complex(new $$.ExpRational(1,2)),
-      r2    = new $$.Complex(new $$.ExpRational(2,1)),
-      r3    = new $$.Complex(new $$.ExpRational(-1,2)),
-      r4    = new $$.Complex(new $$.ExpRational(-1,-2)),
-      r5    = new $$.Complex(new $$.ExpRational(-3,-2)),
-      r6    = new $$.Complex(new $$.ExpRational(0,2)),
-      r7    = new $$.Complex(new $$.ExpRational(2,0)),
-      r8    = new $$.Complex(new $$.ExpRational(Infinity,-5)),
-      r9    = new $$.Complex(new $$.ExpRational(5,Infinity)),
+      r1    = new $$.Complex({a: new $$.ExpRational({n:  1, d:  2}) }),
+      r2    = new $$.Complex({a: new $$.ExpRational({n:  2, d:  1}) }),
+      r3    = new $$.Complex({a: new $$.ExpRational({n: -1, d:  2}) }),
+      r4    = new $$.Complex({a: new $$.ExpRational({n: -1, d: -2}) }),
+      r5    = new $$.Complex({a: new $$.ExpRational({n: -3, d: -2}) }),
+      r6    = new $$.Complex({a: new $$.ExpRational({n:  0, d:  2}) }),
+      r7    = new $$.Complex({a: new $$.ExpRational({n:  2, d:  0}) }),
+      r8    = new $$.Complex({a: new $$.ExpRational({n: Infinity, d: -5}) }),
+      r9    = new $$.Complex({a: new $$.ExpRational({n: 5, d: Infinity}) }),
       
       zero = $$.Complex.zero,
       one = $$.Complex.one,
@@ -137,14 +137,14 @@ describe(`Complex`, function() {
   describe(`like Complex`, function() {
     
     let
-      c1 = new $$.Complex(new $$.ExpRational(1,2),new $$.ExpRational(1,2)),
-      c2 = new $$.Complex(new $$.ExpRational(1,2,undefined,3),new $$.ExpRational(1,2)),
-      c3 = new $$.Complex(new $$.ExpRational(1,2,undefined,3),new $$.ExpRational(1,2,undefined,5)),
-      c4 = new $$.Complex(new $$.ExpRational(0),new $$.ExpRational(2)),
-      c5 = new $$.Complex(new $$.ExpRational(0),new $$.ExpRational(-2)),
-      c6 = new $$.Complex(new $$.ExpRational(0,-1),new $$.ExpRational(-2)),
-      c7 = new $$.Complex(new $$.ExpRational(5),new $$.ExpRational(1)),
-      c8 = new $$.Complex(new $$.ExpRational(5),new $$.ExpRational(-1)),
+      c1 = new $$.Complex({a: new $$.ExpRational({n: 1, d: 2}),         b: new $$.ExpRational({n: 1, d: 2})         }),
+      c2 = new $$.Complex({a: new $$.ExpRational({n: 1, d: 2, exp: 3}), b: new $$.ExpRational({n: 1, d: 2})         }),
+      c3 = new $$.Complex({a: new $$.ExpRational({n: 1, d: 2, exp: 3}), b: new $$.ExpRational({n: 1, d: 2, exp: 5}) }),
+      c4 = new $$.Complex({a: new $$.ExpRational({n: 0}),               b: new $$.ExpRational({n: 2})               }),
+      c5 = new $$.Complex({a: new $$.ExpRational({n: 0}),               b: new $$.ExpRational({n: -2})              }),
+      c6 = new $$.Complex({a: new $$.ExpRational({n: 0, d: -1}),        b: new $$.ExpRational({n: -2})              }),
+      c7 = new $$.Complex({a: new $$.ExpRational({n: 5}),               b: new $$.ExpRational({n: 1})               }),
+      c8 = new $$.Complex({a: new $$.ExpRational({n: 5}),               b: new $$.ExpRational({n: -1})              }),
 
       i = $$.Complex.i,
       mi = $$.Complex.mi;

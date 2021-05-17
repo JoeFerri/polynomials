@@ -21,12 +21,12 @@ describe(`ExpLiteral`, function() {
 
     x = $$.ExpLiteral.x,
     y = $$.ExpLiteral.y,
-    x_1 = new $$.ExpLiteral('x',1),
-    x_2 = new $$.ExpLiteral('x',2),
+    x_1 = new $$.ExpLiteral({char: 'x', index: 1}),
+    x_2 = new $$.ExpLiteral({char: 'x', index: 2}),
     
-    delta = new $$.ExpLiteral($$.gchars.delta,1,2),
-    alfa = new $$.ExpLiteral($$.gchars.alfa,1,-2),
-    beta = new $$.ExpLiteral($$.gchars.beta,1,new $$.Rational(-2,5));
+    delta = new $$.ExpLiteral({char: $$.gchars.delta, index: 1, exp: 2}),
+    alfa = new $$.ExpLiteral({char: $$.gchars.alfa, index: 1, exp: -2}),
+    beta = new $$.ExpLiteral({char: $$.gchars.beta, index: 1, exp: new $$.Rational({n: -2, d: 5}) });
 
   it(`#value()`, function() {
     expect(x.value()).to.be.undefined;
