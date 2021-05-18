@@ -20,24 +20,24 @@ describe(`Monomial`, function() {
     cin: $$.cinopt[] = [],
 
     x = $$.ExpLiteral.x,
-    x2 = new $$.ExpLiteral('x',undefined,2),
-    x3 = new $$.ExpLiteral('x',undefined,3),
+    x2 = new $$.ExpLiteral({char: 'x', exp: 2}),
+    x3 = new $$.ExpLiteral({char: 'x', exp: 3}),
     y = $$.ExpLiteral.y,
-    x_1 = new $$.ExpLiteral('x',1),
-    x_2 = new $$.ExpLiteral('x',2),
-    x_3 = new $$.ExpLiteral('x',3,5),
+    x_1 = new $$.ExpLiteral({char: 'x', index: 1}),
+    x_2 = new $$.ExpLiteral({char: 'x', index: 2}),
+    x_3 = new $$.ExpLiteral({char: 'x', index: 3, exp: 5}),
     
-    z2 = new $$.Complex(new $$.ExpRational(2)),
-    zm3 = new $$.Complex(new $$.ExpRational(-3)),
-    z23 = new $$.Complex(new $$.ExpRational(2,3)),
+    z2  = new $$.Complex({a: new $$.ExpRational({n: 2}) }),
+    zm3 = new $$.Complex({a: new $$.ExpRational({n: -3}) }),
+    z23 = new $$.Complex({a: new $$.ExpRational({n: 2, d: 3}) }),
 
-    mono1 = new $$.Monomial(z2),                //? 2
-    mono2 = new $$.Monomial(zm3),               //? -3
-    mono3 = new $$.Monomial(z23),               //? 2/3
-    mono4 = new $$.Monomial(z2,x,y),            //? 2⋅x⋅y
-    mono5 = new $$.Monomial(zm3,x,x3,x2),       //? -3⋅x^3⋅x^2⋅x
-    mono6 = new $$.Monomial(z23,x_1,x_2),       //? 2/3⋅x_1⋅x_2
-    mono7 = new $$.Monomial(z23,x_1,x_2,x_3),   //? 2/3⋅x_1⋅x_2⋅x_3^5
+    mono1 = new $$.Monomial({z: z2}),                           //? 2
+    mono2 = new $$.Monomial({z: zm3}),                          //? -3
+    mono3 = new $$.Monomial({z: z23}),                          //? 2/3
+    mono4 = new $$.Monomial({z: z2, literals: [x,y]}),          //? 2⋅x⋅y
+    mono5 = new $$.Monomial({z: zm3, literals: [x,x3,x2]}),     //? -3⋅x^3⋅x^2⋅x
+    mono6 = new $$.Monomial({z: z23, literals: [x_1,x_2]}),     //? 2/3⋅x_1⋅x_2
+    mono7 = new $$.Monomial({z: z23, literals: [x_1,x_2,x_3]}), //? 2/3⋅x_1⋅x_2⋅x_3^5
     
     zero = $$.Monomial.zero,
     one = $$.Monomial.one,

@@ -16,32 +16,32 @@ should();
 describe(`Real`, function() {
  
   let
-    e1    = new $$.Real(new $$.ExpRational(1,2,undefined,2)),
-    e2    = new $$.Real(new $$.ExpRational(-1,2,undefined,2)),
-    e3    = new $$.Real(new $$.ExpRational(3,2,undefined,2)),
-    e4    = new $$.Real(new $$.ExpRational(-3,2,undefined,3)),
-    e5    = new $$.Real(new $$.ExpRational(2,3,undefined,0)),
-    e6    = new $$.Real(new $$.ExpRational(-2,3,undefined,0)),
+    e1    = new $$.Real({a: new $$.ExpRational({n:  1, d: 2, exp: 2}) }),
+    e2    = new $$.Real({a: new $$.ExpRational({n: -1, d: 2, exp: 2}) }),
+    e3    = new $$.Real({a: new $$.ExpRational({n:  3, d: 2, exp: 2}) }),
+    e4    = new $$.Real({a: new $$.ExpRational({n: -3, d: 2, exp: 3}) }),
+    e5    = new $$.Real({a: new $$.ExpRational({n:  2, d: 3, exp: 0}) }),
+    e6    = new $$.Real({a: new $$.ExpRational({n: -2, d: 3, exp: 0}) }),
     // e7    = new $$.Real(new $$.ExpRational(4,1,undefined,2.5)), // TODO
     // e8    = new $$.Real(new $$.ExpRational(4,1,undefined,-2.5)), // TODO
 
-    exp1  = new $$.Rational(5,2),
-    exp2  = new $$.Rational(-5,2),
-    exp3  = new $$.Rational(2),
+    exp1  = new $$.Rational({n: 5, d: 2}),
+    exp2  = new $$.Rational({n: -5, d: 2}),
+    exp3  = new $$.Rational({n: 2}),
 
-    ee1   = new $$.Real(new $$.ExpRational(4,1,undefined,exp1)),
-    ee2   = new $$.Real(new $$.ExpRational(4,1,undefined,exp2)),
-    ee3   = new $$.Real(new $$.ExpRational(4,1,undefined,exp3)),
+    ee1   = new $$.Real({a: new $$.ExpRational({n: 4, d: 1, exp: exp1}) }),
+    ee2   = new $$.Real({a: new $$.ExpRational({n: 4, d: 1, exp: exp2}) }),
+    ee3   = new $$.Real({a: new $$.ExpRational({n: 4, d: 1, exp: exp3}) }),
 
-    r1    = new $$.Real(new $$.ExpRational(1,2)),
-    r2    = new $$.Real(new $$.ExpRational(2,1)),
-    r3    = new $$.Real(new $$.ExpRational(-1,2)),
-    r4    = new $$.Real(new $$.ExpRational(-1,-2)),
-    r5    = new $$.Real(new $$.ExpRational(-3,-2)),
-    r6    = new $$.Real(new $$.ExpRational(0,2)),
-    r7    = new $$.Real(new $$.ExpRational(2,0)),
-    r8    = new $$.Real(new $$.ExpRational(Infinity,-5)),
-    r9    = new $$.Real(new $$.ExpRational(5,Infinity)),
+    r1    = new $$.Real({a: new $$.ExpRational({n:  1, d:  2}) }),
+    r2    = new $$.Real({a: new $$.ExpRational({n:  2, d:  1}) }),
+    r3    = new $$.Real({a: new $$.ExpRational({n: -1, d:  2}) }),
+    r4    = new $$.Real({a: new $$.ExpRational({n: -1, d: -2}) }),
+    r5    = new $$.Real({a: new $$.ExpRational({n: -3, d: -2}) }),
+    r6    = new $$.Real({a: new $$.ExpRational({n:  0, d:  2}) }),
+    r7    = new $$.Real({a: new $$.ExpRational({n:  2, d:  0}) }),
+    r8    = new $$.Real({a: new $$.ExpRational({n: Infinity, d: -5}) }),
+    r9    = new $$.Real({a: new $$.ExpRational({n: 5, d: Infinity}) }),
     
     zero = $$.Real.zero,
     one = $$.Real.one,

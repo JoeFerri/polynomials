@@ -16,36 +16,36 @@ should();
 describe(`ExpRational`, function() {
 
   let
-    e1 = new $$.ExpRational(1,2,undefined,2),
-    e2 = new $$.ExpRational(-1,2,undefined,2),
-    e3 = new $$.ExpRational(3,2,undefined,2),
-    e4 = new $$.ExpRational(-3,2,undefined,3),
-    e5 = new $$.ExpRational(2,3,undefined,0),
-    e6 = new $$.ExpRational(-2,3,undefined,0),
+    e1 = new $$.ExpRational({n:  1, d: 2, exp: 2}),
+    e2 = new $$.ExpRational({n: -1, d: 2, exp: 2}),
+    e3 = new $$.ExpRational({n:  3, d: 2, exp: 2}),
+    e4 = new $$.ExpRational({n: -3, d: 2, exp: 3}),
+    e5 = new $$.ExpRational({n:  2, d: 3, exp: 0}),
+    e6 = new $$.ExpRational({n: -2, d: 3, exp: 0}),
     // e7 = new $$.ExpRational(4,1,undefined,2.5), // TODO
     // e8 = new $$.ExpRational(4,1,undefined,-2.5), // TODO
-    e9 = new $$.ExpRational(1,2,undefined,-2),
+    e9 = new $$.ExpRational({n: 1, d: 2, exp: -2}),
 
-    exp1 = new $$.Rational(5,2),
-    exp2 = new $$.Rational(-5,2),
-    exp3 = new $$.Rational(2),
+    exp1 = new $$.Rational({n: 5, d: 2}),
+    exp2 = new $$.Rational({n: -5, d: 2}),
+    exp3 = new $$.Rational({n: 2}),
 
-    exp4 = new $$.Rational(0,-2),
-    e0 = new $$.ExpRational(1,2,undefined,exp4),
+    exp4 = new $$.Rational({n: 0, d: -2}),
+    e0  = new $$.ExpRational({n: 1, d: 2, exp: exp4}),
 
-    ee1 = new $$.ExpRational(4,1,undefined,exp1),
-    ee2 = new $$.ExpRational(4,1,undefined,exp2),
-    ee3 = new $$.ExpRational(4,1,undefined,exp3),
+    ee1 = new $$.ExpRational({n: 4, d: 1, exp: exp1}),
+    ee2 = new $$.ExpRational({n: 4, d: 1, exp: exp2}),
+    ee3 = new $$.ExpRational({n: 4, d: 1, exp: exp3}),
 
-    r1 = new $$.ExpRational(1,2),
-    r2 = new $$.ExpRational(2,1),
-    r3 = new $$.ExpRational(-1,2),
-    r4 = new $$.ExpRational(-1,-2),
-    r5 = new $$.ExpRational(-3,-2),
-    r6 = new $$.ExpRational(0,2),
-    r7 = new $$.ExpRational(2,0),
-    r8 = new $$.ExpRational(Infinity,-5),
-    r9 = new $$.ExpRational(5,Infinity),
+    r1 = new $$.ExpRational({n:  1, d:  2}),
+    r2 = new $$.ExpRational({n:  2, d:  1}),
+    r3 = new $$.ExpRational({n: -1, d:  2}),
+    r4 = new $$.ExpRational({n: -1, d: -2}),
+    r5 = new $$.ExpRational({n: -3, d: -2}),
+    r6 = new $$.ExpRational({n:  0, d:  2}),
+    r7 = new $$.ExpRational({n:  2, d:  0}),
+    r8 = new $$.ExpRational({n: Infinity, d: -5}),
+    r9 = new $$.ExpRational({n: 5, d: Infinity}),
     
     zero = $$.ExpRational.zero,
     one = $$.ExpRational.one,
@@ -56,11 +56,11 @@ describe(`ExpRational`, function() {
 
     
   it(`#constructor()`, function() {
-    expect(() => new $$.ExpRational(0,0)).to.throw();
-    expect(() => new $$.ExpRational(Infinity,Infinity)).to.throw();
-    expect(() => new $$.ExpRational(-Infinity,-Infinity)).to.throw();
-    expect(() => new $$.ExpRational(-Infinity,Infinity)).to.throw();
-    expect(() => new $$.ExpRational(Infinity,-Infinity)).to.throw();
+    expect(() => new $$.ExpRational({n: 0, d: 0})).to.throw();
+    expect(() => new $$.ExpRational({n:  Infinity, d:  Infinity})).to.throw();
+    expect(() => new $$.ExpRational({n: -Infinity, d: -Infinity})).to.throw();
+    expect(() => new $$.ExpRational({n: -Infinity, d:  Infinity})).to.throw();
+    expect(() => new $$.ExpRational({n:  Infinity, d: -Infinity})).to.throw();
   });
 
   it(`#value()`, function() {

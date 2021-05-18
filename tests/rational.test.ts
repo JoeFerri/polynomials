@@ -16,26 +16,25 @@ should();
 describe(`Rational`, function() {
 
   let
-    m1 = new $$.Rational(1,2),
-    m2 = new $$.Rational(2,4),
-    m3 = new $$.Rational(-2,-4),
-    m4 = new $$.Rational(2,3),
-    m5 = new $$.Rational(4,6),
-    m6 = new $$.Rational(-4,-6),
-    m7 = new $$.Rational(20,30),
+    m1 = new $$.Rational({n:  1, d:  2}),
+    m2 = new $$.Rational({n:  2, d:  4}),
+    m3 = new $$.Rational({n: -2, d: -4}),
+    m4 = new $$.Rational({n:  2, d:  3}),
+    m5 = new $$.Rational({n:  4, d:  6}),
+    m6 = new $$.Rational({n: -4, d: -6}),
+    m7 = new $$.Rational({n: 20, d: 30}),
+    r1 = new $$.Rational({n:  1, d:  2}),
+    r2 = new $$.Rational({n:  2, d:  1}),
+    r3 = new $$.Rational({n: -1, d:  2}),
+    r4 = new $$.Rational({n: -1, d: -2}),
+    r5 = new $$.Rational({n: -3, d: -2}),
+    r6 = new $$.Rational({n:  0, d:  2}),
+    r7 = new $$.Rational({n:  2, d:  0}),
+    r8 = new $$.Rational({n: Infinity, d: -5}),
+    r9 = new $$.Rational({n: 5, d: Infinity}),
 
-    r1 = new $$.Rational(1,2),
-    r2 = new $$.Rational(2,1),
-    r3 = new $$.Rational(-1,2),
-    r4 = new $$.Rational(-1,-2),
-    r5 = new $$.Rational(-3,-2),
-    r6 = new $$.Rational(0,2),
-    r7 = new $$.Rational(2,0),
-    r8 = new $$.Rational(Infinity,-5),
-    r9 = new $$.Rational(5,Infinity),
-
-    z1 = new $$.Rational(0,-2),
-    z2 = new $$.Rational(-2,Infinity),
+    z1 = new $$.Rational({n: 0, d: -2}),
+    z2 = new $$.Rational({n: -2, d: Infinity}),
     
     zero = $$.Rational.zero,
     one = $$.Rational.one,
@@ -44,11 +43,11 @@ describe(`Rational`, function() {
     minfinity = $$.Rational.minfinity;
 
   it(`#constructor()`, function() {
-    expect(() => new $$.Rational(0,0)).to.throw();
-    expect(() => new $$.Rational(Infinity,Infinity)).to.throw();
-    expect(() => new $$.Rational(-Infinity,-Infinity)).to.throw();
-    expect(() => new $$.Rational(-Infinity,Infinity)).to.throw();
-    expect(() => new $$.Rational(Infinity,-Infinity)).to.throw();
+    expect(() => new $$.Rational({n: 0, d: 0})).to.throw();
+    expect(() => new $$.Rational({n:  Infinity, d:  Infinity})).to.throw();
+    expect(() => new $$.Rational({n: -Infinity, d: -Infinity})).to.throw();
+    expect(() => new $$.Rational({n: -Infinity, d:  Infinity})).to.throw();
+    expect(() => new $$.Rational({n:  Infinity, d: -Infinity})).to.throw();
   });
 
   it(`#value()`, function() {

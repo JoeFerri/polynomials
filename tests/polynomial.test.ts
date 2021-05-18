@@ -19,17 +19,41 @@ describe(`Polynomial`, function() {
     cns: $$.charindexnum[] = [],
     cin: $$.cinopt[] = [],
 
-    p1 = new $$.Polynomial($$.Monomial.z,$$.Monomial.x2,$$.Monomial.x3,$$.Monomial.x,$$.Monomial.y),
-    p2 = new $$.Polynomial($$.Monomial.x2,new $$.Monomial(new $$.Complex(new $$.ExpRational(-5)),new $$.ExpLiteral('x',undefined,3)),$$.Monomial.x,$$.Monomial.z,$$.Monomial.y),
-    p3 = new $$.Polynomial(
-      $$.Monomial.x2,
-      new $$.Monomial(new $$.Complex(new $$.ExpRational(-5)),new $$.ExpLiteral('x',undefined,3),$$.ExpLiteral.y,$$.ExpLiteral.z,$$.ExpLiteral.x),
-      $$.Monomial.x,
-      $$.Monomial.z,
-      $$.Monomial.y
+    p1 = new $$.Polynomial({monomials: [$$.Monomial.z,$$.Monomial.x2,$$.Monomial.x3,$$.Monomial.x,$$.Monomial.y]}),
+
+    p2 = new $$.Polynomial(
+      {
+        monomials: [
+          $$.Monomial.x2,
+          new $$.Monomial(
+            {
+              z: new $$.Complex({a: new $$.ExpRational({n: -5})}),
+              literals: [new $$.ExpLiteral({char: 'x', exp: 3})]
+            }),
+          $$.Monomial.x,
+          $$.Monomial.z,
+          $$.Monomial.y
+        ]
+      }
     ),
-    p4 = new $$.Polynomial($$.Monomial.x),
-    p5 = new $$.Polynomial(new $$.Monomial($$.Complex.mone,$$.ExpLiteral.x)),
+
+    p3 = new $$.Polynomial(
+      {
+        monomials: [
+          $$.Monomial.x2,
+          new $$.Monomial({
+            z: new $$.Complex({a: new $$.ExpRational({n: -5}) }),
+            literals: [new $$.ExpLiteral({char: 'x', exp: 3}),$$.ExpLiteral.y,$$.ExpLiteral.z,$$.ExpLiteral.x]
+            }),
+          $$.Monomial.x,
+          $$.Monomial.z,
+          $$.Monomial.y
+        ]
+      }
+    ),
+
+    p4 = new $$.Polynomial({monomials: [$$.Monomial.x]}),
+    p5 = new $$.Polynomial({monomials: [new $$.Monomial({z: $$.Complex.mone, literals: [$$.ExpLiteral.x]})]}),
     
     zero = $$.Polynomial.zero,
     // mzero = $$.Polynomial.mzero,
