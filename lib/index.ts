@@ -14,12 +14,14 @@
  export * from "./expliteral";
  export * from "./exprational";
  export * from "./factorial";
+ export * from "./imaginarypart";
  export * from "./literal";
  export * from "./math";
  export * from "./monomial";
  export * from "./polynomial";
  export * from "./rational";
  export * from "./real";
+ export * from "./realpart";
  export * from "./sign";
  export * from "./type";
  export * from "./utils";

@@ -27,7 +27,7 @@ describe(`Polynomial`, function() {
           $$.Monomial.x2,
           new $$.Monomial(
             {
-              z: new $$.Complex({a: new $$.ExpRational({n: -5})}),
+              z: new $$.Complex({a: new $$.RealPart({n: -5})}),
               literals: [new $$.ExpLiteral({char: 'x', exp: 3})]
             }),
           $$.Monomial.x,
@@ -42,7 +42,7 @@ describe(`Polynomial`, function() {
         monomials: [
           $$.Monomial.x2,
           new $$.Monomial({
-            z: new $$.Complex({a: new $$.ExpRational({n: -5}) }),
+            z: new $$.Complex({a: new $$.RealPart({n: -5}) }),
             literals: [new $$.ExpLiteral({char: 'x', exp: 3}),$$.ExpLiteral.y,$$.ExpLiteral.z,$$.ExpLiteral.x]
             }),
           $$.Monomial.x,

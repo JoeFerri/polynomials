@@ -6,22 +6,23 @@
  */
 
 import { Sign } from "./sign";
-import { ExpRational } from "./exprational";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
 import { UndEvaluable } from "./math";
+import { RealPart } from "./realpart";
+import { ImaginaryPart } from "./imaginarypart";
 
 
 
 export class Complex implements Comparable<Complex>, UndEvaluable {
 
-  readonly a: ExpRational;
-  readonly b: ExpRational;
+  readonly a: RealPart;
+  readonly b: ImaginaryPart;
 
 
-  constructor(opt: {a: ExpRational, b?: ExpRational}) {
+  constructor(opt: {a: RealPart, b?: ImaginaryPart}) {
     this.a = opt.a;
-    this.b = opt.b != undefined ? opt.b : ExpRational.zero;
+    this.b = opt.b != undefined ? opt.b : ImaginaryPart.zero;
   }
 
 
@@ -92,50 +93,23 @@ export class Complex implements Comparable<Complex>, UndEvaluable {
     if (vb != 0) {
       if (va != 0 || (va == 0 && vb == -1))
         s += (va != 0 ? ' ' : '') + Sign.byN(vb).sign;
-      if (Math.abs(vb) != 1)
-        s += sb;
-      s += Complex.iChar;
+      // if (Math.abs(vb) != 1)
+      //   s += sb;
+      // s += ImaginaryPart.iChar;
+      s += sb;
     }
 
     return s;
   }
 
 
-  // ℂ    DOUBLE-STRUCK CAPITAL C' (U+2102)
-  private static readonly iList = [
-    'i',
-    '𝑖', // MATHEMATICAL ITALIC SMALL I' (U+1D456)
-    '𝒾', // MATHEMATICAL SCRIPT SMALL I' (U+1D4BE)
-    '𝓲', // MATHEMATICAL BOLD SCRIPT SMALL I' (U+1D4F2)
-    'ⅈ'  // DOUBLE-STRUCK ITALIC SMALL I' (U+2148)
-  ];
-
-
-  static get iChar() : string {
-    return Complex.iList[Complex.iCode];
-  }
-
-
-  private static _iCode: 0|1|2|3|4 = 1;
-  
-
-  static get iCode(): 0|1|2|3|4 {
-    return Complex._iCode;
-  }
-
-
-  static set iCode(id: 0|1|2|3|4) {
-    Complex._iCode = id;
-  }
-
-
-  static readonly zero = new Complex({a: ExpRational.zero});
+  static readonly zero = new Complex({a: RealPart.zero});
   // static readonly mzero = new Complex(ExpRational.mzero);
-  static readonly one = new Complex({a: ExpRational.one});
-  static readonly mone = new Complex({a: ExpRational.mone});
-  static readonly infinity = new Complex({a: ExpRational.infinity});
-  static readonly minfinity = new Complex({a: ExpRational.minfinity});
+  static readonly one = new Complex({a: RealPart.one});
+  static readonly mone = new Complex({a: RealPart.mone});
+  static readonly infinity = new Complex({a: RealPart.infinity});
+  static readonly minfinity = new Complex({a: RealPart.minfinity});
   
-  static readonly i = new Complex({a: ExpRational.zero, b: ExpRational.one});
-  static readonly mi = new Complex({a: ExpRational.zero, b: ExpRational.mone});
+  static readonly i = new Complex({a: RealPart.zero, b: ImaginaryPart.one});
+  static readonly mi = new Complex({a: RealPart.zero, b: ImaginaryPart.mone});
 }

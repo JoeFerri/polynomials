@@ -5,7 +5,7 @@
  * Copyright (c) 2021, Giuseppe Ferri (joeferri83prog@libero.it)
  */
 
- import { Complex } from ".";
+ import { Complex } from "./complex";
  import { ExpRational } from "./exprational";
  
  

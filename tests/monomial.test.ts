@@ -27,9 +27,9 @@ describe(`Monomial`, function() {
     x_2 = new $$.ExpLiteral({char: 'x', index: 2}),
     x_3 = new $$.ExpLiteral({char: 'x', index: 3, exp: 5}),
     
-    z2  = new $$.Complex({a: new $$.ExpRational({n: 2}) }),
-    zm3 = new $$.Complex({a: new $$.ExpRational({n: -3}) }),
-    z23 = new $$.Complex({a: new $$.ExpRational({n: 2, d: 3}) }),
+    z2  = new $$.Complex({a: new $$.RealPart({n: 2}) }),
+    zm3 = new $$.Complex({a: new $$.RealPart({n: -3}) }),
+    z23 = new $$.Complex({a: new $$.RealPart({n: 2, d: 3}) }),
 
     mono1 = new $$.Monomial({z: z2}),                           //? 2
     mono2 = new $$.Monomial({z: zm3}),                          //? -3
