@@ -12,6 +12,9 @@ import { Comparable } from "./utils";
 
 
 
+export type RationalOpt = {n: number, d?: number, s?: Sign, simplify?: boolean};
+
+
 export class Rational implements Comparable<Rational> {
 
   readonly n: number;
@@ -19,8 +22,7 @@ export class Rational implements Comparable<Rational> {
   readonly s: Sign;
 
 
-  // constructor(n: number, d: number = 1, s?: Sign, simplify: boolean = true) {
-  constructor(opt: {n: number, d?: number, s?: Sign, simplify?: boolean}) {
+  constructor(opt: RationalOpt) {
     let
       simplify = opt.simplify != undefined ? opt.simplify : true,
       n = opt.n,
@@ -70,6 +72,25 @@ export class Rational implements Comparable<Rational> {
 
   compare(r: Rational) : number {
     return this.value() - r.value();
+  }
+
+
+  static readonly expStrict: RegExp = /^(?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?$/;
+
+  static readonly exp: RegExp = /(?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?/;
+
+
+  static parse(str: string) : Rational {
+    let opt = str.match(Rational.expStrict);
+    if (opt == null || opt.groups == undefined)
+      throw new UndefinedError();
+    else {
+      let
+        s = opt[1] == Sign.minus.sign ? Sign.minus : Sign.plus,
+        n = Number(opt[2]),
+        d = opt[3] != undefined ? Number(opt[3]) : 1;
+      return new Rational({n:n, d:d, s:s});
+    }
   }
 
 
