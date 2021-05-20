@@ -113,6 +113,87 @@ export class ExpRational extends Rational implements Comparable<ExpRational> {
   compare(r: ExpRational) : number {
     return this.value() - r.value();
   }
+  
+
+  static readonly expsStrict: RegExp[] = [
+    /^\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)$/, //? (-23/87)^(-66/78)
+    /^\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^(?<n_exp>\d+)$/,                                        //? (-23/87)^66
+    /^(?<s>[+-]?)(?<n>\d+)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)$/,                     //? -23^(-66/78)
+    /^(?<s>[+-]?)(?<n>\d+)\^(?<n_exp>\d+)$/                                                             //? -23^66
+  ];
+
+  static readonly exps: RegExp[] = [
+    /\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)/,
+    /\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^(?<n_exp>\d+)/,
+    /(?<s>[+-]?)(?<n>\d+)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)/,
+    /(?<s>[+-]?)(?<n>\d+)\^(?<n_exp>\d+)/
+  ];
+
+
+
+  static parse(str: string) : ExpRational {
+    let
+      opt: RegExpMatchArray|null,
+      obj: ExpRational|null = null;
+    
+    // -23/87
+    if ((opt = str.match(Rational.expStrict)) != null) {
+      let
+        s = opt[1] == Sign.minus.sign ? Sign.minus : Sign.plus,
+        n = Number(opt[2]),
+        d = opt[3] != undefined ? Number(opt[3]) : 1;
+      obj = new ExpRational({n: n, d: d, s: s});
+    }
+    
+    // (-23/87)^(-66/78)
+    if ((opt = str.match(ExpRational.expsStrict[0])) != null) {
+      let
+        s = opt[1] == Sign.minus.sign ? Sign.minus : Sign.plus,
+        n = Number(opt[2]),
+        d = opt[3] != undefined ? Number(opt[3]) : 1,
+        s_exp = opt[4] == Sign.minus.sign ? Sign.minus : Sign.plus,
+        n_exp = Number(opt[5]),
+        d_exp = opt[6] != undefined ? Number(opt[6]) : 1,
+        exp = new Rational({n: n_exp, d: d_exp, s: s_exp});
+      obj = new ExpRational({n: n, d: d, s: s, exp: exp});
+    }
+    
+    // (-23/87)^66
+    if ((opt = str.match(ExpRational.expsStrict[1])) != null) {
+      let
+        s = opt[1] == Sign.minus.sign ? Sign.minus : Sign.plus,
+        n = Number(opt[2]),
+        d = opt[3] != undefined ? Number(opt[3]) : 1,
+        n_exp = Number(opt[4]);
+      obj = new ExpRational({n: n, d: d, s: s, exp: n_exp});
+    }
+    
+    // -23^(-66/78)
+    if ((opt = str.match(ExpRational.expsStrict[2])) != null) {
+      let
+        s = opt[1] == Sign.minus.sign ? Sign.minus : Sign.plus,
+        n = Number(opt[2]),
+        s_exp = opt[3] == Sign.minus.sign ? Sign.minus : Sign.plus,
+        n_exp = Number(opt[4]),
+        d_exp = opt[5] != undefined ? Number(opt[5]) : 1,
+        exp = new Rational({n: n_exp, d: d_exp, s: s_exp});
+      obj = new ExpRational({n: n, d: 1, s: s, exp: exp});
+    }
+    
+    // -23^66
+    if ((opt = str.match(ExpRational.expsStrict[3])) != null) {
+      let
+        s = opt[1] == Sign.minus.sign ? Sign.minus : Sign.plus,
+        n = Number(opt[2]),
+        n_exp = Number(opt[3]);
+      obj = new ExpRational({n: n, d: 1, s: s, exp: n_exp});
+    }
+    
+    if (obj == null)
+      throw new UndefinedError();
+    
+    return obj!;
+  }
 
 
   toString(with_sign: boolean = false) : string {

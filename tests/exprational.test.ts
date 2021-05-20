@@ -55,6 +55,26 @@ describe(`ExpRational`, function() {
 
 
     
+
+  it(`#parse()`, function() {
+    expect(() => $$.ExpRational.parse("")).to.throw();
+    expect(() => $$.ExpRational.parse(" 2")).to.throw();
+    expect(() => $$.ExpRational.parse("2 ")).to.throw();
+    expect(() => $$.ExpRational.parse("2/")).to.throw();
+    expect(() => $$.ExpRational.parse("2x")).to.throw();
+    expect(() => $$.ExpRational.parse("2/2x")).to.throw();
+    $$.ExpRational.parse("12/34").toString().should.to.be.equal("6/17");
+    $$.ExpRational.parse("2/33").toString().should.to.be.equal("2/33");
+    $$.ExpRational.parse("1").toString().should.to.be.equal("1");
+    $$.ExpRational.parse("-1").toString().should.to.be.equal("-1");
+    $$.ExpRational.parse("-12/17").toString().should.to.be.equal("-12/17");
+    
+    $$.ExpRational.parse("(-23/87)^(-66/78)").toString().should.to.be.equal("(-23/87)^(-11/13)");
+    $$.ExpRational.parse("(-23/87)^66").toString().should.to.be.equal("(-23/87)^66");
+    $$.ExpRational.parse("-23^(-66/78)").toString().should.to.be.equal("-23^(-11/13)");
+    $$.ExpRational.parse("-23^66").toString().should.to.be.equal("-23^66");
+  });
+
   it(`#constructor()`, function() {
     expect(() => new $$.ExpRational({n: 0, d: 0})).to.throw();
     expect(() => new $$.ExpRational({n:  Infinity, d:  Infinity})).to.throw();

@@ -82,7 +82,7 @@ export class Rational implements Comparable<Rational> {
 
   static parse(str: string) : Rational {
     let opt = str.match(Rational.expStrict);
-    if (opt == null || opt.groups == undefined)
+    if (opt == null)
       throw new UndefinedError();
     else {
       let
