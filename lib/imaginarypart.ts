@@ -31,15 +31,15 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
     return super.compare(r);
   }
   static readonly expsStrict: RegExp[] = [
-    /^\((?<s>[+-]?)(?<n>\d+)i(?:\/(?<d>\d+))?\)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)$/,  //? (-23i/87)^(-66/78)
-    /^\((?<s>[+-]?)(?<n>\d+)i(?:\/(?<d>\d+))?\)\^(?<n_exp>\d+)$/,                                         //? (-23i/87)^66
-    /^(?<s>[+-]?)(?<n>\d+)i\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)$/,                      //? -23i^(-66/78)
-    /^(?<s>[+-]?)(?<n>\d+)i\^(?<n_exp>\d+)$/,                                                             //? -23i^66
-    /^(?<s>[+-]?)(?<n>\d+)?i(?:\/(?<d>\d+))?$/,                                                           //? -23i  -23i/87 -i
-    /^\((?<s>[+-]?)(?<n>\d+)?i(?:\/(?<d>\d+))?\)$/                                                        //? (-23i)  (-23i/87) (-i)
+    /^\(\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)\)i$/,  //? ((-23/87)^(-66/78))i
+    /^\(\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^(?<n_exp>\d+)\)i$/,                                         //? ((-23/87)^66)i
+    /^\((?<s>[+-]?)(?<n>\d+)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)\)i$/,                      //? (-23^(-66/78))i
+    /^\((?<s>[+-]?)(?<n>\d+)\^(?<n_exp>\d+)\)i$/,                                                             //? (-23^66)i
+    /^(?<s>[+-]?)(?<n>\d+)?i(?:\/(?<d>\d+))?$/,                                                               //? -23i  -23i/87 -i
+    /^\((?<s>[+-]?)(?<n>\d+)?i(?:\/(?<d>\d+))?\)$/                                                            //? (-23i)  (-23i/87) (-i)
   ];
 
-  static readonly exps: RegExp[] = [
+  static readonly exps: RegExp[] = [ // TODO modificare
     /\((?<s>[+-]?)(?<n>\d+)i(?:\/(?<d>\d+))?\)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)/,
     /\((?<s>[+-]?)(?<n>\d+)i(?:\/(?<d>\d+))?\)\^(?<n_exp>\d+)/,
     /(?<s>[+-]?)(?<n>\d+)i\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)/,
@@ -55,7 +55,7 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
       opt: RegExpMatchArray|null,
       obj: ImaginaryPart|null = null;
     
-    // (-23i/87)^(-66/78)
+    // ((-23/87)^(-66/78))i
     if ((opt = str.match(ImaginaryPart.expsStrict[0])) != null) {
       let
         s = opt[1] == Sign.minus.sign ? Sign.minus : Sign.plus,
@@ -68,7 +68,7 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
       obj = new ImaginaryPart({n: n, d: d, s: s, exp: exp});
     }
     
-    // (-23i/87)^66
+    // ((-23/87)^66)i
     if ((opt = str.match(ImaginaryPart.expsStrict[1])) != null) {
       let
         s = opt[1] == Sign.minus.sign ? Sign.minus : Sign.plus,
@@ -78,7 +78,7 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
       obj = new ImaginaryPart({n: n, d: d, s: s, exp: n_exp});
     }
     
-    // -23i^(-66/78)
+    // (-23^(-66/78))i
     if ((opt = str.match(ImaginaryPart.expsStrict[2])) != null) {
       let
         s = opt[1] == Sign.minus.sign ? Sign.minus : Sign.plus,
@@ -90,7 +90,7 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
       obj = new ImaginaryPart({n: n, d: 1, s: s, exp: exp});
     }
     
-    // -23i^66
+    // (-23^66)i
     if ((opt = str.match(ImaginaryPart.expsStrict[3])) != null) {
       let
         s = opt[1] == Sign.minus.sign ? Sign.minus : Sign.plus,
@@ -122,10 +122,12 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
 
     //! Rational
     let
+      hasExp = !this.exp.equals(Rational.one),
       ss = with_sign ? this.s.sign : this.s.signpm(),
       sn = this.n,
       sd = this.d != 1 ? ('/' + this.d) : '',
-      s = (ss + (sn != 1 ? sn : '') + i + sd).toLowerCase();
+      // s = (ss + (sn != 1 ? sn : '') + i + sd);
+      s = (ss + (sn != 1 || hasExp ? sn : '') + (!hasExp ? i : '') + sd);
 
     //!
     if (this.n == Infinity)
@@ -135,7 +137,7 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
       return ss + i;
 
     //! ExpRational
-    if (!this.exp.equals(Rational.one)) {
+    if (hasExp) {
       if (this.d != 1)
         s = '(' + s + ')';
       let e = this.exp.toString();
@@ -143,6 +145,9 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
         e = '(' + e + ')';
       s = `${s}^${e}`;
     }
+
+    if (hasExp)
+      s = '(' + s + ')' + i;
 
     return s;
   }

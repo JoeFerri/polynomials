@@ -89,9 +89,14 @@ export class ExpRational extends Rational implements Comparable<ExpRational> {
       (exp instanceof Rational ? exp : new Rational({n: exp})) : Rational.one;
   }
 
-
+/**
+ * (-2)^(-2/3) = ((-2)^(-2))^(1/3) = cbrt(1/4)
+ */
   value() : number {
-    return super.value() ** this.exp.value();
+    let
+      exp = this.exp.s.value * this.exp.n,
+      root = this.exp.d;
+    return Math.nthRoot( super.value() ** exp, root);
   }
 
 

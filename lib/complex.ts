@@ -84,7 +84,8 @@ export class Complex implements Comparable<Complex>, UndEvaluable {
       sb: string = this.b.toString(va != 0 && vb < 0),
       s: string = '';
 
-    if (va != 0 && vb < 0 && sb[0] != '(')
+    // if (va != 0 && vb < 0 && sb[0] != '(')
+    if (va != 0 && sb[0] == '-')
       sb = '(' + sb + ')';
 
     if (va == 0 && vb == 0)

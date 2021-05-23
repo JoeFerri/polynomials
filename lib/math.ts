@@ -10,6 +10,22 @@ import { undnumber } from "./type";
 
 
 
+declare global {
+
+  interface Math  {
+    /**
+     * Calculate the nth root of a value.
+     */
+     nthRoot: (n: number, root: number) => number;
+  }
+
+}
+
+Math.nthRoot = function (n: number, root: number) : number {
+  return Math.pow(n,1/root);
+}
+
+
 /**
  * Euclid's algorithm
  * 

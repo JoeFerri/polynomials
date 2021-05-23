@@ -15,6 +15,8 @@ should();
 
 describe(`ImaginaryPart`, function() {
 
+  $$.ImaginaryPart.iCode = 0; // set character 'i'
+
   let
     zero = $$.ImaginaryPart.zero,
     one = $$.ImaginaryPart.one,
@@ -39,10 +41,10 @@ describe(`ImaginaryPart`, function() {
     $$.ImaginaryPart.parse("-1i").toString().should.to.be.equal("-i");
     $$.ImaginaryPart.parse("-12i/17").toString().should.to.be.equal("-12i/17");
     
-    $$.ImaginaryPart.parse("(-23i/87)^(-66/78)").toString().should.to.be.equal("(-23i/87)^(-11/13)");
-    $$.ImaginaryPart.parse("(-23i/87)^66").toString().should.to.be.equal("(-23i/87)^66");
-    $$.ImaginaryPart.parse("-23i^(-66/78)").toString().should.to.be.equal("-23i^(-11/13)");
-    $$.ImaginaryPart.parse("-23i^66").toString().should.to.be.equal("-23i^66");
+    $$.ImaginaryPart.parse("((-23/87)^(-66/78))i").toString().should.to.be.equal("((-23/87)^(-11/13))i");
+    $$.ImaginaryPart.parse("((-23/87)^66)i").toString().should.to.be.equal("((-23/87)^66)i");
+    $$.ImaginaryPart.parse("(-23^(-66/78))i").toString().should.to.be.equal("(-23^(-11/13))i");
+    $$.ImaginaryPart.parse("(-23^66)i").toString().should.to.be.equal("(-23^66)i");
     $$.ImaginaryPart.parse("-23i").toString().should.to.be.equal("-23i");
     $$.ImaginaryPart.parse("-23i/87").toString().should.to.be.equal("-23i/87");
     $$.ImaginaryPart.parse("-i").toString().should.to.be.equal("-i");

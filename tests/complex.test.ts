@@ -184,19 +184,21 @@ describe(`Complex`, function() {
       
       c1.toString().should.to.be.equal("1/2 + i/2");
       c2.toString().should.to.be.equal("(1/2)^3 + i/2");
-      c3.toString().should.to.be.equal("(1/2)^3 + (i/2)^5");
+      c3.toString().should.to.be.equal("(1/2)^3 + ((1/2)^5)i");
       cm2a.toString().should.to.be.equal("(1/2)^3 + (-i/2)");
-      cm3a.toString().should.to.be.equal("(1/2)^3 + (-i/2)^5");
+      cm3a.toString().should.to.be.equal("(1/2)^3 + ((-1/2)^5)i");
       cm2b.toString().should.to.be.equal("(1/2)^3 + (-3i/2)");
-      cm3b.toString().should.to.be.equal("(1/2)^3 + (-3i/2)^5");
+      cm3b.toString().should.to.be.equal("(1/2)^3 + ((-3/2)^5)i");
       c4.toString().should.to.be.equal("2i");
       c5.toString().should.to.be.equal("-2i");
       c6.toString().should.to.be.equal("-2i");
       c7.toString().should.to.be.equal("5 + i");
       c8.toString().should.to.be.equal("5 + (-i)");
+
+      let z = new $$.Complex({a: $$.RealPart.parse("-23^(-66/78)"), b: $$.ImaginaryPart.parse("(-23^(-66/78))i")});
+      z.toString().should.to.be.equal("-23^(-11/13) + (-23^(-11/13))i");
     });
 
   });
-
 
 });
