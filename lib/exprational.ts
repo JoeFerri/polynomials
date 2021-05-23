@@ -216,7 +216,6 @@ export class ExpRational extends Rational implements Comparable<ExpRational> {
 
 
   static readonly zero = new ExpRational({n: 0});
-  // static readonly mzero = new ExpRational(0,-1);
   static readonly one = new ExpRational({n: 1});
   static readonly mone = new ExpRational({n: -1});
   static readonly infinity = new ExpRational({n: Infinity});

@@ -75,6 +75,32 @@ export class Complex implements Comparable<Complex>, UndEvaluable {
 
     return compAA != 0 ? compAA : compBB;
   }
+  
+
+  static parse(str: string) : Complex {
+    let
+      ab: string[] = str.split(/\s+\+\s+/),
+      a: RealPart|null = null,
+      b: ImaginaryPart|null = null;
+
+    if (ab.length == 2) {
+      a = RealPart.parse(ab[0]);
+      b = ImaginaryPart.parse(ab[1]);
+    }
+    else {
+      if (ab[0].includes('i')) {
+        a = RealPart.zero;
+        b = ImaginaryPart.parse(ab[0]);
+      }
+      else {
+        a = RealPart.parse(ab[0]);
+        b = ImaginaryPart.zero;
+      }
+    }
+
+    return new Complex({a: a!, b: b!});
+  }
+
 
   toString(with_sign: boolean = false) : string {
     let
@@ -84,7 +110,6 @@ export class Complex implements Comparable<Complex>, UndEvaluable {
       sb: string = this.b.toString(va != 0 && vb < 0),
       s: string = '';
 
-    // if (va != 0 && vb < 0 && sb[0] != '(')
     if (va != 0 && sb[0] == '-')
       sb = '(' + sb + ')';
 
@@ -102,7 +127,6 @@ export class Complex implements Comparable<Complex>, UndEvaluable {
 
 
   static readonly zero = new Complex({a: RealPart.zero});
-  // static readonly mzero = new Complex(ExpRational.mzero);
   static readonly one = new Complex({a: RealPart.one});
   static readonly mone = new Complex({a: RealPart.mone});
   static readonly infinity = new Complex({a: RealPart.infinity});

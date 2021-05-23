@@ -200,5 +200,45 @@ describe(`Complex`, function() {
     });
 
   });
+  
+  describe(`all`, function() {
+    it(`#parse()`, function() {
+      expect(() => $$.Complex.parse("")).to.throw();
+  
+      $$.Complex.parse("12i/34").toString().should.to.be.equal("6i/17");
+      $$.Complex.parse("2i/33").toString().should.to.be.equal("2i/33");
+      $$.Complex.parse("1i").toString().should.to.be.equal("i");
+      $$.Complex.parse("-1i").toString().should.to.be.equal("-i");
+      $$.Complex.parse("-12i/17").toString().should.to.be.equal("-12i/17");
+      
+      $$.Complex.parse("((-23/87)^(-66/78))i").toString().should.to.be.equal("((-23/87)^(-11/13))i");
+      $$.Complex.parse("((-23/87)^66)i").toString().should.to.be.equal("((-23/87)^66)i");
+      $$.Complex.parse("(-23^(-66/78))i").toString().should.to.be.equal("(-23^(-11/13))i");
+      $$.Complex.parse("(-23^66)i").toString().should.to.be.equal("(-23^66)i");
+      $$.Complex.parse("-23i").toString().should.to.be.equal("-23i");
+      $$.Complex.parse("-23i/87").toString().should.to.be.equal("-23i/87");
+      $$.Complex.parse("-i").toString().should.to.be.equal("-i");
+  
+      $$.Complex.parse("(-23i)").toString().should.to.be.equal("-23i");
+      $$.Complex.parse("(-23i/87)").toString().should.to.be.equal("-23i/87");
+      $$.Complex.parse("(-i)").toString().should.to.be.equal("-i");
+
+      // -------------
+      
+      $$.Complex.parse("12/34 + 12i/34").toString().should.to.be.equal("6/17 + 6i/17");
+      $$.Complex.parse("2/33 + 2i/33").toString().should.to.be.equal("2/33 + 2i/33");
+      $$.Complex.parse("1 + 1i").toString().should.to.be.equal("1 + i");
+      $$.Complex.parse("1 + (-1i)").toString().should.to.be.equal("1 + (-i)");
+      $$.Complex.parse("-12/17 + (-12i/17)").toString().should.to.be.equal("-12/17 + (-12i/17)");
+      
+      $$.Complex.parse("(-23/87)^(-66/78) + ((-23/87)^(-66/78))i").toString().should.to.be.equal("(-23/87)^(-11/13) + ((-23/87)^(-11/13))i");
+      $$.Complex.parse("(-23/87)^66 + ((-23/87)^66)i").toString().should.to.be.equal("(-23/87)^66 + ((-23/87)^66)i");
+      $$.Complex.parse("-23^(-66/78) + (-23^(-66/78))i").toString().should.to.be.equal("-23^(-11/13) + (-23^(-11/13))i");
+      $$.Complex.parse("-23^66 + (-23^66)i").toString().should.to.be.equal("-23^66 + (-23^66)i");
+      $$.Complex.parse("-23 + (-23i)").toString().should.to.be.equal("-23 + (-23i)");
+      $$.Complex.parse("-23/87 + (-23i/87)").toString().should.to.be.equal("-23/87 + (-23i/87)");
+      $$.Complex.parse("-1 + (-i)").toString().should.to.be.equal("-1 + (-i)");
+    });
+  });
 
 });

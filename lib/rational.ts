@@ -100,12 +100,11 @@ export class Rational implements Comparable<Rational> {
       sn = this.n,
       sd = this.d != 1 ? ('/' + this.d) : '';
       
-    return (ss + sn + sd);//.toLowerCase();
+    return (ss + sn + sd);
   }
 
 
   static readonly zero = new Rational({n: 0});
-  // static readonly mzero = new Rational(0,-1);
   static readonly one = new Rational({n: 1});
   static readonly mone = new Rational({n: -1});
   static readonly infinity = new Rational({n: Infinity});
