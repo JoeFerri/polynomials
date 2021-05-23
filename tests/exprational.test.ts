@@ -135,8 +135,8 @@ describe(`ExpRational`, function() {
     zero.toString().should.to.be.equal("0");
     one.toString().should.to.be.equal("1");
     mone.toString().should.to.be.equal("-1");
-    infinity.toString().should.to.be.equal("infinity");
-    minfinity.toString().should.to.be.equal("-infinity");
+    infinity.toString().should.to.be.equal("Infinity");
+    minfinity.toString().should.to.be.equal("-Infinity");
 
     e1.toString().should.to.be.equal("(1/2)^2");
     e2.toString().should.to.be.equal("(-1/2)^2");
@@ -158,8 +158,8 @@ describe(`ExpRational`, function() {
     r4.toString().should.to.be.equal("1/2");
     r5.toString().should.to.be.equal("3/2");
     r6.toString().should.to.be.equal("0");
-    r7.toString().should.to.be.equal("infinity");
-    r8.toString().should.to.be.equal("-infinity");
+    r7.toString().should.to.be.equal("Infinity");
+    r8.toString().should.to.be.equal("-Infinity");
     r9.toString().should.to.be.equal("0");
   });
 

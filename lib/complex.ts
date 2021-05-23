@@ -76,14 +76,16 @@ export class Complex implements Comparable<Complex>, UndEvaluable {
     return compAA != 0 ? compAA : compBB;
   }
 
-
   toString(with_sign: boolean = false) : string {
     let
       va: number = this.a.value(),
       vb: number = this.b.value(),
       sa: string = this.a.toString(with_sign),
-      sb: string = this.b.toString(),
+      sb: string = this.b.toString(va != 0 && vb < 0),
       s: string = '';
+
+    if (va != 0 && vb < 0 && sb[0] != '(')
+      sb = '(' + sb + ')';
 
     if (va == 0 && vb == 0)
       return sa;
@@ -91,12 +93,7 @@ export class Complex implements Comparable<Complex>, UndEvaluable {
     if (va != 0)
       s = sa;
     if (vb != 0) {
-      if (va != 0 || (va == 0 && vb == -1))
-        s += (va != 0 ? ' ' : '') + Sign.byN(vb).sign;
-      // if (Math.abs(vb) != 1)
-      //   s += sb;
-      // s += ImaginaryPart.iChar;
-      s += sb;
+      s += (va != 0 ? ' ' + Sign.plus.sign + ' ' : '') + sb;
     }
 
     return s;
@@ -112,4 +109,6 @@ export class Complex implements Comparable<Complex>, UndEvaluable {
   
   static readonly i = new Complex({a: RealPart.zero, b: ImaginaryPart.one});
   static readonly mi = new Complex({a: RealPart.zero, b: ImaginaryPart.mone});
+  static readonly cinfinity = new Complex({a: RealPart.zero, b: ImaginaryPart.infinity});
+  static readonly cminfinity = new Complex({a: RealPart.zero, b: ImaginaryPart.minfinity});
 }

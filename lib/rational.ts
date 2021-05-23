@@ -100,7 +100,7 @@ export class Rational implements Comparable<Rational> {
       sn = this.n,
       sd = this.d != 1 ? ('/' + this.d) : '';
       
-    return (ss + sn + sd).toLowerCase();
+    return (ss + sn + sd);//.toLowerCase();
   }
 
 

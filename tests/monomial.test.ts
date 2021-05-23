@@ -91,8 +91,8 @@ describe(`Monomial`, function() {
     zero.toString().should.to.be.equal("0");
     one.toString().should.to.be.equal("1");
     mone.toString().should.to.be.equal("-1");
-    infinity.toString().should.to.be.equal("infinity");
-    minfinity.toString().should.to.be.equal("-infinity");
+    infinity.toString().should.to.be.equal("Infinity");
+    minfinity.toString().should.to.be.equal("-Infinity");
 
     mono1.toString().should.to.be.equal("2");
     mono2.toString().should.to.be.equal("-3");

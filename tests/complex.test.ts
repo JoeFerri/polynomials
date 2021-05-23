@@ -17,6 +17,15 @@ describe(`Complex`, function() {
 
   $$.ImaginaryPart.iCode = 0; // set character 'i'
 
+  let
+    zero = $$.Complex.zero,
+    one = $$.Complex.one,
+    mone = $$.Complex.mone,
+    infinity = $$.Complex.infinity,
+    minfinity = $$.Complex.minfinity,
+    cinfinity = $$.Complex.cinfinity,
+    cminfinity = $$.Complex.cminfinity;
+
   describe(`like Real`, function() {
 
     let
@@ -45,14 +54,7 @@ describe(`Complex`, function() {
       r6    = new $$.Complex({a: new $$.RealPart({n:  0, d:  2}) }),
       r7    = new $$.Complex({a: new $$.RealPart({n:  2, d:  0}) }),
       r8    = new $$.Complex({a: new $$.RealPart({n: Infinity, d: -5}) }),
-      r9    = new $$.Complex({a: new $$.RealPart({n: 5, d: Infinity}) }),
-      
-      zero = $$.Complex.zero,
-      one = $$.Complex.one,
-      mone = $$.Complex.mone,
-      infinity = $$.Complex.infinity,
-      minfinity = $$.Complex.minfinity;
-
+      r9    = new $$.Complex({a: new $$.RealPart({n: 5, d: Infinity}) });
 
 
     it(`#value()`, function() {
@@ -61,6 +63,8 @@ describe(`Complex`, function() {
       (mone.value()      as number).should.to.be.equal(-1);
       (infinity.value()  as number).should.to.be.equal(Infinity);
       (minfinity.value() as number).should.to.be.equal(-Infinity);
+      (infinity.value()  as number).should.to.be.equal($$.ComplexInfinity);
+      (minfinity.value() as number).should.to.be.equal(-$$.ComplexInfinity);
 
       (e1.value() as number).should.to.be.equal(1/4);
       (e2.value() as number).should.to.be.equal(1/4);
@@ -107,8 +111,8 @@ describe(`Complex`, function() {
       zero.toString().should.to.be.equal("0");
       one.toString().should.to.be.equal("1");
       mone.toString().should.to.be.equal("-1");
-      infinity.toString().should.to.be.equal("infinity");
-      minfinity.toString().should.to.be.equal("-infinity");
+      infinity.toString().should.to.be.equal("Infinity");
+      minfinity.toString().should.to.be.equal("-Infinity");
 
       e1.toString().should.to.be.equal("(1/2)^2");
       e2.toString().should.to.be.equal("(-1/2)^2");
@@ -127,8 +131,8 @@ describe(`Complex`, function() {
       r4.toString().should.to.be.equal("1/2");
       r5.toString().should.to.be.equal("3/2");
       r6.toString().should.to.be.equal("0");
-      r7.toString().should.to.be.equal("infinity");
-      r8.toString().should.to.be.equal("-infinity");
+      r7.toString().should.to.be.equal("Infinity");
+      r8.toString().should.to.be.equal("-Infinity");
       r9.toString().should.to.be.equal("0");
     });
 
@@ -145,6 +149,11 @@ describe(`Complex`, function() {
       c6 = new $$.Complex({a: new $$.RealPart({n: 0, d: -1}),        b: new $$.ImaginaryPart({n: -2})              }),
       c7 = new $$.Complex({a: new $$.RealPart({n: 5}),               b: new $$.ImaginaryPart({n: 1})               }),
       c8 = new $$.Complex({a: new $$.RealPart({n: 5}),               b: new $$.ImaginaryPart({n: -1})              }),
+
+      cm2a = new $$.Complex({a: new $$.RealPart({n: 1, d: 2, exp: 3}), b: new $$.ImaginaryPart({n: -1, d: 2})         }),
+      cm3a = new $$.Complex({a: new $$.RealPart({n: 1, d: 2, exp: 3}), b: new $$.ImaginaryPart({n: -1, d: 2, exp: 5}) }),
+      cm2b = new $$.Complex({a: new $$.RealPart({n: 1, d: 2, exp: 3}), b: new $$.ImaginaryPart({n: -3, d: 2})         }),
+      cm3b = new $$.Complex({a: new $$.RealPart({n: 1, d: 2, exp: 3}), b: new $$.ImaginaryPart({n: -3, d: 2, exp: 5}) }),
 
       i = $$.Complex.i,
       mi = $$.Complex.mi;
@@ -169,15 +178,22 @@ describe(`Complex`, function() {
     it(`#toString()`, function() {
       i.toString().should.to.be.equal("i");
       mi.toString().should.to.be.equal("-i");
+
+      cinfinity.toString().should.to.be.equal("ComplexInfinity");
+      cminfinity.toString().should.to.be.equal("-ComplexInfinity");
       
-      c1.toString().should.to.be.equal("1/2 +1/2i");
-      c2.toString().should.to.be.equal("(1/2)^3 +1/2i");
-      c3.toString().should.to.be.equal("(1/2)^3 +(1/2)^5i");
+      c1.toString().should.to.be.equal("1/2 + i/2");
+      c2.toString().should.to.be.equal("(1/2)^3 + i/2");
+      c3.toString().should.to.be.equal("(1/2)^3 + (i/2)^5");
+      cm2a.toString().should.to.be.equal("(1/2)^3 + (-i/2)");
+      cm3a.toString().should.to.be.equal("(1/2)^3 + (-i/2)^5");
+      cm2b.toString().should.to.be.equal("(1/2)^3 + (-3i/2)");
+      cm3b.toString().should.to.be.equal("(1/2)^3 + (-3i/2)^5");
       c4.toString().should.to.be.equal("2i");
       c5.toString().should.to.be.equal("-2i");
       c6.toString().should.to.be.equal("-2i");
-      c7.toString().should.to.be.equal("5 +i");
-      c8.toString().should.to.be.equal("5 -i");
+      c7.toString().should.to.be.equal("5 + i");
+      c8.toString().should.to.be.equal("5 + (-i)");
     });
 
   });

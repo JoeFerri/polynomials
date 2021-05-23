@@ -29,6 +29,11 @@ export class RealPart extends ExpRational implements Comparable<RealPart> {
   }
   
 
+  static parse(str: string) : RealPart {
+    let er: ExpRational = ExpRational.parse(str);
+    return new RealPart({n: er.n, d: er.d, s: er.s, exp: er.exp});
+  }
+
 
   static readonly zero = new RealPart({n: 0});
   static readonly one = new RealPart({n: 1});

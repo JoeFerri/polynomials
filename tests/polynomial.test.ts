@@ -84,8 +84,8 @@ describe(`Polynomial`, function() {
     // mzero.toString().should.to.be.equal("-0");
     one.toString().should.to.be.equal("1");
     mone.toString().should.to.be.equal("-1");
-    infinity.toString().should.to.be.equal("infinity");
-    minfinity.toString().should.to.be.equal("-infinity");
+    infinity.toString().should.to.be.equal("Infinity");
+    minfinity.toString().should.to.be.equal("-Infinity");
 
     p1.toString().should.to.be.equal("x^3 +x^2 +x +y +z");
     p2.toString().should.to.be.equal("-5⋅x^3 +x^2 +x +y +z");
