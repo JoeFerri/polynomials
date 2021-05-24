@@ -7,6 +7,7 @@
 
 import { charindexnum, charindexnumOpts, cinopt } from "./char";
 import { Complex } from "./complex";
+import { InternalError, UndefinedError } from "./error";
 import { ExpLiteral } from "./expliteral";
 import { UndEvaluable } from "./math";
 import { Sign } from "./sign";
@@ -18,7 +19,7 @@ import { Comparable } from "./utils";
 export class Monomial implements Comparable<Monomial>, UndEvaluable {
 
   readonly z: Complex;
-  private literals: ExpLiteral[];
+  private  literals: ExpLiteral[];
 
 
   constructor(opt: {z: Complex, literals?: ExpLiteral[]}) {
@@ -37,7 +38,8 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
     return vz != undefined && vl != undefined ? vz * vl : undefined;
   }
 
-  
+
+  //! bug: if dotCode is changed, track remains unchanged
   private track: string|undefined = undefined;
 
 
@@ -89,6 +91,51 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
     return len1 - len2;
   }
 
+  
+  static parse(str: string) : Monomial {
+    let
+      expLits = [
+        /^([\u0370-\u03FFa-zA-Z]{1})(?:_(\d+))?\^\(([+-])?(\d+)(?:\/(\d+))?\)/u,
+        /^([\u0370-\u03FFa-zA-Z]{1})(?:_(\d+))?(?:\^([+-])?(\d+)(?:\/(\d+))?)?/u
+      ],
+      opt: RegExpMatchArray|null,
+      z: Complex|undefined,
+      literals: ExpLiteral[] = [];
+
+    if ((opt = /[\u0370-\u03FFa-hj-zA-HJ-Z]{1}/u.exec(str)) != null && opt.index != 0) {
+      let
+        s = str.slice(0,opt.index),
+        ab: string[] = s.split(/\s+\+\s+/);
+
+      if ((ab[0].match(/\(/g) || []).length > (ab[0].match(/\)/g) || []).length)
+        s = s.slice(1);
+
+      if (ab[1] != undefined && (ab[1].match(/\(/g) || []).length < (ab[1].match(/\)/g) || []).length)
+        s = s.slice(0,s.length-1);
+      
+      z = Complex.parse(s);
+      str = str.slice(opt.index);
+    }
+
+    let counter = 0;
+    while (str != '') {
+      if (++counter > 100)
+        throw new InternalError("Maximum call stack size exceeded.");
+        
+      if ((opt = expLits[0].exec(str)) != null
+          || (opt = expLits[1].exec(str)) != null) {
+        literals.push(ExpLiteral.parse(opt[0]));
+        str = str.slice(opt[0].length);
+      }
+    }
+
+    if (z == undefined && literals.length == 0)
+      throw new UndefinedError();
+
+    return new Monomial({z: z != undefined ? z : Complex.one, literals: literals});
+  }
+
+
   toString(with_sign: boolean = false) : string {
     let
       tostring: string = "",
@@ -98,6 +145,8 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
       isOne = sv != undefined ? Math.abs(sv) == 1 : false;
 
       if (!isOne) {
+        if ((sz.includes('/') || sz.includes('^')) && track != '')
+          sz = '(' + sz + ')';
         tostring = sz + (track != '' ? Monomial.dotChar : '') + track;
       } else {
         if (track != '')
@@ -125,7 +174,7 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
   }
 
 
-  private static _dotCode: 0|1|2|3|4|5|6 = 1;
+  private static _dotCode: 0|1|2|3|4|5|6 = 0;
   
 
   static get dotCode(): 0|1|2|3|4|5|6 {

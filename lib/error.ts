@@ -33,3 +33,17 @@ export class NumericError extends TypeError {
     this.name = 'NumericError'
   }
 }
+
+
+export class InternalError extends Error {
+  constructor(message?: string) {
+    super(message);
+
+    // only available on V8
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, InternalError);
+    }
+
+    this.name = 'InternalError'
+  }
+}

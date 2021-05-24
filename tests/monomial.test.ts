@@ -15,6 +15,8 @@ should();
 
 describe(`Monomial`, function() {
 
+  $$.ImaginaryPart.iCode = 0; // set character 'i'
+
   let
     cns: $$.charindexnum[] = [],
     cin: $$.cinopt[] = [],
@@ -38,6 +40,8 @@ describe(`Monomial`, function() {
     mono5 = new $$.Monomial({z: zm3, literals: [x,x3,x2]}),     //? -3⋅x^3⋅x^2⋅x
     mono6 = new $$.Monomial({z: z23, literals: [x_1,x_2]}),     //? 2/3⋅x_1⋅x_2
     mono7 = new $$.Monomial({z: z23, literals: [x_1,x_2,x_3]}), //? 2/3⋅x_1⋅x_2⋅x_3^5
+    
+    mono8 = new $$.Monomial({z: z23, literals: [x,y, $$.ExpLiteral.parse("z^(-2/3)")]}), //? (2/3)xyz^(-2/3)
     
     zero = $$.Monomial.zero,
     one = $$.Monomial.one,
@@ -87,6 +91,22 @@ describe(`Monomial`, function() {
     mono4.equals(mono5).should.to.be.equal(false);
   });
 
+  it(`#parse()`, function() {
+    expect(() => $$.Monomial.parse("")).to.throw();
+
+    $$.Monomial.parse("x_1").toString().should.to.be.equal("x_1");
+    $$.Monomial.parse("x_1^3").toString().should.to.be.equal("x_1^3");
+    $$.Monomial.parse("x_1^(-3)").toString().should.to.be.equal("x_1^(-3)");
+    $$.Monomial.parse("x_1^(12/34)").toString().should.to.be.equal("x_1^(6/17)");
+    $$.Monomial.parse("ψ_1^(-12/34)").toString().should.to.be.equal("ψ_1^(-6/17)");
+
+    $$.Monomial.parse("2x_1").toString().should.to.be.equal("2x_1");
+
+    let strin = "((-23/87)^(-11/13) + ((-23/87)^(-11/13))i)xyf^(-2/3)k_3d";
+    let strout = "((-23/87)^(-11/13) + ((-23/87)^(-11/13))i)df^(-2/3)k_3xy";
+    $$.Monomial.parse(strin).toString().should.to.be.equal(strout);
+  });
+  
   it(`#toString()`, function() {
     zero.toString().should.to.be.equal("0");
     one.toString().should.to.be.equal("1");
@@ -97,10 +117,11 @@ describe(`Monomial`, function() {
     mono1.toString().should.to.be.equal("2");
     mono2.toString().should.to.be.equal("-3");
     mono3.toString().should.to.be.equal("2/3");
-    mono4.toString().should.to.be.equal("2⋅x⋅y");
-    mono5.toString().should.to.be.equal("-3⋅x^3⋅x^2⋅x");
-    mono6.toString().should.to.be.equal("2/3⋅x_1⋅x_2");
-    mono7.toString().should.to.be.equal("2/3⋅x_1⋅x_2⋅x_3^5");
+    mono4.toString().should.to.be.equal("2xy");
+    mono5.toString().should.to.be.equal("-3x^3x^2x");
+    mono6.toString().should.to.be.equal("(2/3)x_1x_2");
+    mono7.toString().should.to.be.equal("(2/3)x_1x_2x_3^5");
+    mono8.toString().should.to.be.equal("(2/3)xyz^(-2/3)");
   });
 
 });

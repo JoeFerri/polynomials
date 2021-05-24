@@ -88,8 +88,8 @@ describe(`Polynomial`, function() {
     minfinity.toString().should.to.be.equal("-Infinity");
 
     p1.toString().should.to.be.equal("x^3 +x^2 +x +y +z");
-    p2.toString().should.to.be.equal("-5⋅x^3 +x^2 +x +y +z");
-    p3.toString().should.to.be.equal("-5⋅x^3⋅x⋅y⋅z +x^2 +x +y +z");
+    p2.toString().should.to.be.equal("-5x^3 +x^2 +x +y +z");
+    p3.toString().should.to.be.equal("-5x^3xyz +x^2 +x +y +z");
     p4.toString().should.to.be.equal("x");
     p5.toString().should.to.be.equal("-x");
   });
