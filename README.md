@@ -6,7 +6,7 @@
 
 # Polynomials
 
-> Library for polynomial and vector calculus in Typescript.
+> Library for polynomial calculus in Typescript.
 
 ---
 
