@@ -11,6 +11,8 @@ import { Exp } from "./exp";
 import { Literal } from "./literal";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
+import { UndefinedError } from "./error";
+import { Sign } from "./sign";
 
 
 
@@ -48,6 +50,44 @@ export class ExpLiteral extends Literal implements Comparable<ExpLiteral> {
     // x_1^3 != x_1^2 != x_1
     // major powers on the left
     return superComp != 0 ? superComp : l.exp.value() - this.exp.value();
+  }
+
+  
+  static readonly expsStrict: RegExp[] = [
+    /^(?<char>[\u0370-\u03FFa-zA-Z]{1})(?:_(?<index>\d+))?(?:\^(?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?)?$/u,
+    /^(?<char>[\u0370-\u03FFa-zA-Z]{1})(?:_(?<index>\d+))?\^\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)$/u
+  ];
+
+  static readonly exps: RegExp[] = [
+    /(?<char>[\u0370-\u03FFa-zA-Z]{1})(?:_(?<index>\d+))?(?:\^(?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?)?/u,
+    /(?<char>[\u0370-\u03FFa-zA-Z]{1})(?:_(?<index>\d+))?\^\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)/u
+  ];
+
+
+
+  static parse(str: string) : ExpLiteral {
+    let
+      opt: RegExpMatchArray|null,
+      char: charlit,
+      index: number|undefined,
+      exp: Exp|undefined;
+    
+    if ((opt = str.match(ExpLiteral.expsStrict[0])) != null
+        || (opt = str.match(ExpLiteral.expsStrict[1])) != null) {
+
+      char = opt[1] as charlit;
+      index = opt[2] != undefined ? Number(opt[2]) : undefined;
+      if (opt[4] != undefined) {
+        let
+          s = opt[3] == Sign.minus.sign ? Sign.minus : Sign.plus,
+          n = Number(opt[4]),
+          d = opt[5] != undefined ? Number(opt[5]) : 1;
+        exp = new Rational({n:n, d:d, s:s});
+      } else exp = 1;
+    }
+    else throw new UndefinedError();
+
+    return new ExpLiteral({char: char, index: index, exp: exp});
   }
 
 

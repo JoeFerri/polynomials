@@ -55,6 +55,16 @@ describe(`ExpLiteral`, function() {
     x_1.equals(x_2).should.to.be.equal(false);
   });
 
+  it(`#parse()`, function() {
+    expect(() => $$.ExpLiteral.parse("")).to.throw();
+
+    $$.ExpLiteral.parse("x_1").toString().should.to.be.equal("x_1");
+    $$.ExpLiteral.parse("x_1^3").toString().should.to.be.equal("x_1^3");
+    $$.ExpLiteral.parse("x_1^(-3)").toString().should.to.be.equal("x_1^(-3)");
+    $$.ExpLiteral.parse("x_1^(12/34)").toString().should.to.be.equal("x_1^(6/17)");
+    $$.ExpLiteral.parse("ψ_1^(-12/34)").toString().should.to.be.equal("ψ_1^(-6/17)");
+  });
+
   it(`#toString()`, function() {
     x.toString().should.to.be.equal("x");
     y.toString().should.to.be.equal("y");
