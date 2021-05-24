@@ -31,6 +31,7 @@ see package.json file for versions:
     mocha
     nyc
     chalk
+    cross-env
 
 ### compilation
     npm-run-all
@@ -52,6 +53,7 @@ see package.json file for versions:
     $ npm i -D @types/chai @types/mocha
     $ npm i -D @types/node
     $ npm i -D chalk
+    $ npm i -D cross-env
 
 ## start the tests
     $ npm t

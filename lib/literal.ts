@@ -6,6 +6,7 @@
  */
 
 import { charlit, charindexnum, cinopt, charindexnumOpts } from "./char";
+import { NumericError, UndefinedError } from "./error";
 import { UndEvaluable } from "./math";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
@@ -54,9 +55,33 @@ export class Literal implements Comparable<Literal>, UndEvaluable {
   }
 
 
+  static readonly expStrict: RegExp = /^(?<char>[\u0370-\u03FFa-zA-Z]{1})(?:_(?<index>\d+))?$/u;
+
+  static readonly exp: RegExp = /(?<char>[\u0370-\u03FFa-zA-Z]{1})(?:_(?<index>\d+))?/u;
+
+
+  static parse(str: string) : Literal {
+    let
+      opt: RegExpMatchArray|null = str.match(Literal.expStrict),
+      char: charlit,
+      index: number|undefined;
+
+    if (opt != null) {
+      char = opt[1] as charlit;
+      index = opt[2] != undefined ? Number(opt[2]) : undefined;
+    }
+    else throw new UndefinedError();
+    
+    return new Literal({char: char, index: index});
+  }
+
+
   toString() : string {
     return this.char + (this.index != 0 ? '_' + this.index : '');
   }
+
+
+
 
   static readonly x_1 = new Literal({char: 'x', index: 1});
   static readonly x_2 = new Literal({char: 'x', index: 2});

@@ -25,7 +25,6 @@ describe(`ImaginaryPart`, function() {
     minfinity = $$.ImaginaryPart.minfinity;
 
 
-    
 
   it(`#parse()`, function() {
     expect(() => $$.ImaginaryPart.parse("")).to.throw();

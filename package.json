@@ -6,12 +6,16 @@
   "description": "Library for polynomial and vector calculus.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "config": {
+    "mocha_glob": "tests/**/*.test.ts"
+  },
   "scripts": {
     "prepublish": "npm run build",
     "start": "npm-run-all -s clean build",
     "clean": "del-cli dist",
     "build": "tsc",
-    "test": "mocha --timeout 5000 -r ts-node/register tests/**/*.test.ts",
+    "test": "cross-env-shell mocha --timeout 5000 -r ts-node/register ${npm_package_config_mocha_glob}",
+    "test-only": "cross-env-shell mocha --timeout 5000 -r ts-node/register tests/${npm_config_file}.test.ts",
     "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test"
   },
   "keywords": [
@@ -22,8 +26,8 @@
   "license": "LGPL-3.0-only",
   "readmeFilename": "README.md",
   "repository": {
-      "type": "git",
-      "url": "git://github.com/JoeFerri/polynomials.git"
+    "type": "git",
+    "url": "git://github.com/JoeFerri/polynomials.git"
   },
   "devDependencies": {
     "@types/chai": "^4.2.17",
@@ -31,6 +35,7 @@
     "@types/node": "^15.0.2",
     "chai": "^4.3.4",
     "chalk": "^4.1.1",
+    "cross-env": "^7.0.3",
     "del-cli": "^3.0.1",
     "mocha": "^8.3.2",
     "npm-run-all": "^4.1.5",

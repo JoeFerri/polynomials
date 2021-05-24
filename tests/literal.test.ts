@@ -51,6 +51,18 @@ describe(`Literal`, function() {
     x_1.equals(x_2).should.to.be.equal(false);
   });
 
+  it(`#parse()`, function() {
+    expect(() => $$.Literal.parse("")).to.throw();
+    expect(() => $$.Literal.parse("x ")).to.throw();
+    expect(() => $$.Literal.parse("x_")).to.throw();
+    expect(() => $$.Literal.parse("xy")).to.throw();
+
+    $$.Literal.parse("x").toString().should.to.be.equal("x");
+    $$.Literal.parse("x_23").toString().should.to.be.equal("x_23");
+    $$.Literal.parse("ψ").toString().should.to.be.equal("ψ");
+    $$.Literal.parse("ψ_12").toString().should.to.be.equal("ψ_12");
+  });
+
   it(`#toString()`, function() {
     x.toString().should.to.be.equal("x");
     y.toString().should.to.be.equal("y");

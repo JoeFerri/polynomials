@@ -6,7 +6,7 @@
  */
 
 
-
+// https://www.unicode.org/charts/PDF/U0370.pdf
 export type gcharl =
   'α' | 'β' | 'γ' | 'δ' | 'ε' |
   'ζ' | 'η' | 'θ' | 'ι' | 'κ' |
