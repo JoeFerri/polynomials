@@ -49,7 +49,20 @@ export class Polynomial implements Comparable<Polynomial>, UndEvaluable {
 
 
   compare(p: Polynomial) : number {
-    throw new Error(); // TODO
+    let
+      i = 0,
+      comp: number = -1,
+      len1: number = this.monomials.length,
+      len2: number = p.monomials.length,
+      lenMin: number = Math.min(len1,len2);
+    
+    while (i < lenMin) {
+      comp = this.monomials[i].compare(p.monomials[i]);
+      if (comp != 0)
+        return comp;
+      i++;
+    }
+    return len1 - len2;
   }
 
 
