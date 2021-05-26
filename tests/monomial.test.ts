@@ -94,7 +94,9 @@ describe(`Monomial`, function() {
   it(`#parse()`, function() {
     expect(() => $$.Monomial.parse("")).to.throw();
 
-    $$.Monomial.parse("x_1").toString().should.to.be.equal("x_1");
+    $$.Monomial.parse("+x_1").toString().should.to.be.equal("x_1");
+    $$.Monomial.parse("-x_1").toString().should.to.be.equal("-x_1");
+
     $$.Monomial.parse("x_1^3").toString().should.to.be.equal("x_1^3");
     $$.Monomial.parse("x_1^(-3)").toString().should.to.be.equal("x_1^(-3)");
     $$.Monomial.parse("x_1^(12/34)").toString().should.to.be.equal("x_1^(6/17)");

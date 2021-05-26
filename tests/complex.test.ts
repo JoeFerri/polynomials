@@ -205,6 +205,9 @@ describe(`Complex`, function() {
     it(`#parse()`, function() {
       expect(() => $$.Complex.parse("")).to.throw();
   
+      $$.Complex.parse("+12i/34").toString().should.to.be.equal("6i/17");
+      $$.Complex.parse("+12/34").toString().should.to.be.equal("6/17");
+
       $$.Complex.parse("12i/34").toString().should.to.be.equal("6i/17");
       $$.Complex.parse("2i/33").toString().should.to.be.equal("2i/33");
       $$.Complex.parse("1i").toString().should.to.be.equal("i");
