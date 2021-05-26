@@ -79,6 +79,16 @@ describe(`Polynomial`, function() {
     minfinity.equals(minfinity).should.to.be.equal(true);
   });
 
+  it(`#parse()`, function() {
+    expect(() => $$.Polynomial.parse("")).to.throw();
+
+    $$.Polynomial.parse("x_1").toString().should.to.be.equal("x_1");
+    $$.Polynomial.parse("+x_1").toString().should.to.be.equal("x_1");
+    $$.Polynomial.parse("-x_1").toString().should.to.be.equal("-x_1");
+    $$.Polynomial.parse("+x^2 -5x^3xyz +x +z +y").toString().should.to.be.equal("-5x^3xyz +x^2 +x +y +z");
+    $$.Polynomial.parse("+x^2 -x +x^3").toString().should.to.be.equal("x^3 +x^2 -x");
+  });
+
   it(`#toString()`, function() {
     zero.toString().should.to.be.equal("0");
     // mzero.toString().should.to.be.equal("-0");

@@ -103,9 +103,12 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
       literals: ExpLiteral[] = [];
 
     if ((opt = /[\u0370-\u03FFa-hj-zA-HJ-Z]{1}/u.exec(str)) != null && opt.index != 0) {
-      let
-        s = str.slice(0,opt.index),
-        ab: string[] = s.split(/\s+\+\s+/);
+
+      let s = str.slice(0,opt.index)
+      if (s == '+' || s == '-')
+        s = s + "1";
+
+      let ab: string[] = s.split(/\s+\+\s+/);
 
       if ((ab[0].match(/\(/g) || []).length > (ab[0].match(/\)/g) || []).length)
         s = s.slice(1);
@@ -188,7 +191,6 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
 
 
   static readonly zero      = new Monomial({z: Complex.zero});
-  // static readonly mzero     = new Monomial(Complex.mzero);
   static readonly one       = new Monomial({z: Complex.one});
   static readonly mone      = new Monomial({z: Complex.mone});
   static readonly infinity  = new Monomial({z: Complex.infinity});

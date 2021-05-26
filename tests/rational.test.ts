@@ -49,6 +49,10 @@ describe(`Rational`, function() {
     expect(() => $$.Rational.parse("2/")).to.throw();
     expect(() => $$.Rational.parse("2x")).to.throw();
     expect(() => $$.Rational.parse("2/2x")).to.throw();
+
+    $$.Rational.parse("+12").toString().should.to.be.equal("12");
+    $$.Rational.parse("+12/34").toString().should.to.be.equal("6/17");
+
     $$.Rational.parse("12/34").toString().should.to.be.equal("6/17");
     $$.Rational.parse("2/33").toString().should.to.be.equal("2/33");
     $$.Rational.parse("1").toString().should.to.be.equal("1");

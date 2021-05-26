@@ -6,7 +6,7 @@
  */
 
 import { charindexnum, charindexnumOpts, cinopt } from "./char";
-import { UndefinedError } from "./error";
+import { InternalError, UndefinedError } from "./error";
 import { UndEvaluable } from "./math";
 import { Monomial } from "./monomial";
 import { undnumber } from "./type";
@@ -49,21 +49,52 @@ export class Polynomial implements Comparable<Polynomial>, UndEvaluable {
 
 
   compare(p: Polynomial) : number {
-    throw new Error(); // TODO
+    let
+      i = 0,
+      comp: number = -1,
+      len1: number = this.monomials.length,
+      len2: number = p.monomials.length,
+      lenMin: number = Math.min(len1,len2);
+    
+    while (i < lenMin) {
+      comp = this.monomials[i].compare(p.monomials[i]);
+      if (comp != 0)
+        return comp;
+      i++;
+    }
+    return len1 - len2;
+  }
+
+
+  static parse(str: string) : Polynomial {
+    let
+      monomials: Monomial[] = [],
+      opt: RegExpMatchArray|null,
+      regexp: RegExp = /\s{1}([+-]){1}/g,
+      sx: number = 0;
+
+    try {
+      while ((opt = regexp.exec(str)) !== null) {
+        monomials.push(Monomial.parse(str.slice(sx,opt.index)));
+        sx = (opt.index)! +1; //! ASSERT: opt.index != undefined
+      }
+      monomials.push(Monomial.parse(str.slice(sx)));
+    } catch (error) {
+      throw new UndefinedError();
+    }
+
+    return new Polynomial({monomials: monomials});
   }
 
 
   toString(with_sign: boolean = false) : string {
-    let tostring = this.monomials
-          .map( (m,index) => index != 0 ? m.toString(true) : m.toString() )
+    return this.monomials
+          .map( (m,index) => index != 0 ? m.toString(true) : m.toString(with_sign) )
           .join(' ');
-    
-    return (with_sign ? this.monomials[0].z.s.sign : '') + (tostring as string);
   }
 
 
   static readonly zero      = new Polynomial({monomials: [Monomial.zero]});
-  // static readonly mzero     = new Polynomial(Monomial.mzero);
   static readonly one       = new Polynomial({monomials: [Monomial.one]});
   static readonly mone      = new Polynomial({monomials: [Monomial.mone]});
   static readonly infinity  = new Polynomial({monomials: [Monomial.infinity]});

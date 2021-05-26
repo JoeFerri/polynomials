@@ -63,6 +63,10 @@ describe(`ExpRational`, function() {
     expect(() => $$.ExpRational.parse("2/")).to.throw();
     expect(() => $$.ExpRational.parse("2x")).to.throw();
     expect(() => $$.ExpRational.parse("2/2x")).to.throw();
+
+    $$.ExpRational.parse("+12").toString().should.to.be.equal("12");
+    $$.ExpRational.parse("+12/34").toString().should.to.be.equal("6/17");
+
     $$.ExpRational.parse("12/34").toString().should.to.be.equal("6/17");
     $$.ExpRational.parse("2/33").toString().should.to.be.equal("2/33");
     $$.ExpRational.parse("1").toString().should.to.be.equal("1");
