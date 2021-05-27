@@ -6,7 +6,7 @@
  */
 
 import { NumericError, UndefinedError } from "./error";
-import { euclAlg, isInteger } from "./math";
+import { euclAlg, EuclFlag, isInteger, Summable } from "./math";
 import { Sign } from "./sign";
 import { Comparable } from "./utils";
 
@@ -15,7 +15,7 @@ import { Comparable } from "./utils";
 export type RationalOpt = {n: number, d?: number, s?: Sign, simplify?: boolean};
 
 
-export class Rational implements Comparable<Rational> {
+export class Rational implements Comparable<Rational>, Summable<Rational> {
 
   readonly n: number;
   readonly d: number;
@@ -57,6 +57,43 @@ export class Rational implements Comparable<Rational> {
     this.n = n;
     this.d = d;
     this.s = s;
+  }
+
+
+  sum(t: Rational): Rational {
+    // throw new Error("Method not implemented.");
+    let
+      n1 = this.n * this.s.value,
+      d1 = this.d,
+      n2 = t.n * t.s.value,
+      d2 = t.d;
+
+    if (this.n == Infinity && t.n == Infinity)
+      if (this.s != t.s) // +∞ -∞
+        throw new UndefinedError();
+      else return new Rational({n: n1});
+
+    if (this.n == Infinity || t.n == Infinity) // ±∞ + n
+      return new Rational({n: n1 + n2});
+
+    // Least Common Multiple
+    let lcd = euclAlg(d1,d2, EuclFlag.LCD), a:number, b: number;
+
+    // simplify
+    a = (lcd / d1 * n1),
+    b = (lcd / d2 * n2);
+
+    return new Rational({n: a+b, d: lcd});
+  }
+
+
+  subtr(t: Rational): Rational {
+    return this.sum(t.opp());
+  }
+
+
+  opp(): Rational {
+    return new Rational({n: (this.n * this.s.value * (-1)), d: this.d});
   }
 
 

@@ -141,4 +141,30 @@ describe(`Rational`, function() {
     r9.toString().should.to.be.equal("0");
   });
 
+  it(`#sum()`, function() {
+    let a: $$.Rational, b: $$.Rational;
+    
+    a = $$.Rational.parse("1"); b = $$.Rational.parse("1");
+    a.sum(b).toString().should.to.be.equal("2");
+    a.sum(b.opp()).toString().should.to.be.equal("0");
+    a.subtr(b).toString().should.to.be.equal("0");
+    
+    a = $$.Rational.parse("-1"); b = $$.Rational.parse("-1");
+    a.sum(b).toString().should.to.be.equal("-2");
+    a.sum(b.opp()).toString().should.to.be.equal("0");
+    a.subtr(b).toString().should.to.be.equal("0");
+    
+    a = $$.Rational.parse("1"); b = $$.Rational.parse("-1");
+    a.sum(b).toString().should.to.be.equal("0");
+    
+    a = $$.Rational.parse("2/3"); b = $$.Rational.parse("-3/6");
+    a.sum(b).toString().should.to.be.equal("1/6");
+    a.subtr(b).toString().should.to.be.equal("7/6");
+    
+    a = $$.Rational.parse("211/210"); b = $$.Rational.parse("211/2310");
+    a.sum(b).toString().should.to.be.equal("422/385");
+    a.sum(b.opp()).toString().should.to.be.equal("211/231");
+    a.subtr(b).toString().should.to.be.equal("211/231");
+  });
+
 });

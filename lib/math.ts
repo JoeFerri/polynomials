@@ -84,3 +84,24 @@ export function isInteger(n: number|Evaluable|UndEvaluable, res: {value: number}
 export function isNatural(n: number|Evaluable|UndEvaluable, res: {value: number} = {value: 0}) {
   return isInteger(n,res) && res.value >= 0;
 }
+
+
+export interface Summable<T> {
+  
+  /**
+   * Implement the sum operation.
+   */
+  sum(t: T) : T;
+
+  /**
+   * Implement the subtraction operation.
+   */
+  subtr(t: T) : T;
+
+  /**
+   * Implement the opposite operation.
+   * 
+   * E.g. (-2).opp() → +2
+   */
+  opp() : T;
+}
