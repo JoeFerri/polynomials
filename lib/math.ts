@@ -22,7 +22,8 @@ declare global {
 }
 
 Math.nthRoot = function (n: number, root: number) : number {
-  return Math.pow(n,1/root);
+  let sign = n >= 0 ? 1 : -1; //! JS returns NaN with nth odd roots on negative numbers
+  return sign * Math.pow(Math.abs(n),1/root);
 }
 
 

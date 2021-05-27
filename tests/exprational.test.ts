@@ -167,4 +167,44 @@ describe(`ExpRational`, function() {
     r9.toString().should.to.be.equal("0");
   });
 
+  it(`#sum()`, function() {
+    let a: $$.ExpRational, b: $$.ExpRational;
+    
+    a = $$.ExpRational.parse("1"); b = $$.ExpRational.parse("1");
+    a.sum(b).toString().should.to.be.equal("2");
+    a.sum(b.opp()).toString().should.to.be.equal("0");
+    a.subtr(b).toString().should.to.be.equal("0");
+    
+    a = $$.ExpRational.parse("-1"); b = $$.ExpRational.parse("-1");
+    a.sum(b).toString().should.to.be.equal("-2");
+    a.sum(b.opp()).toString().should.to.be.equal("0");
+    a.subtr(b).toString().should.to.be.equal("0");
+    
+    a = $$.ExpRational.parse("1"); b = $$.ExpRational.parse("-1");
+    a.sum(b).toString().should.to.be.equal("0");
+    
+    a = $$.ExpRational.parse("2/3"); b = $$.ExpRational.parse("-3/6");
+    a.sum(b).toString().should.to.be.equal("1/6");
+    a.subtr(b).toString().should.to.be.equal("7/6");
+    
+    a = $$.ExpRational.parse("211/210"); b = $$.ExpRational.parse("211/2310");
+    a.sum(b).toString().should.to.be.equal("422/385");
+    a.sum(b.opp()).toString().should.to.be.equal("211/231");
+    a.subtr(b).toString().should.to.be.equal("211/231");
+    
+    a = $$.ExpRational.parse("(2/3)^2"); b = $$.ExpRational.parse("-2^3");
+    a.sum(b).toString().should.to.be.equal("-68/9");
+    
+    a = $$.ExpRational.parse("(1/3)^2"); b = $$.ExpRational.parse("-2^(-3)");
+    a.sum(b).toString().should.to.be.equal("-1/72");
+    
+    //? I take into account the approximation
+    a = $$.ExpRational.parse("(1/3)^2"); b = $$.ExpRational.parse("-4^(1/3)");
+    a.sum(b).value().toString().slice(0,12).should.to.be.equal("-1.476289940"); // -1.4762899408570882
+
+    //? I take into account the approximation
+    a = $$.ExpRational.parse("(1/3)^2"); b = $$.ExpRational.parse("4^(1/3)");
+    a.sum(b).value().toString().slice(0,12).should.to.be.equal("1.6985121630"); // 1.6985121630793105
+  });
+
 });

@@ -131,6 +131,20 @@ export class Rational implements Comparable<Rational>, Summable<Rational> {
   }
 
 
+  static byNumber(r: number) : Rational {
+    let n: number = r, d: number = 1;
+    if (("" + r).includes('.')) {
+      let
+        s = ("" + r).split('.'),
+        a = new Array(s[1].length).fill('0');
+      d = Number("1" + a.join('')),
+      n = Number(s[0] + s[1]);
+    }
+    // console.table({r:r,n:n,d:d})
+    return new Rational({n: n, d: d});
+  }
+
+
   toString(with_sign: boolean = false) : string {
     let
       ss = with_sign ? this.s.sign : this.s.signpm(),

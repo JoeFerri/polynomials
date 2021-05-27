@@ -10,10 +10,11 @@ import { Rational } from "./rational";
 import { Exp } from "./exp";
 import { UndefinedError } from "./error";
 import { Comparable } from "./utils";
+import { Summable } from "./math";
 
 
 
-export class ExpRational extends Rational implements Comparable<ExpRational> {
+export class ExpRational extends Rational implements Comparable<ExpRational>, Summable<ExpRational> {
 
   readonly exp: Rational;
 
@@ -88,6 +89,43 @@ export class ExpRational extends Rational implements Comparable<ExpRational> {
     this.exp = exp != undefined && super.n != 0 && super.n != Infinity ?
       (exp instanceof Rational ? exp : new Rational({n: exp})) : Rational.one;
   }
+
+
+  sum(t: ExpRational): ExpRational {
+    let sum: Rational;
+
+    if (this.exp.value() == 1 && t.exp.value() == 1) {
+      sum = super.sum(t);
+    }
+    else {
+      let
+        r1: Rational = new Rational(
+          { n: Math.pow((this.exp.s == Sign.plus ? this.n : this.d) * this.s.value, this.exp.n),
+            d: Math.pow((this.exp.s == Sign.plus ? this.d : this.n), this.exp.n)}
+        ),
+        r2: Rational = new Rational(
+          { n: Math.pow((t.exp.s == Sign.plus ? t.n : t.d) * t.s.value, t.exp.n),
+            d: Math.pow((t.exp.s == Sign.plus ? t.d : t.n), t.exp.n)}
+        );
+      if (this.exp.d != 1 || t.exp.d != 1) {
+        // nthroot → exp := n/d
+        sum = Rational.byNumber(Math.nthRoot(r1.value(),this.exp.d) + Math.nthRoot(r2.value(),t.exp.d));
+      }
+      else sum = r1.sum(r2);
+    }
+    return new ExpRational({n: sum.n * sum.s.value, d: sum.d});
+  }
+
+
+  subtr(t: ExpRational): ExpRational {
+    return this.sum(t.opp());
+  }
+
+
+  opp(): ExpRational {
+    return new ExpRational({n: (this.n * this.s.value * (-1)), d: this.d, exp: this.exp});
+  }
+
 
 /**
  * (-2)^(-2/3) = ((-2)^(-2))^(1/3) = cbrt(1/4)
