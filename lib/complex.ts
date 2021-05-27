@@ -8,13 +8,13 @@
 import { Sign } from "./sign";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
-import { UndEvaluable } from "./math";
+import { Summable, UndEvaluable } from "./math";
 import { RealPart } from "./realpart";
 import { ImaginaryPart } from "./imaginarypart";
 
 
 
-export class Complex implements Comparable<Complex>, UndEvaluable {
+export class Complex implements Comparable<Complex>, UndEvaluable, Summable<Complex> {
 
   readonly a: RealPart;
   readonly b: ImaginaryPart;
@@ -23,6 +23,26 @@ export class Complex implements Comparable<Complex>, UndEvaluable {
   constructor(opt: {a: RealPart, b?: ImaginaryPart}) {
     this.a = opt.a;
     this.b = opt.b != undefined ? opt.b : ImaginaryPart.zero;
+  }
+
+
+  sum(t: Complex): Complex {
+    return new Complex({a: this.a.sum(t.a), b: this.b.sum(t.b)});
+  }
+
+
+  subtr(t: Complex): Complex {
+    return this.sum(t.opp());
+  }
+
+
+  opp(): Complex {
+    return new Complex({a: this.a.opp(), b: this.b.opp()});
+  }
+
+
+  conjugate(): Complex {
+    return new Complex({a: this.a, b: this.b.opp()});
   }
 
 

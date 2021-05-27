@@ -83,8 +83,7 @@ export class ExpRational extends Rational implements Comparable<ExpRational>, Su
           ((super.n == 0 || super.n == Infinity) && super.s == Sign.plus)) || // (0⁺)^(+∞) ; +∞^0
         (((exp instanceof Rational && exp.value() == Infinity) || exp == Infinity) && super.n == 1) // 1^±∞
       )
-    )
-      throw new UndefinedError();
+    ) throw new UndefinedError();
 
     this.exp = exp != undefined && super.n != 0 && super.n != Infinity ?
       (exp instanceof Rational ? exp : new Rational({n: exp})) : Rational.one;

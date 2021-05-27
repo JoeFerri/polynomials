@@ -7,15 +7,32 @@
 
 import { Exp } from "./exp";
 import { ExpRational } from "./exprational";
+import { Summable } from "./math";
 import { Sign } from "./sign";
 import { Comparable } from "./utils";
 
 
 
-export class RealPart extends ExpRational implements Comparable<RealPart> {
+export class RealPart extends ExpRational implements Comparable<RealPart>, Summable<RealPart> {
 
   constructor(opt: {n: number, d?: number, s?: Sign, simplify?: boolean, exp?: Exp}) {
     super(opt);
+  }
+
+
+  sum(t: RealPart): RealPart {
+    let sum = super.sum(t);
+    return new RealPart({n: (sum.n * sum.s.value), d: sum.d, exp: sum.exp});
+  }
+
+
+  subtr(t: RealPart): RealPart {
+    return this.sum(t.opp());
+  }
+
+
+  opp(): RealPart {
+    return new RealPart({n: (this.n * this.s.value * (-1)), d: this.d, exp: this.exp});
   }
 
 

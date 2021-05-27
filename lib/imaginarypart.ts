@@ -8,6 +8,7 @@
 import { UndefinedError } from "./error";
 import { Exp } from "./exp";
 import { ExpRational } from "./exprational";
+import { Summable } from "./math";
 import { Rational } from "./rational";
 import { Sign } from "./sign";
 import { ComplexInfinity } from "./type";
@@ -15,10 +16,26 @@ import { Comparable } from "./utils";
 
 
 
-export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPart> {
+export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPart>, Summable<ImaginaryPart> {
 
   constructor(opt: {n: number, d?: number, s?: Sign, simplify?: boolean, exp?: Exp}) {
     super(opt);
+  }
+
+
+  sum(t: ImaginaryPart): ImaginaryPart {
+    let sum = super.sum(t);
+    return new ImaginaryPart({n: (sum.n * sum.s.value), d: sum.d, exp: sum.exp});
+  }
+
+
+  subtr(t: ImaginaryPart): ImaginaryPart {
+    return this.sum(t.opp());
+  }
+
+
+  opp(): ImaginaryPart {
+    return new ImaginaryPart({n: (this.n * this.s.value * (-1)), d: this.d, exp: this.exp});
   }
 
 
@@ -30,6 +47,8 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
   compare(r: ImaginaryPart) : number {
     return super.compare(r);
   }
+
+
   static readonly expsStrict: RegExp[] = [
     /^\(\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)\)i$/,  //? ((-23/87)^(-66/78))i
     /^\(\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^(?<n_exp>\d+)\)i$/,                                         //? ((-23/87)^66)i
@@ -47,7 +66,6 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
     /(?<s>[+-]?)(?<n>\d+)?i(?:\/(?<d>\d+))?/,                                                                 //? -23i  -23i/87 -i
     /\((?<s>[+-]?)(?<n>\d+)?i(?:\/(?<d>\d+))?\)/                                                              //? (-23i)  (-23i/87) (-i)
   ];
-
 
 
   static parse(str: string) : ImaginaryPart {

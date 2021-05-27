@@ -202,6 +202,7 @@ describe(`Complex`, function() {
   });
   
   describe(`all`, function() {
+
     it(`#parse()`, function() {
       expect(() => $$.Complex.parse("")).to.throw();
   
@@ -242,6 +243,22 @@ describe(`Complex`, function() {
       $$.Complex.parse("-23/87 + (-23i/87)").toString().should.to.be.equal("-23/87 + (-23i/87)");
       $$.Complex.parse("-1 + (-i)").toString().should.to.be.equal("-1 + (-i)");
     });
+    
+    it.only(`#sum()`, function() {
+      let a: $$.Complex, b: $$.Complex;
+      
+      a = $$.Complex.parse("1"); b = $$.Complex.parse("1");
+      a.sum(b).toString().should.to.be.equal("2");
+      a.sum(b.opp()).toString().should.to.be.equal("0");
+      a.subtr(b).toString().should.to.be.equal("0");
+      
+      a = $$.Complex.parse("-23 + (-23i)"); b = $$.Complex.parse("-23 + (-23i)");
+      a.sum(b).toString().should.to.be.equal("-46 + (-46i)");
+      a.sum(b.conjugate()).toString().should.to.be.equal("-46");
+      a.sum(b.opp()).toString().should.to.be.equal("0");
+      a.subtr(b).toString().should.to.be.equal("0");
+    });
+
   });
 
 });
