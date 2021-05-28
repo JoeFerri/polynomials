@@ -10,11 +10,11 @@ import { Rational } from "./rational";
 import { Exp } from "./exp";
 import { UndefinedError } from "./error";
 import { Comparable } from "./utils";
-import { Summable } from "./math";
+import { Opposable, Summable } from "./math";
 
 
 
-export class ExpRational extends Rational implements Comparable<ExpRational>, Summable<ExpRational> {
+export class ExpRational extends Rational implements Comparable<ExpRational>, Summable<ExpRational>, Opposable<ExpRational> {
 
   readonly exp: Rational;
 

@@ -82,6 +82,10 @@ describe(`Polynomial`, function() {
   it(`#parse()`, function() {
     expect(() => $$.Polynomial.parse("")).to.throw();
 
+    $$.Polynomial.parse("1").toString().should.to.be.equal("1");
+    $$.Polynomial.parse("-1").toString().should.to.be.equal("-1");
+    $$.Polynomial.parse("-1 + 2i").toString().should.to.be.equal("-1 + 2i");
+    $$.Polynomial.parse("2i").toString().should.to.be.equal("2i");
     $$.Polynomial.parse("x_1").toString().should.to.be.equal("x_1");
     $$.Polynomial.parse("+x_1").toString().should.to.be.equal("x_1");
     $$.Polynomial.parse("-x_1").toString().should.to.be.equal("-x_1");
@@ -91,7 +95,6 @@ describe(`Polynomial`, function() {
 
   it(`#toString()`, function() {
     zero.toString().should.to.be.equal("0");
-    // mzero.toString().should.to.be.equal("-0");
     one.toString().should.to.be.equal("1");
     mone.toString().should.to.be.equal("-1");
     infinity.toString().should.to.be.equal("Infinity");
@@ -102,6 +105,30 @@ describe(`Polynomial`, function() {
     p3.toString().should.to.be.equal("-5x^3xyz +x^2 +x +y +z");
     p4.toString().should.to.be.equal("x");
     p5.toString().should.to.be.equal("-x");
+  });
+    
+  it(`#sum()`, function() {
+    let a: $$.Polynomial, b: $$.Polynomial;
+    
+    a = $$.Polynomial.parse("1"); b = $$.Polynomial.parse("1");
+    a.sum(b).toString().should.to.be.equal("2");
+    a.sum(b.opp()).toString().should.to.be.equal("0");
+    a.subtr(b).toString().should.to.be.equal("0");
+    
+    a = $$.Polynomial.parse("-23 + (-23i)"); b = $$.Polynomial.parse("-23 + (-23i)");
+    a.sum(b).toString().should.to.be.equal("-46 + (-46i)");
+    a.sum(b.opp()).toString().should.to.be.equal("0");
+    a.subtr(b).toString().should.to.be.equal("0");
+    
+    a = $$.Polynomial.parse("x"); b = $$.Polynomial.parse("x");
+    a.sum(b).toString().should.to.be.equal("2x");
+    a.sum(b.opp()).toString().should.to.be.equal("0");
+    a.subtr(b).toString().should.to.be.equal("0");
+    
+    a = $$.Polynomial.parse("(-23 + (-23i))xy"); b = $$.Polynomial.parse("(-23 + (-23i))xy");
+    a.sum(b).toString().should.to.be.equal("(-46 + (-46i))xy");
+    a.sum(b.opp()).toString().should.to.be.equal("0");
+    a.subtr(b).toString().should.to.be.equal("0");
   });
 
 });

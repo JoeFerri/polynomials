@@ -98,11 +98,15 @@ export interface Summable<T> {
    * Implement the subtraction operation.
    */
   subtr(t: T) : T;
+}
 
+
+export interface Opposable<T> {
+  
   /**
    * Implement the opposite operation.
    * 
    * E.g. (-2).opp() → +2
    */
-  opp() : T;
+   opp() : T;
 }

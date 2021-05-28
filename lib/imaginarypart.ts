@@ -173,7 +173,7 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
 
   // ℂ    DOUBLE-STRUCK CAPITAL C' (U+2102)
   private static readonly iList = [
-    'i',
+    'i', //! DEFAULT
     '𝑖', // MATHEMATICAL ITALIC SMALL I' (U+1D456)
     '𝒾', // MATHEMATICAL SCRIPT SMALL I' (U+1D4BE)
     '𝓲', // MATHEMATICAL BOLD SCRIPT SMALL I' (U+1D4F2)
@@ -186,7 +186,7 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
   }
 
 
-  private static _iCode: 0|1|2|3|4 = 1;
+  private static _iCode: 0|1|2|3|4 = 0;
   
 
   static get iCode(): 0|1|2|3|4 {

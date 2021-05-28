@@ -6,7 +6,7 @@
  */
 
 import { NumericError, UndefinedError } from "./error";
-import { euclAlg, EuclFlag, isInteger, Summable } from "./math";
+import { euclAlg, EuclFlag, isInteger, Opposable, Summable } from "./math";
 import { Sign } from "./sign";
 import { Comparable } from "./utils";
 
@@ -15,7 +15,7 @@ import { Comparable } from "./utils";
 export type RationalOpt = {n: number, d?: number, s?: Sign, simplify?: boolean};
 
 
-export class Rational implements Comparable<Rational>, Summable<Rational> {
+export class Rational implements Comparable<Rational>, Summable<Rational>, Opposable<Rational> {
 
   readonly n: number;
   readonly d: number;

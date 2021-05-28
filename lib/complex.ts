@@ -8,13 +8,13 @@
 import { Sign } from "./sign";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
-import { Summable, UndEvaluable } from "./math";
+import { Opposable, Summable, UndEvaluable } from "./math";
 import { RealPart } from "./realpart";
 import { ImaginaryPart } from "./imaginarypart";
 
 
 
-export class Complex implements Comparable<Complex>, UndEvaluable, Summable<Complex> {
+export class Complex implements Comparable<Complex>, UndEvaluable, Summable<Complex>, Opposable<Complex> {
 
   readonly a: RealPart;
   readonly b: ImaginaryPart;

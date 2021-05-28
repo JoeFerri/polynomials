@@ -7,24 +7,50 @@
 
 import { charindexnum, charindexnumOpts, cinopt } from "./char";
 import { Complex } from "./complex";
-import { InternalError, UndefinedError } from "./error";
+import { InternalError, OperationError, UndefinedError } from "./error";
 import { ExpLiteral } from "./expliteral";
-import { UndEvaluable } from "./math";
+import { Opposable, UndEvaluable } from "./math";
 import { Sign } from "./sign";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
 
 
 
-export class Monomial implements Comparable<Monomial>, UndEvaluable {
+export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<Monomial> {
 
   readonly z: Complex;
-  private  literals: ExpLiteral[];
+  private  _literals: ExpLiteral[];
 
 
   constructor(opt: {z: Complex, literals?: ExpLiteral[]}) {
     this.z = opt.z;
-    this.literals = [...(opt.literals || [])].sort( (l1,l2) => l1.compare(l2) ); // literals must be sorted
+    if (this.z.value() == 0)
+      this._literals = [];
+    else
+      this._literals = [...(opt.literals || [])].sort( (l1,l2) => l1.compare(l2) ); // literals must be sorted
+  }
+
+
+  get literals() : ExpLiteral[] {
+    return [...this._literals];
+  }
+
+
+  sum(t: Monomial, check: boolean = true): Monomial {
+    if (this.z.value() == 0)
+      return new Monomial({z: t.z, literals: t._literals});
+    if (t.z.value() == 0)
+      return new Monomial({z: this.z, literals: this._literals});
+
+    if (check && this.literalsTrack() != t.literalsTrack())
+      throw new OperationError();
+
+    return new Monomial({z: this.z.sum(t.z), literals: this._literals});
+  }
+
+
+  opp(): Monomial {
+    return new Monomial({z: this.z.opp(), literals: this._literals});
   }
 
 
@@ -32,7 +58,7 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
     cns = charindexnumOpts(cns);
     let
       vz = this.z.value(),
-      vl = this.literals
+      vl = this._literals
         .map( l => l.value(cns) )
         .reduce( (prev,curr) => prev != undefined && curr != undefined ? prev * curr : undefined, 1);
     return vz != undefined && vl != undefined ? vz * vl : undefined;
@@ -46,7 +72,7 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
   literalsTrack() : string {
     if (this.track == undefined)
       this.track =
-        this.literals
+        this._literals
           .map( l => l.toString() )
           .join(Monomial.dotChar);
     return this.track;
@@ -73,12 +99,12 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
     let
       i: number = 0,
       comp: number,
-      len1: number = this.literals.length,
+      len1: number = this._literals.length,
       len2: number = m.literals.length,
       lenMin: number = Math.min(len1,len2);
 
     while(i < lenMin) {
-      comp = this.literals[i].compare(m.literals[i]); // compare only the literal part
+      comp = this._literals[i].compare(m.literals[i]); // compare only the literal part
       if (comp != 0)
         return comp;
       i++;
@@ -118,6 +144,10 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
       
       z = Complex.parse(s);
       str = str.slice(opt.index);
+    }
+    else if ((opt = /[\u0370-\u03FFa-hj-zA-HJ-Z]{1}/u.exec(str)) == null) { //? e.g. 2, 55, 89/3, 2 + 3i
+      z = Complex.parse(str);
+      str = "";
     }
 
     let counter = 0;
@@ -162,7 +192,7 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable {
 
 
   private static readonly dotList = [
-    '',
+    '',       //! DEFAULT
     '⋅',     // DOT OPERATOR          (U+22C5)
     '·',    // MIDDLE DOT            (U+00B7)
     '·',   // GREEK ANO TELEIA      (U+0387)

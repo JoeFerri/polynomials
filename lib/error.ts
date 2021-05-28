@@ -21,6 +21,20 @@ export class UndefinedError extends Error {
 }
 
 
+export class OperationError extends Error {
+  constructor(message?: string) {
+    super(message);
+
+    // only available on V8
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, OperationError);
+    }
+
+    this.name = 'OperationError'
+  }
+}
+
+
 export class NumericError extends TypeError {
   constructor(message?: string) {
     super(message);

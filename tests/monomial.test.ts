@@ -15,8 +15,6 @@ should();
 
 describe(`Monomial`, function() {
 
-  $$.ImaginaryPart.iCode = 0; // set character 'i'
-
   let
     cns: $$.charindexnum[] = [],
     cin: $$.cinopt[] = [],
