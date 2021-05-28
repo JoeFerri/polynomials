@@ -20,7 +20,8 @@ export class Polynomial implements Comparable<Polynomial>, UndEvaluable, Summabl
 
 
   constructor(opt: {monomials: Monomial[]}) {
-    this.monomials = [...(opt.monomials || [])].sort( (m1,m2) => m1.compare(m2) );
+    let monos: Monomial[] = opt.monomials || [];
+    this.monomials = sumMonos([monos]).sort( (m1,m2) => m1.compare(m2) );
 
     if (this.monomials.length == 0)
       throw new UndefinedError();
@@ -28,19 +29,7 @@ export class Polynomial implements Comparable<Polynomial>, UndEvaluable, Summabl
 
 
   sum(t: Polynomial): Polynomial {
-    let
-      lst: Map<string,Monomial> = new Map<string,Monomial>(),
-      track: string;
-    for (let ms of [this.monomials, t.monomials]) {
-      for (let m of ms) {
-        track = m.literalsTrack();
-        if (!lst.has(track))
-          lst.set(track,Monomial.zero);
-        lst.set(track,lst.get(track)!.sum(m,false)); //! ASSERT: lst.get(track) != null
-      }
-    }
-
-    return new Polynomial({monomials: [...lst.values()]});
+    return new Polynomial({monomials: sumMonos([this.monomials, t.monomials])});
   }
 
 
@@ -51,6 +40,11 @@ export class Polynomial implements Comparable<Polynomial>, UndEvaluable, Summabl
 
   opp(): Polynomial {
     return new Polynomial({monomials: this.monomials.map( m => m.opp() )});
+  }
+
+
+  conjugate(): Polynomial {
+    return new Polynomial({monomials: this.monomials.map( m => m.conjugate() )});
   }
 
 
@@ -139,4 +133,21 @@ export class Polynomial implements Comparable<Polynomial>, UndEvaluable, Summabl
   static readonly x3 = new Polynomial({monomials: [Monomial.x3]});
   static readonly y3 = new Polynomial({monomials: [Monomial.y3]});
   static readonly z3 = new Polynomial({monomials: [Monomial.z3]});
+}
+
+
+function sumMonos(mss: Monomial[][]): Monomial[] {
+  let
+    lst: Map<string,Monomial> = new Map<string,Monomial>(),
+    track: string;
+  for (let ms of mss) {
+    for (let m of ms) {
+      track = m.literalsTrack();
+      if (!lst.has(track))
+        lst.set(track,Monomial.zero);
+      lst.set(track,lst.get(track)!.sum(m,false)); //! ASSERT: lst.get(track) != null
+    }
+  }
+
+  return [...lst.values()];
 }

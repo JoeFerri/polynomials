@@ -92,6 +92,11 @@ describe(`Monomial`, function() {
   it(`#parse()`, function() {
     expect(() => $$.Monomial.parse("")).to.throw();
 
+    $$.Monomial.parse("ixy").toString().should.to.be.equal("ixy");
+    $$.Monomial.parse("1ixy").toString().should.to.be.equal("ixy");
+    $$.Monomial.parse("-ixy").toString().should.to.be.equal("-ixy");
+    $$.Monomial.parse("-1ixy").toString().should.to.be.equal("-ixy");
+
     $$.Monomial.parse("+x_1").toString().should.to.be.equal("x_1");
     $$.Monomial.parse("-x_1").toString().should.to.be.equal("-x_1");
 
@@ -105,6 +110,10 @@ describe(`Monomial`, function() {
     let strin = "((-23/87)^(-11/13) + ((-23/87)^(-11/13))i)xyf^(-2/3)k_3d";
     let strout = "((-23/87)^(-11/13) + ((-23/87)^(-11/13))i)df^(-2/3)k_3xy";
     $$.Monomial.parse(strin).toString().should.to.be.equal(strout);
+    
+    $$.Monomial.parse("(-23 + (-23i))xy").toString().should.to.be.equal("(-23 + (-23i))xy");
+    $$.Monomial.parse("(1 + 23i)xy").toString().should.to.be.equal("(1 + 23i)xy");
+    $$.Monomial.parse("-23ixy").toString().should.to.be.equal("-23ixy");
   });
   
   it(`#toString()`, function() {

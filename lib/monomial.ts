@@ -23,6 +23,8 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<M
 
 
   constructor(opt: {z: Complex, literals?: ExpLiteral[]}) {
+    // TODO: normalize
+    //! E.g. xyyz → xy^2z
     this.z = opt.z;
     if (this.z.value() == 0)
       this._literals = [];
@@ -49,8 +51,18 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<M
   }
 
 
+  subtr(t: Monomial, check: boolean = true): Monomial {
+    return this.sum(t.opp(),check);
+  }
+
+
   opp(): Monomial {
     return new Monomial({z: this.z.opp(), literals: this._literals});
+  }
+
+
+  conjugate(): Monomial {
+    return new Monomial({z: this.z.conjugate(), literals: this._literals});
   }
 
 
@@ -178,7 +190,7 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<M
       isOne = sv != undefined ? Math.abs(sv) == 1 : false;
 
       if (!isOne) {
-        if ((sz.includes('/') || sz.includes('^')) && track != '')
+        if ((sz.includes('/') || sz.includes('^') || (this.z.a.value() != 0 && this.z.b.value() != 0)) && track != '')
           sz = '(' + sz + ')';
         tostring = sz + (track != '' ? Monomial.dotChar : '') + track;
       } else {
@@ -187,6 +199,7 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<M
         else
           tostring = sz;
       }
+      
     return tostring;
   }
 

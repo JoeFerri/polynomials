@@ -91,6 +91,9 @@ describe(`Polynomial`, function() {
     $$.Polynomial.parse("-x_1").toString().should.to.be.equal("-x_1");
     $$.Polynomial.parse("+x^2 -5x^3xyz +x +z +y").toString().should.to.be.equal("-5x^3xyz +x^2 +x +y +z");
     $$.Polynomial.parse("+x^2 -x +x^3").toString().should.to.be.equal("x^3 +x^2 -x");
+    
+    $$.Polynomial.parse("+x^2 -5x^3zxy +x +2y +z -2z +y").toString().should.to.be.equal("-5x^3xyz +x^2 +x +3y -z");
+    $$.Polynomial.parse("x +2y +y").toString().should.to.be.equal("x +3y");
   });
 
   it(`#toString()`, function() {
@@ -105,6 +108,9 @@ describe(`Polynomial`, function() {
     p3.toString().should.to.be.equal("-5x^3xyz +x^2 +x +y +z");
     p4.toString().should.to.be.equal("x");
     p5.toString().should.to.be.equal("-x");
+
+    $$.Polynomial.parse("(-23 + (-23i))xy").toString().should.to.be.equal("(-23 + (-23i))xy");
+    $$.Polynomial.parse("(-23 + (-23i))yx").toString().should.to.be.equal("(-23 + (-23i))xy");
   });
     
   it(`#sum()`, function() {
@@ -129,6 +135,17 @@ describe(`Polynomial`, function() {
     a.sum(b).toString().should.to.be.equal("(-46 + (-46i))xy");
     a.sum(b.opp()).toString().should.to.be.equal("0");
     a.subtr(b).toString().should.to.be.equal("0");
+    
+    a = $$.Polynomial.parse("(-2 + (-3i))xy"); b = $$.Polynomial.parse("(-2 + 3i)xy");
+    a.sum(b).toString().should.to.be.equal("-4xy");
+    a.sum(b.opp()).toString().should.to.be.equal("-6ixy");
+    a.subtr(b).toString().should.to.be.equal("-6ixy");
+    
+    a = $$.Polynomial.parse("(-2 + (-3i))xy +2xy +iyx"); b = $$.Polynomial.parse("(-2 + 3i)xy -y");
+    a.sum(b).toString().should.to.be.equal("(-2 + i)xy -y");
+    a.sum(b.opp()).toString().should.to.be.equal("(2 + (-5i))xy +y");
+    a.subtr(b).toString().should.to.be.equal("(2 + (-5i))xy +y");
+    a.sum(b.conjugate()).toString().should.to.be.equal("(-2 + (-5i))xy -y");
   });
 
 });

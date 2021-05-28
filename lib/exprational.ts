@@ -240,7 +240,7 @@ export class ExpRational extends Rational implements Comparable<ExpRational>, Su
 
   toString(with_sign: boolean = false) : string {
     if (this.exp.equals(Rational.one))
-      return super.toString();
+      return super.toString(with_sign);
 
     let s = super.toString(with_sign);
     if (this.d != 1)
@@ -248,6 +248,7 @@ export class ExpRational extends Rational implements Comparable<ExpRational>, Su
     let e = this.exp.toString();
     if (e.includes('/') || e.includes('-'))
       e = '(' + e + ')';
+      
     return `${s}^${e}`;
   }
 
