@@ -10,11 +10,13 @@ import { Rational } from "./rational";
 import { Exp } from "./exp";
 import { UndefinedError } from "./error";
 import { Comparable } from "./utils";
-import { Opposable, Summable } from "./math";
+import { Multiplicable, Opposable, Reciprocable, Summable } from "./math";
 
 
 
-export class ExpRational extends Rational implements Comparable<ExpRational>, Summable<ExpRational>, Opposable<ExpRational> {
+export class ExpRational extends Rational implements 
+  Comparable<ExpRational>, Summable<ExpRational>, Opposable<ExpRational>,
+    Multiplicable<ExpRational>, Reciprocable<ExpRational> {
 
   readonly exp: Rational;
 
@@ -76,6 +78,22 @@ export class ExpRational extends Rational implements Comparable<ExpRational>, Su
       }
     }
 
+    if (exp != undefined) {
+      let
+        r = new Rational({n: n, d: d, s: s, simplify: simplify}),
+        _exp = exp != undefined && r.n != 0 && r.n != Infinity ?
+          (exp instanceof Rational ? exp : new Rational({n: exp})) : Rational.one;
+
+      if (_exp.d != 1 && _exp.value()%2 == 0 && r.s == Sign.minus)
+        throw new UndefinedError("Even nth roots of negative numbers to implement."); // TODO: complex
+
+      if ((r.n == 1 && r.d == 1) || r.n == 0) {
+        exp = Rational.one;
+        if (r.value() == 1)
+          s = Sign.plus;
+      }
+    }
+
     super({n: n, d: d, s: s, simplify: simplify});
     
     if (exp != undefined && (
@@ -87,6 +105,64 @@ export class ExpRational extends Rational implements Comparable<ExpRational>, Su
 
     this.exp = exp != undefined && super.n != 0 && super.n != Infinity ?
       (exp instanceof Rational ? exp : new Rational({n: exp})) : Rational.one;
+  }
+
+
+  // (2/3)^(-2/3) → (3/2)^(2/3)
+  normalize() : ExpRational {
+    if (this.exp.s == Sign.plus)
+      return this;
+    return new ExpRational({n: this.d * this.s.value, d: this.n, exp: this.exp.opp()});
+  }
+
+
+  recpr(): ExpRational {
+    return new ExpRational({n: this.d * this.s.value, d: this.n, exp: this.exp});
+  }
+
+
+  prod(t: ExpRational): ExpRational {
+    let t1: ExpRational = this.normalize(), t2: ExpRational = t.normalize();
+
+    if ((t1.n == Infinity && t2.n == 0) || (t2.n == Infinity && t1.n == 0))
+      throw new UndefinedError();
+    let prod: Rational;
+
+    if (this.n == t.n && this.d == t.d) { // same base before the inversion
+      return new ExpRational({n: this.s.value * t.s.value * this.n, d: this.d, exp: this.exp.sum(t.exp)});
+    } else if (t1.exp.value() == 1 && t2.exp.value() == 1) {
+      prod = new Rational({n: t1.n * t1.s.value, d: t1.d}).prod(t2);
+    }
+    else if (t1.n == t2.n && t1.d == t2.d) { // same base
+      return new ExpRational({n: t1.s.value * t2.s.value * t1.n, d: t1.d, exp: t1.exp.sum(t2.exp)});
+    }
+    else if (t1.exp.equals(t2.exp)) { // same exponent
+      return new ExpRational({n: t1.s.value * t2.s.value * t1.n * t2.n, d: t1.d * t2.d, exp: t1.exp});
+    } else {
+      let
+        r1: Rational = new Rational(
+          { n: Math.pow(t1.n * t1.s.value, t1.exp.n),
+            d: Math.pow(t1.d, t1.exp.n)}
+        ),
+        r2: Rational = new Rational(
+          { n: Math.pow(t2.n * t2.s.value, t2.exp.n),
+            d: Math.pow(t2.d, t2.exp.n)}
+        );
+      if (t1.exp.d != 1 || t2.exp.d != 1) {
+        // nthroot → exp := n/d
+        prod = Rational.byNumber(Math.nthRoot(r1.value(),t1.exp.d) * Math.nthRoot(r2.value(),t2.exp.d));
+      }
+      else prod = r1.prod(r2);
+    }
+    return new ExpRational({n: prod.n * prod.s.value, d: prod.d});
+  }
+
+
+  div(t: ExpRational): ExpRational {
+    if (this.n == t.n && this.d == t.d) { // same base before the inversion
+      return new ExpRational({n: this.s.value * t.s.value * this.n, d: this.d, exp: this.exp.subtr(t.exp)});
+    }
+    return this.prod(t.recpr());
   }
 
 

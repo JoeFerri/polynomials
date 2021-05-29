@@ -207,4 +207,75 @@ describe(`ExpRational`, function() {
     a.sum(b).value().toString().slice(0,12).should.to.be.equal("1.6985121630"); // 1.6985121630793105
   });
 
+  it(`#prod()`, function() {
+    let a: $$.ExpRational, b: $$.ExpRational;
+    
+    a = $$.ExpRational.parse("1"); b = $$.ExpRational.parse("1");
+    a.prod(b).toString().should.to.be.equal("1");
+    
+    a = $$.ExpRational.parse("-1"); b = $$.ExpRational.parse("1");
+    a.prod(b).toString().should.to.be.equal("-1");
+    
+    a = $$.ExpRational.parse("2"); b = $$.ExpRational.parse("1");
+    a.prod(b).toString().should.to.be.equal("2");
+    
+    a = $$.ExpRational.parse("1"); b = $$.ExpRational.parse("0");
+    a.prod(b).toString().should.to.be.equal("0");
+    
+    a = $$.ExpRational.parse("0"); b = $$.ExpRational.parse("0");
+    a.prod(b).toString().should.to.be.equal("0");
+    
+    a = $$.ExpRational.parse("1/2"); b = $$.ExpRational.parse("2/3");
+    a.prod(b).toString().should.to.be.equal("1/3");
+    
+    a = $$.ExpRational.parse("-1/2"); b = $$.ExpRational.parse("2/3");
+    a.prod(b).toString().should.to.be.equal("-1/3");
+    
+    a = $$.ExpRational.parse("-1/2"); b = $$.ExpRational.parse("-2/3");
+    a.prod(b).toString().should.to.be.equal("1/3");
+    
+    a = $$.ExpRational.parse("(1/2)^2"); b = $$.ExpRational.parse("2/3");
+    a.prod(b).toString().should.to.be.equal("1/6");
+    
+    //? I take into account the approximation
+    a = $$.ExpRational.parse("(1/2)^(2/3)"); b = $$.ExpRational.parse("2/3");
+    a.prod(b).value().toString().slice(0,9).should.to.be.equal("0.4199736"); // 0.4199736833
+    
+    a = $$.ExpRational.parse("(1/2)^2"); b = $$.ExpRational.parse("2/3");
+    a.div(b).toString().should.to.be.equal("3/8");
+    
+    a = $$.ExpRational.parse("(1/2)^2"); b = $$.ExpRational.parse("(2/3)^3");
+    a.div(b).toString().should.to.be.equal("27/32");
+    
+    a = $$.ExpRational.parse("(2/3)^3"); b = $$.ExpRational.parse("(2/3)^2");
+    a.prod(b).toString().should.to.be.equal("(2/3)^5");
+    
+    a = $$.ExpRational.parse("(2/3)^3"); b = $$.ExpRational.parse("(2/3)^2");
+    a.div(b).toString().should.to.be.equal("2/3");
+    
+    a = $$.ExpRational.parse("(2/3)^5"); b = $$.ExpRational.parse("(2/3)^2");
+    a.div(b).toString().should.to.be.equal("(2/3)^3");
+    
+    a = $$.ExpRational.parse("(2/3)^3"); b = $$.ExpRational.parse("(2/3)^(-2)");
+    a.prod(b).toString().should.to.be.equal("2/3");
+    
+    a = $$.ExpRational.parse("(2/3)^3"); b = $$.ExpRational.parse("(3/5)^(3)");
+    a.prod(b).toString().should.to.be.equal("(2/5)^3");
+
+    a = $$.ExpRational.parse("(2/3)^2"); b = $$.ExpRational.parse("(2/3)^3");
+    a.div(b).toString().should.to.be.equal("(2/3)^(-1)");
+
+    a = $$.ExpRational.parse("2^2"); b = $$.ExpRational.parse("3^2");
+    a.div(b).toString().should.to.be.equal("(2/3)^2");
+
+    a = $$.ExpRational.parse("2^2"); b = $$.ExpRational.parse("3^2");
+    a.prod(b).toString().should.to.be.equal("6^2");
+
+    a = $$.ExpRational.parse("2^3"); b = $$.ExpRational.parse("2^5");
+    a.prod(b).toString().should.to.be.equal("2^8");
+
+    a = $$.ExpRational.parse("2^3"); b = $$.ExpRational.parse("3^2");
+    a.prod(b).toString().should.to.be.equal("72");
+  });
+
 });
