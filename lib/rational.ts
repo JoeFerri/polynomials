@@ -6,7 +6,7 @@
  */
 
 import { NumericError, UndefinedError } from "./error";
-import { euclAlg, EuclFlag, isInteger, Opposable, Summable } from "./math";
+import { euclAlg, EuclFlag, isInteger, Multiplicable, Opposable, Reciprocable, Summable } from "./math";
 import { Sign } from "./sign";
 import { Comparable } from "./utils";
 
@@ -15,7 +15,9 @@ import { Comparable } from "./utils";
 export type RationalOpt = {n: number, d?: number, s?: Sign, simplify?: boolean};
 
 
-export class Rational implements Comparable<Rational>, Summable<Rational>, Opposable<Rational> {
+export class Rational implements 
+  Comparable<Rational>, Summable<Rational>, Opposable<Rational>,
+    Multiplicable<Rational>, Reciprocable<Rational> {
 
   readonly n: number;
   readonly d: number;
@@ -57,6 +59,24 @@ export class Rational implements Comparable<Rational>, Summable<Rational>, Oppos
     this.n = n;
     this.d = d;
     this.s = s;
+  }
+
+
+  recpr(): Rational {
+    return new Rational({n: this.d * this.s.value, d: this.n});
+  }
+
+
+  prod(t: Rational): Rational {
+    if ((this.n == Infinity && t.n == 0) || (t.n == Infinity && this.n == 0))
+      throw new UndefinedError();
+
+    return new Rational({n: this.s.value * t.s.value * this.n * t.n, d: this.d * t.d})
+  }
+
+
+  div(t: Rational): Rational {
+    return this.prod(t.recpr());
   }
 
 

@@ -110,3 +110,26 @@ export interface Opposable<T> {
    */
    opp() : T;
 }
+
+
+export interface Multiplicable<T> {
+
+  /**
+   * Implement the product operation.
+   */
+  prod(t: T) : T;
+
+  /**
+   * Implement the division operation.
+   */
+  div(t: T) : T;
+}
+
+
+export interface Reciprocable<T> {
+
+  /**
+   * It returns its reciprocal.
+   */
+   recpr() : T;
+}
