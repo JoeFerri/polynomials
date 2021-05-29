@@ -108,6 +108,20 @@ export class ExpRational extends Rational implements
   }
 
 
+  toRational() {
+    let
+      rn: ExpRational = this.normalize(),
+      r: Rational = new Rational(
+        { n: Math.pow(rn.n * rn.s.value, rn.exp.n),
+          d: Math.pow(rn.d, rn.exp.n)}
+      );
+    if (rn.exp.d != 1)
+      // nthroot → exp := n/d
+      return Rational.byNumber(Math.nthRoot(r.value(),rn.exp.d));
+    return r;
+  }
+
+
   // (2/3)^(-2/3) → (3/2)^(2/3)
   normalize() : ExpRational {
     if (this.exp.s == Sign.plus)

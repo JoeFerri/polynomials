@@ -278,4 +278,16 @@ describe(`ExpRational`, function() {
     a.prod(b).toString().should.to.be.equal("72");
   });
 
+  it(`#toRational()`, function() {
+    $$.ExpRational.parse("2").toRational().toString().should.to.be.equal("2");
+    $$.ExpRational.parse("-2").toRational().toString().should.to.be.equal("-2");
+    $$.ExpRational.parse("2^2").toRational().toString().should.to.be.equal("4");
+    $$.ExpRational.parse("(-2)^2").toRational().toString().should.to.be.equal("4");
+    $$.ExpRational.parse("(-2)^3").toRational().toString().should.to.be.equal("-8");
+    
+    //? I take into account the approximation
+    $$.ExpRational.parse("(2)^(3/2)").toRational().value().toString().slice(0,9).should.to.be.equal("2.8284271"); // 2.828427125
+    $$.ExpRational.parse("(2/3)^(3/2)").toRational().value().toString().slice(0,8).should.to.be.equal("0.544331"); // 0.544331054
+  });
+
 });
