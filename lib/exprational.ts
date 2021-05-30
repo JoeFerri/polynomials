@@ -112,8 +112,8 @@ export class ExpRational extends Rational implements
     let
       rn: ExpRational = this.normalize(),
       r: Rational = new Rational(
-        { n: Math.pow(rn.n * rn.s.value, rn.exp.n),
-          d: Math.pow(rn.d, rn.exp.n)}
+        { n: rn.exp.n != 1 ? Math.pow(rn.n * rn.s.value, rn.exp.n) : rn.n * rn.s.value,
+          d: rn.exp.n != 1 ? Math.pow(rn.d, rn.exp.n) : rn.d}
       );
     if (rn.exp.d != 1)
       // nthroot → exp := n/d
