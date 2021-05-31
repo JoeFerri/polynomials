@@ -8,7 +8,7 @@
 import { UndefinedError } from "./error";
 import { Exp } from "./exp";
 import { ExpRational } from "./exprational";
-import { Summable } from "./math";
+import { Multiplicable, Reciprocable, Summable } from "./math";
 import { Rational } from "./rational";
 import { Sign } from "./sign";
 import { ComplexInfinity } from "./type";
@@ -16,10 +16,41 @@ import { Comparable } from "./utils";
 
 
 
-export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPart>, Summable<ImaginaryPart> {
+export class ImaginaryPart extends ExpRational implements
+  Comparable<ImaginaryPart>, Summable<ImaginaryPart>,
+    Multiplicable<ImaginaryPart>, Reciprocable<ImaginaryPart> {
 
   constructor(opt: {n: number, d?: number, s?: Sign, simplify?: boolean, exp?: Exp}) {
     super(opt);
+  }
+
+
+  static newBy<T extends ExpRational>(v: T) : ImaginaryPart {
+    return new ImaginaryPart({n: v.n * v.s.value, d: v.d, exp: v.exp});
+  }
+
+
+  normalize() : ImaginaryPart {
+    if (this.exp.s == Sign.plus)
+      return this;
+    return new ImaginaryPart({n: this.d * this.s.value, d: this.n, exp: this.exp.opp()});
+  }
+
+
+  recpr(): ImaginaryPart {
+    return new ImaginaryPart({n: this.d * this.s.value, d: this.n, exp: this.exp});
+  }
+
+  
+  prod(t: ImaginaryPart): ImaginaryPart {
+    let prod = super.prod(t);
+    return new ImaginaryPart({n: (prod.n * prod.s.value), d: prod.d, exp: prod.exp});
+  }
+
+  
+  div(t: ImaginaryPart): ImaginaryPart {
+    let div = super.div(t);
+    return new ImaginaryPart({n: (div.n * div.s.value), d: div.d, exp: div.exp});
   }
 
 
@@ -35,7 +66,8 @@ export class ImaginaryPart extends ExpRational implements Comparable<ImaginaryPa
 
 
   opp(): ImaginaryPart {
-    return new ImaginaryPart({n: (this.n * this.s.value * (-1)), d: this.d, exp: this.exp});
+    let opp = super.opp();
+    return new ImaginaryPart({n: (opp.n * opp.s.value), d: opp.d, exp: opp.exp});
   }
 
 

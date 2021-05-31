@@ -224,6 +224,7 @@ describe(`Complex`, function() {
       $$.Complex.parse("(-23i)").toString().should.to.be.equal("-23i");
       $$.Complex.parse("(-23i/87)").toString().should.to.be.equal("-23i/87");
       $$.Complex.parse("(-i)").toString().should.to.be.equal("-i");
+      $$.Complex.parse("i").toString().should.to.be.equal("i");
 
       // -------------
       
@@ -247,6 +248,9 @@ describe(`Complex`, function() {
     it(`#sum()`, function() {
       let a: $$.Complex, b: $$.Complex;
       
+      a = $$.Complex.parse("0"); b = $$.Complex.parse("i");
+      a.sum(b).toString().should.to.be.equal("i");
+
       a = $$.Complex.parse("1"); b = $$.Complex.parse("1");
       a.sum(b).toString().should.to.be.equal("2");
       a.sum(b.opp()).toString().should.to.be.equal("0");
@@ -257,6 +261,43 @@ describe(`Complex`, function() {
       a.sum(b.conjugate()).toString().should.to.be.equal("-46");
       a.sum(b.opp()).toString().should.to.be.equal("0");
       a.subtr(b).toString().should.to.be.equal("0");
+    });
+    
+    it(`#prod()`, function() {
+      let a: $$.Complex, b: $$.Complex;
+      
+      a = $$.Complex.parse("1"); b = $$.Complex.parse("1");
+      a.prod(b).toString().should.to.be.equal("1");
+      
+      a = $$.Complex.parse("-1"); b = $$.Complex.parse("1");
+      a.prod(b).toString().should.to.be.equal("-1");
+      
+      a = $$.Complex.parse("-1"); b = $$.Complex.parse("-1");
+      a.prod(b).toString().should.to.be.equal("1");
+      
+      a = $$.Complex.parse("i"); b = $$.Complex.parse("1");
+      a.prod(b).toString().should.to.be.equal("i");
+      
+      a = $$.Complex.parse("i"); b = $$.Complex.parse("-1");
+      a.prod(b).toString().should.to.be.equal("-i");
+      
+      a = $$.Complex.parse("(2/3)^3"); b = $$.Complex.parse("(3/5)^(3)");
+      a.prod(b).toString().should.to.be.equal("(2/5)^3");
+      
+      a = $$.Complex.parse("2i"); b = $$.Complex.parse("2i");
+      a.prod(b).toString().should.to.be.equal("-4");
+      
+      a = $$.Complex.parse("1 + 2i"); b = $$.Complex.parse("2i");
+      a.prod(b).toString().should.to.be.equal("-4 + 2i");
+      
+      a = $$.Complex.parse("3 + 2i"); b = $$.Complex.parse("5 + 3i");
+      a.prod(b).toString().should.to.be.equal("9 + 19i");
+      
+      a = $$.Complex.parse("3 + (-2i)"); b = $$.Complex.parse("5 + (-3i)");
+      a.prod(b).toString().should.to.be.equal("9 + (-19i)");
+      
+      a = $$.Complex.parse("3 + (-2i)"); b = $$.Complex.parse("3 + (-2i)");
+      a.div(b).toString().should.to.be.equal("1");
     });
 
   });

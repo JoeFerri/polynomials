@@ -205,6 +205,10 @@ describe(`ExpRational`, function() {
     //? I take into account the approximation
     a = $$.ExpRational.parse("(1/3)^2"); b = $$.ExpRational.parse("4^(1/3)");
     a.sum(b).value().toString().slice(0,12).should.to.be.equal("1.6985121630"); // 1.6985121630793105
+    
+    a = $$.ExpRational.parse("0"); b = $$.ExpRational.parse("2^2");
+    a.subtr(b).toString().should.to.be.equal("-4");
+    $$.ExpRational.parse("-2^2").toString().should.to.be.equal("-2^2");
   });
 
   it(`#prod()`, function() {
@@ -218,6 +222,16 @@ describe(`ExpRational`, function() {
     
     a = $$.ExpRational.parse("2"); b = $$.ExpRational.parse("1");
     a.prod(b).toString().should.to.be.equal("2");
+    
+    a = $$.ExpRational.parse("-2"); b = $$.ExpRational.parse("(1/2)^(-1)");
+    a.prod(b).toString().should.to.be.equal("-4");
+    
+    a = $$.ExpRational.parse("-2"); b = $$.ExpRational.parse("(1/2)^(-3)");
+    a.prod(b).toString().should.to.be.equal("-16");
+    a.prod(b).value().should.to.be.equal(-16);
+    
+    a = $$.ExpRational.parse("-2"); b = $$.ExpRational.parse("(1/2)^(-2)");
+    a.prod(b).toString().should.to.be.equal("-2^3");
     
     a = $$.ExpRational.parse("1"); b = $$.ExpRational.parse("0");
     a.prod(b).toString().should.to.be.equal("0");
@@ -276,6 +290,20 @@ describe(`ExpRational`, function() {
 
     a = $$.ExpRational.parse("2^3"); b = $$.ExpRational.parse("3^2");
     a.prod(b).toString().should.to.be.equal("72");
+
+    let a1: $$.ExpRational, b1: $$.ExpRational, a2: $$.ExpRational, b2: $$.ExpRational;
+    a1 = $$.ExpRational.parse("0"); b1 = $$.ExpRational.parse("2");
+    a2 = $$.ExpRational.parse("0"); b2 = $$.ExpRational.parse("2");
+    (a1.prod(a2)).toString().should.to.be.equal("0");
+    (b1.prod(b2)).toString().should.to.be.equal("2^2");
+    (b1.prod(b2)).opp().toString().should.to.be.equal("-4");
+    (a1.prod(a2)).subtr(b1.prod(b2)).toString().should.to.be.equal("-4");
+
+    a1 = $$.ExpRational.parse("3"); b1 = $$.ExpRational.parse("-2");
+    a2 = $$.ExpRational.parse("5"); b2 = $$.ExpRational.parse("-3");
+    (a1.prod(b2)).toString().should.to.be.equal("-9");
+    (b1.prod(a2)).toString().should.to.be.equal("-10");
+    ((a1.prod(b2)).sum(b1.prod(a2))).toString().should.to.be.equal("-19");
   });
 
   it(`#toRational()`, function() {

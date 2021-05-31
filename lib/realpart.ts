@@ -7,16 +7,41 @@
 
 import { Exp } from "./exp";
 import { ExpRational } from "./exprational";
-import { Summable } from "./math";
+import { Multiplicable, Reciprocable, Summable } from "./math";
 import { Sign } from "./sign";
 import { Comparable } from "./utils";
 
 
 
-export class RealPart extends ExpRational implements Comparable<RealPart>, Summable<RealPart> {
+export class RealPart extends ExpRational implements
+  Comparable<RealPart>, Summable<RealPart>,
+    Multiplicable<RealPart>, Reciprocable<RealPart> {
 
   constructor(opt: {n: number, d?: number, s?: Sign, simplify?: boolean, exp?: Exp}) {
     super(opt);
+  }
+
+
+  static newBy<T extends ExpRational>(v: T) : RealPart {
+    return new RealPart({n: v.n * v.s.value, d: v.d, exp: v.exp});
+  }
+
+
+  normalize() : RealPart {
+    if (this.exp.s == Sign.plus)
+      return this;
+    return new RealPart({n: this.d * this.s.value, d: this.n, exp: this.exp.opp()});
+  }
+
+
+  recpr(): RealPart {
+    return new RealPart({n: this.d * this.s.value, d: this.n, exp: this.exp});
+  }
+
+  
+  prod(t: RealPart): RealPart {
+    let prod = super.prod(t);
+    return new RealPart({n: (prod.n * prod.s.value), d: prod.d, exp: prod.exp});
   }
 
 
@@ -32,7 +57,8 @@ export class RealPart extends ExpRational implements Comparable<RealPart>, Summa
 
 
   opp(): RealPart {
-    return new RealPart({n: (this.n * this.s.value * (-1)), d: this.d, exp: this.exp});
+    let opp = super.opp();
+    return new RealPart({n: (opp.n * opp.s.value), d: opp.d, exp: opp.exp});
   }
 
 

@@ -143,16 +143,32 @@ export class ExpRational extends Rational implements
     let prod: Rational;
 
     if (this.n == t.n && this.d == t.d) { // same base before the inversion
-      return new ExpRational({n: this.s.value * t.s.value * this.n, d: this.d, exp: this.exp.sum(t.exp)});
-    } else if (t1.exp.value() == 1 && t2.exp.value() == 1) {
+      let tt = new ExpRational({n: this.n, d: this.d, exp: this.exp.sum(t.exp)});
+
+      if (this.s.value * t.s.value == 1)
+        return tt;
+      else
+        return tt.opp();
+    }
+    
+    else if (t1.exp.value() == 1 && t2.exp.value() == 1) {
       prod = new Rational({n: t1.n * t1.s.value, d: t1.d}).prod(t2);
     }
+    
     else if (t1.n == t2.n && t1.d == t2.d) { // same base
-      return new ExpRational({n: t1.s.value * t2.s.value * t1.n, d: t1.d, exp: t1.exp.sum(t2.exp)});
+      let tt = new ExpRational({n: t1.n, d: t1.d, exp: t1.exp.sum(t2.exp)});
+
+      if (t1.s.value * t2.s.value == 1)
+        return tt;
+      else
+        return tt.opp();
     }
+    
     else if (t1.exp.equals(t2.exp)) { // same exponent
       return new ExpRational({n: t1.s.value * t2.s.value * t1.n * t2.n, d: t1.d * t2.d, exp: t1.exp});
-    } else {
+    }
+    
+    else {
       let
         r1: Rational = new Rational(
           { n: Math.pow(t1.n * t1.s.value, t1.exp.n),
@@ -168,6 +184,7 @@ export class ExpRational extends Rational implements
       }
       else prod = r1.prod(r2);
     }
+    
     return new ExpRational({n: prod.n * prod.s.value, d: prod.d});
   }
 
@@ -212,7 +229,18 @@ export class ExpRational extends Rational implements
 
 
   opp(): ExpRational {
-    return new ExpRational({n: (this.n * this.s.value * (-1)), d: this.d, exp: this.exp});
+    let r: ExpRational = even(this);
+    return new ExpRational({n: (r.n * r.s.value * (-1)), d: r.d, exp: r.exp});
+
+    // if (this.exp.n%2 == 0) {
+    //   let
+    //     exp: Rational = new Rational({n: this.exp.s.value, d: this.exp.d}),
+    //     r: Rational = new Rational(
+    //       {n: Math.pow(this.n * this.s.value, this.exp.n),
+    //        d: Math.pow(this.d, this.exp.n)});
+    //   return new ExpRational({n: (r.n * (-1)), d: r.d, exp: exp});
+    // }
+    // return new ExpRational({n: (this.n * this.s.value * (-1)), d: this.d, exp: this.exp});
   }
 
 
@@ -348,4 +376,17 @@ export class ExpRational extends Rational implements
   static readonly mone = new ExpRational({n: -1});
   static readonly infinity = new ExpRational({n: Infinity});
   static readonly minfinity = new ExpRational({n: -Infinity});
+}
+
+
+function even(t: ExpRational): ExpRational {
+  if (t.exp.n%2 == 0) {
+    let
+      exp: Rational = new Rational({n: t.exp.s.value, d: t.exp.d}),
+      r: Rational = new Rational(
+        {n: Math.pow(t.n, t.exp.n),
+         d: Math.pow(t.d, t.exp.n)});
+    return new ExpRational({n: r.n, d: r.d, exp: exp});
+  }
+  return t;
 }

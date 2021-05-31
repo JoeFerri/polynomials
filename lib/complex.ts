@@ -8,13 +8,16 @@
 import { Sign } from "./sign";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
-import { Opposable, Summable, UndEvaluable } from "./math";
+import { Multiplicable, Opposable, Reciprocable, Summable, UndEvaluable } from "./math";
 import { RealPart } from "./realpart";
 import { ImaginaryPart } from "./imaginarypart";
+import { ExpRational } from "./exprational";
 
 
 
-export class Complex implements Comparable<Complex>, UndEvaluable, Summable<Complex>, Opposable<Complex> {
+export class Complex implements Comparable<Complex>, UndEvaluable,
+  Summable<Complex>, Opposable<Complex>,
+    Multiplicable<Complex>, Reciprocable<Complex> {
 
   readonly a: RealPart;
   readonly b: ImaginaryPart;
@@ -23,6 +26,64 @@ export class Complex implements Comparable<Complex>, UndEvaluable, Summable<Comp
   constructor(opt: {a: RealPart, b?: ImaginaryPart}) {
     this.a = opt.a;
     this.b = opt.b != undefined ? opt.b : ImaginaryPart.zero;
+  }
+
+
+  // 1/z = 1/(a + bi) = a/(a^2 + b^2) -bi/(a^2 + b^2)
+  //
+  // real = a.div( (a.prod(a)).sum(b.prod(b)) )
+  // imma = (b.opp().div( (a.prod(a)).sum(b.prod(b)) ))i
+  recpr(): Complex {
+    if (this.b.n == 0)
+      return new Complex({a: this.a.recpr()});
+
+    let
+      a = this.a,
+      b = this.b,
+      real: RealPart = RealPart.newBy( a.div( (a.prod(a)).sum(b.prod(b)) ) ),
+      imma: ImaginaryPart = ImaginaryPart.newBy( (b.opp().div( (a.prod(a)).sum(b.prod(b)) )) );
+    return new Complex({a: real, b: imma});
+  }
+
+
+  // z*w = (a  + bi )*(c  + di ) = ( a*c  -  b*d ) + ( a*d  +  b*c )i
+  // (a1 + b1i)*(a2 + b2i) = (a1*a2 - b1*b2) + (a1*b2 + b1*a2)i
+  //
+  // real = (a1.prod(a2)).subtr(b1.prod(b2))
+  // imma = ((a1.prod(b2)).sum(b1.prod(a2)))i
+  prod(t: Complex): Complex {
+    if (this.b.n == 0 && t.b.n == 0)
+      return new Complex({a: this.a.prod(t.a)});
+
+    let
+      a1: ExpRational = this.a,
+      b1: ExpRational = this.b,
+      a2: ExpRational = t.a,
+      b2: ExpRational = t.b,
+      real: RealPart = RealPart.newBy( (a1.prod(a2)).subtr(b1.prod(b2)) ),
+      imma: ImaginaryPart = ImaginaryPart.newBy( ((a1.prod(b2)).sum(b1.prod(a2))) );
+      
+    return new Complex({a: real, b: imma});
+  }
+
+
+  // z/w = (a  + bi  )/(c  + di  ) = ( a*c   +  b*d )/( c^2 +  d^2) + i(  b*c  -  a*d )/( c^2 +  d^2)
+  // (a1 + b1i )/(a2 + b2i ) = (a1*a2  + b1*b2)/(a2^2 + b2^2) + i( b1*a2 - a1*b2)/(a2^2 + b2^2)
+  //
+  // real = ( (a1.prod(a2)).sum(b1.prod(b2)) ).div( (a2.prod(a2)).sum(b2.prod(b2)) )
+  // imma = i( (b1.prod(a2)).subtr(a1.prod(b2)) ).div( (a2.prod(a2)).sum(b2.prod(b2)) )
+  div(t: Complex): Complex {
+    if (this.b.n == 0 && t.b.n == 0)
+      return new Complex({a: this.a.div(t.a)});
+
+    let
+      a1 = this.a,
+      b1 = this.b,
+      a2 = t.a,
+      b2 = t.b,
+      real: RealPart = RealPart.newBy( ( (a1.prod(a2)).sum(b1.prod(b2)) ).div( (a2.prod(a2)).sum(b2.prod(b2)) ) ),
+      imma: ImaginaryPart = ImaginaryPart.newBy( ( (b1.prod(a2)).subtr(a1.prod(b2)) ).div( (a2.prod(a2)).sum(b2.prod(b2)) ) );
+    return new Complex({a: real, b: imma});
   }
 
 
