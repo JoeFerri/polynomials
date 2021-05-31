@@ -31,8 +31,8 @@ describe(`Complex`, function() {
       e2    = new $$.Complex({a: new $$.RealPart({n: -1, d: 2, exp: 2}) }),
       e3    = new $$.Complex({a: new $$.RealPart({n:  3, d: 2, exp: 2}) }),
       e4    = new $$.Complex({a: new $$.RealPart({n: -3, d: 2, exp: 3}) }),
-      e5    = new $$.Complex({a: new $$.RealPart({n:  2, d: 3, exp: 0}) }),
-      e6    = new $$.Complex({a: new $$.RealPart({n: -2, d: 3, exp: 0}) }),
+      e5    = new $$.Complex({a: new $$.RealPart({n:  2, d: 3, exp: 0, simplify: false}) }),
+      e6    = new $$.Complex({a: new $$.RealPart({n: -2, d: 3, exp: 0, simplify: false}) }),
       // e7    = new $$.Complex(new $$.ExpRational(4,1,undefined,2.5)), // TODO
       // e8    = new $$.Complex(new $$.ExpRational(4,1,undefined,-2.5)), // TODO
 
@@ -245,7 +245,7 @@ describe(`Complex`, function() {
       $$.Complex.parse("-1 + (-i)").toString().should.to.be.equal("-1 + (-i)");
     });
     
-    it(`#sum()`, function() {
+    it(`#sum() #subtr()`, function() {
       let a: $$.Complex, b: $$.Complex;
       
       a = $$.Complex.parse("0"); b = $$.Complex.parse("i");
@@ -263,7 +263,7 @@ describe(`Complex`, function() {
       a.subtr(b).toString().should.to.be.equal("0");
     });
     
-    it(`#prod()`, function() {
+    it(`#prod() #div()`, function() {
       let a: $$.Complex, b: $$.Complex;
       
       a = $$.Complex.parse("1"); b = $$.Complex.parse("1");
@@ -298,6 +298,9 @@ describe(`Complex`, function() {
       
       a = $$.Complex.parse("3 + (-2i)"); b = $$.Complex.parse("3 + (-2i)");
       a.div(b).toString().should.to.be.equal("1");
+      
+      a = $$.Complex.parse("5 + (-12i)"); b = $$.Complex.parse("3 + (-2i)");
+      a.div(b).toString().should.to.be.equal("3 + (-2i)");
     });
 
   });

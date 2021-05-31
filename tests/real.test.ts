@@ -92,7 +92,7 @@ describe(`Real`, function() {
     e1.equals(e1).should.to.be.equal(true);
     e1.equals(e2).should.to.be.equal(false);
     e1.equals(e3).should.to.be.equal(false);
-    e5.equals(e6).should.to.be.equal(false);
+    e5.equals(e6).should.to.be.equal(true);
 
     r1.equals(r1).should.to.be.equal(true);
     r1.equals(r3).should.to.be.equal(false);
@@ -110,8 +110,8 @@ describe(`Real`, function() {
     e2.toString().should.to.be.equal("(-1/2)^2");
     e3.toString().should.to.be.equal("(3/2)^2");
     e4.toString().should.to.be.equal("(-3/2)^3");
-    e5.toString().should.to.be.equal("(2/3)^0");
-    e6.toString().should.to.be.equal("(-2/3)^0");
+    e5.toString().should.to.be.equal("1");
+    e6.toString().should.to.be.equal("1");
     
     ee1.toString().should.to.be.equal("4^(5/2)");
     ee2.toString().should.to.be.equal("4^(-5/2)");

@@ -58,6 +58,7 @@ describe(`ExpRational`, function() {
 
   it(`#parse()`, function() {
     expect(() => $$.ExpRational.parse("")).to.throw();
+    expect(() => $$.ExpRational.parse("0^0")).to.throw();
     expect(() => $$.ExpRational.parse(" 2")).to.throw();
     expect(() => $$.ExpRational.parse("2 ")).to.throw();
     expect(() => $$.ExpRational.parse("2/")).to.throw();
@@ -128,7 +129,7 @@ describe(`ExpRational`, function() {
     e1.equals(e1).should.to.be.equal(true);
     e1.equals(e2).should.to.be.equal(false);
     e1.equals(e3).should.to.be.equal(false);
-    e5.equals(e6).should.to.be.equal(false);
+    e5.equals(e6).should.to.be.equal(true);
 
     r1.equals(r1).should.to.be.equal(true);
     r1.equals(r3).should.to.be.equal(false);
@@ -146,11 +147,11 @@ describe(`ExpRational`, function() {
     e2.toString().should.to.be.equal("(-1/2)^2");
     e3.toString().should.to.be.equal("(3/2)^2");
     e4.toString().should.to.be.equal("(-3/2)^3");
-    e5.toString().should.to.be.equal("(2/3)^0");
-    e6.toString().should.to.be.equal("(-2/3)^0");
+    e5.toString().should.to.be.equal("1");
+    e6.toString().should.to.be.equal("1");
     e9.toString().should.to.be.equal("(1/2)^(-2)");
 
-    e0.toString().should.to.be.equal("(1/2)^0");
+    e0.toString().should.to.be.equal("1");
     
     ee1.toString().should.to.be.equal("4^(5/2)");
     ee2.toString().should.to.be.equal("4^(-5/2)");
@@ -167,7 +168,7 @@ describe(`ExpRational`, function() {
     r9.toString().should.to.be.equal("0");
   });
 
-  it(`#sum()`, function() {
+  it(`#sum() #subtr()`, function() {
     let a: $$.ExpRational, b: $$.ExpRational;
     
     a = $$.ExpRational.parse("1"); b = $$.ExpRational.parse("1");
@@ -211,7 +212,7 @@ describe(`ExpRational`, function() {
     $$.ExpRational.parse("-2^2").toString().should.to.be.equal("-2^2");
   });
 
-  it(`#prod()`, function() {
+  it(`#prod() #div()`, function() {
     let a: $$.ExpRational, b: $$.ExpRational;
     
     a = $$.ExpRational.parse("1"); b = $$.ExpRational.parse("1");

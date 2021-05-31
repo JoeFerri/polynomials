@@ -31,6 +31,12 @@ export class ExpRational extends Rational implements
       simplify = opt.simplify != undefined ? opt.simplify : true,
       exp = opt.exp;
     
+    let
+      _exp: number = exp instanceof Rational ? exp.value() : (exp as number),
+      v: number = n/d;
+    if (_exp == 0 && v == 0) // 0^0
+      throw new UndefinedError();
+
     if (simplify) {
       let
         _exp: number = exp instanceof Rational ? exp.value() : (exp as number),
@@ -53,6 +59,11 @@ export class ExpRational extends Rational implements
       }
       else if (_exp == -Infinity && 0 <= v && v < 1) {
         n = Infinity;
+        d = 1;
+        s = undefined;
+      }
+      else if (_exp == 0 && v != Infinity && v != -Infinity) { 
+        n = 1;
         d = 1;
         s = undefined;
       }
