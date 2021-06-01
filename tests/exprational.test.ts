@@ -230,6 +230,10 @@ describe(`ExpRational`, function() {
     a = $$.ExpRational.parse("-2"); b = $$.ExpRational.parse("(1/2)^(-3)");
     a.prod(b).toString().should.to.be.equal("-16");
     a.prod(b).value().should.to.be.equal(-16);
+
+    a = $$.ExpRational.parse("-2"); b = $$.ExpRational.parse("(2)^(-3)");
+    a.div(b).toString().should.to.be.equal("-16");
+    a.div(b).value().should.to.be.equal(-16);
     
     a = $$.ExpRational.parse("-2"); b = $$.ExpRational.parse("(1/2)^(-2)");
     a.prod(b).toString().should.to.be.equal("-2^3");

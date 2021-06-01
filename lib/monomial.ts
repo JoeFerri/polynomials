@@ -9,8 +9,7 @@ import { charindexnum, charindexnumOpts, charlit, cinopt } from "./char";
 import { Complex } from "./complex";
 import { InternalError, OperationError, UndefinedError } from "./error";
 import { ExpLiteral } from "./expliteral";
-import { ExpRational } from "./exprational";
-import { Opposable, UndEvaluable } from "./math";
+import { Multiplicable, Opposable, Reciprocable, UndEvaluable } from "./math";
 import { Rational } from "./rational";
 import { Sign } from "./sign";
 import { undnumber } from "./type";
@@ -18,7 +17,8 @@ import { Comparable } from "./utils";
 
 
 
-export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<Monomial> {
+export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<Monomial>,
+    Multiplicable<Monomial>, Reciprocable<Monomial> {
 
   readonly z: Complex;
   private  _literals: ExpLiteral[];
@@ -33,6 +33,21 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<M
       this._literals = [];
     else
       this._literals = prodLiterals([literals]).sort( (l1,l2) => l1.compare(l2) ); // literals must be sorted
+  }
+
+
+  recpr(): Monomial {
+    throw new Error("Method not implemented.");
+  }
+
+
+  prod(t: Monomial): Monomial {
+    throw new Error("Method not implemented.");
+  }
+
+  
+  div(t: Monomial): Monomial {
+    throw new Error("Method not implemented.");
   }
 
 

@@ -201,7 +201,13 @@ export class ExpRational extends Rational implements
 
   div(t: ExpRational): ExpRational {
     if (this.n == t.n && this.d == t.d) { // same base before the inversion
-      return new ExpRational({n: this.s.value * t.s.value * this.n, d: this.d, exp: this.exp.subtr(t.exp)});
+      // return new ExpRational({n: this.s.value * t.s.value * this.n, d: this.d, exp: this.exp.subtr(t.exp)});
+      let tt = new ExpRational({n: this.n, d: this.d, exp: this.exp.subtr(t.exp)});
+
+      if (this.s.value * t.s.value == 1)
+        return tt;
+      else
+        return tt.opp();
     }
     return this.prod(t.recpr());
   }
