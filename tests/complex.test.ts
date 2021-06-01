@@ -301,6 +301,11 @@ describe(`Complex`, function() {
       
       a = $$.Complex.parse("5 + (-12i)"); b = $$.Complex.parse("3 + (-2i)");
       a.div(b).toString().should.to.be.equal("3 + (-2i)");
+      
+      $$.Complex.parse("2 + (-4i)").recpr().toString().should.to.be.equal("1/10 + i/5");
+      $$.Complex.parse("2 + (4i)").recpr().toString().should.to.be.equal("1/10 + (-i/5)");
+      $$.Complex.parse("0 + (4i)").recpr().toString().should.to.be.equal("-i/4");
+      $$.Complex.parse("4i").recpr().toString().should.to.be.equal("-i/4");
     });
 
   });

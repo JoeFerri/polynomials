@@ -89,10 +89,10 @@ describe(`Polynomial`, function() {
     $$.Polynomial.parse("x_1").toString().should.to.be.equal("x_1");
     $$.Polynomial.parse("+x_1").toString().should.to.be.equal("x_1");
     $$.Polynomial.parse("-x_1").toString().should.to.be.equal("-x_1");
-    $$.Polynomial.parse("+x^2 -5x^3xyz +x +z +y").toString().should.to.be.equal("-5x^3xyz +x^2 +x +y +z");
+    $$.Polynomial.parse("+x^2 -5x^3xyz +x +z +y").toString().should.to.be.equal("-5x^4yz +x^2 +x +y +z");
     $$.Polynomial.parse("+x^2 -x +x^3").toString().should.to.be.equal("x^3 +x^2 -x");
     
-    $$.Polynomial.parse("+x^2 -5x^3zxy +x +2y +z -2z +y").toString().should.to.be.equal("-5x^3xyz +x^2 +x +3y -z");
+    $$.Polynomial.parse("+x^2 -5x^3zxy +x +2y +z -2z +y").toString().should.to.be.equal("-5x^4yz +x^2 +x +3y -z");
     $$.Polynomial.parse("x +2y +y").toString().should.to.be.equal("x +3y");
   });
 
@@ -105,7 +105,7 @@ describe(`Polynomial`, function() {
 
     p1.toString().should.to.be.equal("x^3 +x^2 +x +y +z");
     p2.toString().should.to.be.equal("-5x^3 +x^2 +x +y +z");
-    p3.toString().should.to.be.equal("-5x^3xyz +x^2 +x +y +z");
+    p3.toString().should.to.be.equal("-5x^4yz +x^2 +x +y +z");
     p4.toString().should.to.be.equal("x");
     p5.toString().should.to.be.equal("-x");
 

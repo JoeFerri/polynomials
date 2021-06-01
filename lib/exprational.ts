@@ -21,7 +21,6 @@ export class ExpRational extends Rational implements
   readonly exp: Rational;
 
 
-  // constructor(n: number, d: number = 1, s?: Sign, exp?: Exp, simplify: boolean = true) {
   constructor(opt: {n: number, d?: number, s?: Sign, simplify?: boolean, exp?: Exp}) {
 
     let

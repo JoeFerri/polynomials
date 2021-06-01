@@ -28,6 +28,11 @@ export class ExpLiteral extends Literal implements Comparable<ExpLiteral> {
   }
 
 
+  toLiteral() : Literal {
+    return new Literal({char: this.char, index: this.index});
+  }
+
+
   value(cns: charindexnum[]|cinopt[] = []) : undnumber {
     cns = charindexnumOpts(cns);
     let

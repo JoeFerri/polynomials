@@ -5,11 +5,13 @@
  * Copyright (c) 2021, Giuseppe Ferri (joeferri83prog@libero.it)
  */
 
-import { charindexnum, charindexnumOpts, cinopt } from "./char";
+import { charindexnum, charindexnumOpts, charlit, cinopt } from "./char";
 import { Complex } from "./complex";
 import { InternalError, OperationError, UndefinedError } from "./error";
 import { ExpLiteral } from "./expliteral";
+import { ExpRational } from "./exprational";
 import { Opposable, UndEvaluable } from "./math";
+import { Rational } from "./rational";
 import { Sign } from "./sign";
 import { undnumber } from "./type";
 import { Comparable } from "./utils";
@@ -23,13 +25,14 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<M
 
 
   constructor(opt: {z: Complex, literals?: ExpLiteral[]}) {
-    // TODO: normalize
     //! E.g. xyyz → xy^2z
+    let literals: ExpLiteral[] = opt.literals || [];
+
     this.z = opt.z;
     if (this.z.value() == 0)
       this._literals = [];
     else
-      this._literals = [...(opt.literals || [])].sort( (l1,l2) => l1.compare(l2) ); // literals must be sorted
+      this._literals = prodLiterals([literals]).sort( (l1,l2) => l1.compare(l2) ); // literals must be sorted
   }
 
 
@@ -77,16 +80,20 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<M
   }
 
 
-  //! bug: if dotCode is changed, track remains unchanged
+  private dotCode = Monomial.dotCode;
+
+
   private track: string|undefined = undefined;
 
 
   literalsTrack() : string {
-    if (this.track == undefined)
+    if (this.track == undefined || this.dotCode != Monomial.dotCode) {
+      this.dotCode = Monomial.dotCode;
       this.track =
         this._literals
           .map( l => l.toString() )
           .join(Monomial.dotChar);
+    }
     return this.track;
   }
 
@@ -251,4 +258,25 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<M
   static readonly x3 = new Monomial({z: Complex.one, literals: [new ExpLiteral({char: 'x', exp: 3})]});
   static readonly y3 = new Monomial({z: Complex.one, literals: [new ExpLiteral({char: 'y', exp: 3})]});
   static readonly z3 = new Monomial({z: Complex.one, literals: [new ExpLiteral({char: 'z', exp: 3})]});
+}
+
+
+function prodLiterals(mss: ExpLiteral[][]): ExpLiteral[] {
+  let
+    lst:  Map<string,Rational> = new Map<string,Rational>(),
+    lstO: Map<string,{char: charlit, index?: number}> = new Map<string,{char: charlit, index?: number}>(),
+    track: string;
+  for (let ms of mss) {
+    for (let m of ms) {
+      track = m.toLiteral().toString();
+      if (!lst.has(track)) {
+        lstO.set(track, {char: m.char, index: m.index});
+        lst.set(track,Rational.zero);
+      }
+      lst.set(track,lst.get(track)!.sum(m.exp)); //! ASSERT: lst.get(track) != null
+    }
+  }
+
+  return [...lst.entries()] //! ASSERT: lstO.get(e[0]) != null
+    .map( e => { let d = lstO.get(e[0]); return new ExpLiteral({char: d!.char, index: d!.index, exp: e[1]})} );
 }

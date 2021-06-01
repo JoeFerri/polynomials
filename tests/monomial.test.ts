@@ -35,7 +35,7 @@ describe(`Monomial`, function() {
     mono2 = new $$.Monomial({z: zm3}),                          //? -3
     mono3 = new $$.Monomial({z: z23}),                          //? 2/3
     mono4 = new $$.Monomial({z: z2, literals: [x,y]}),          //? 2⋅x⋅y
-    mono5 = new $$.Monomial({z: zm3, literals: [x,x3,x2]}),     //? -3⋅x^3⋅x^2⋅x
+    mono5 = new $$.Monomial({z: zm3, literals: [x,x3,x2]}),     //? -3⋅x^3⋅x^2⋅x = -3^6
     mono6 = new $$.Monomial({z: z23, literals: [x_1,x_2]}),     //? 2/3⋅x_1⋅x_2
     mono7 = new $$.Monomial({z: z23, literals: [x_1,x_2,x_3]}), //? 2/3⋅x_1⋅x_2⋅x_3^5
     
@@ -127,7 +127,7 @@ describe(`Monomial`, function() {
     mono2.toString().should.to.be.equal("-3");
     mono3.toString().should.to.be.equal("2/3");
     mono4.toString().should.to.be.equal("2xy");
-    mono5.toString().should.to.be.equal("-3x^3x^2x");
+    mono5.toString().should.to.be.equal("-3x^6");
     mono6.toString().should.to.be.equal("(2/3)x_1x_2");
     mono7.toString().should.to.be.equal("(2/3)x_1x_2x_3^5");
     mono8.toString().should.to.be.equal("(2/3)xyz^(-2/3)");
