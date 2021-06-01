@@ -74,6 +74,9 @@ describe(`ExpRational`, function() {
     $$.ExpRational.parse("-1").toString().should.to.be.equal("-1");
     $$.ExpRational.parse("-12/17").toString().should.to.be.equal("-12/17");
     
+    $$.ExpRational.parse("2^(-1)").toString().should.to.be.equal("2^(-1)");
+    $$.ExpRational.parse("(2/3)^(-1)").toString().should.to.be.equal("(2/3)^(-1)");
+    
     $$.ExpRational.parse("(-23/87)^(-66/78)").toString().should.to.be.equal("(-23/87)^(-11/13)");
     $$.ExpRational.parse("(-23/87)^66").toString().should.to.be.equal("(-23/87)^66");
     $$.ExpRational.parse("-23^(-66/78)").toString().should.to.be.equal("-23^(-11/13)");
@@ -227,10 +230,12 @@ describe(`ExpRational`, function() {
     a = $$.ExpRational.parse("-2"); b = $$.ExpRational.parse("(1/2)^(-1)");
     a.prod(b).toString().should.to.be.equal("-4");
     
+    // even
     a = $$.ExpRational.parse("-2"); b = $$.ExpRational.parse("(1/2)^(-3)");
     a.prod(b).toString().should.to.be.equal("-16");
     a.prod(b).value().should.to.be.equal(-16);
 
+    // even
     a = $$.ExpRational.parse("-2"); b = $$.ExpRational.parse("(2)^(-3)");
     a.div(b).toString().should.to.be.equal("-16");
     a.div(b).value().should.to.be.equal(-16);

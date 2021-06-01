@@ -133,4 +133,43 @@ describe(`Monomial`, function() {
     mono8.toString().should.to.be.equal("(2/3)xyz^(-2/3)");
   });
 
+  it.only(`#prod() #div() #recpr()`, function() {
+    let a: $$.Monomial, b: $$.Monomial;
+    
+    a = $$.Monomial.parse("1"); b = $$.Monomial.parse("1");
+    a.prod(b).toString().should.to.be.equal("1");
+    a.div(b).toString().should.to.be.equal("1");
+    a.recpr().toString().should.to.be.equal("1");
+    
+    a = $$.Monomial.parse("x");
+    a.recpr().toString().should.to.be.equal("x^(-1)");
+    
+    a = $$.Monomial.parse("2xyz"); b = $$.Monomial.parse("xy");
+    a.prod(b).toString().should.to.be.equal("2x^2y^2z");
+    a.div(b).toString().should.to.be.equal("2z");
+    b.div(a).toString().should.to.be.equal("(1/2)z^(-1)");
+    a.recpr().toString().should.to.be.equal("(1/2)x^(-1)y^(-1)z^(-1)");
+    
+    a = $$.Monomial.parse("1"); b = $$.Monomial.parse("yyx");
+    a.prod(b).toString().should.to.be.equal("xy^2");
+    a.div(b).toString().should.to.be.equal("x^(-1)y^(-2)");
+    
+    a = $$.Monomial.parse("xy"); b = $$.Monomial.parse("yx");
+    a.prod(b).toString().should.to.be.equal("x^2y^2");
+    a.div(b).toString().should.to.be.equal("1");
+    
+    a = $$.Monomial.parse("-xy"); b = $$.Monomial.parse("yx");
+    a.prod(b).toString().should.to.be.equal("-x^2y^2");
+    a.div(b).toString().should.to.be.equal("-1");
+    
+    a = $$.Monomial.parse("-xy"); b = $$.Monomial.parse("-yx");
+    a.prod(b).toString().should.to.be.equal("x^2y^2");
+    a.div(b).toString().should.to.be.equal("1");
+    
+    a = $$.Monomial.parse("0"); b = $$.Monomial.parse("xy");
+    a.prod(b).toString().should.to.be.equal("0");
+    a.div(b).toString().should.to.be.equal("0");
+    b.div(a).toString().should.to.be.equal("Infinity");
+  });
+
 });

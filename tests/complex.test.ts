@@ -263,7 +263,7 @@ describe(`Complex`, function() {
       a.subtr(b).toString().should.to.be.equal("0");
     });
     
-    it(`#prod() #div()`, function() {
+    it(`#prod() #div() #recpr()`, function() {
       let a: $$.Complex, b: $$.Complex;
       
       a = $$.Complex.parse("1"); b = $$.Complex.parse("1");

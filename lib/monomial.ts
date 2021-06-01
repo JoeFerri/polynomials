@@ -29,7 +29,8 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<M
     let literals: ExpLiteral[] = opt.literals || [];
 
     this.z = opt.z;
-    if (this.z.value() == 0)
+    // TODO: manage the sign of the product with literals
+    if (this.z.value() == 0 || this.z.a.n == Infinity || this.z.b.n == Infinity) //! BUG: wrong sign
       this._literals = [];
     else
       this._literals = prodLiterals([literals]).sort( (l1,l2) => l1.compare(l2) ); // literals must be sorted
@@ -37,17 +38,23 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<M
 
 
   recpr(): Monomial {
-    throw new Error("Method not implemented.");
+    return new Monomial(
+      {
+        z: this.z.recpr(),
+        literals: this._literals
+          .map( l => new ExpLiteral({char: l.char, index: l.index, exp: l.exp.opp()}) )
+      }
+    );
   }
 
 
   prod(t: Monomial): Monomial {
-    throw new Error("Method not implemented.");
+    return new Monomial({z: this.z.prod(t.z), literals: [...this.literals,...t.literals]});
   }
 
-  
+
   div(t: Monomial): Monomial {
-    throw new Error("Method not implemented.");
+    return this.prod(t.recpr());
   }
 
 
@@ -293,5 +300,6 @@ function prodLiterals(mss: ExpLiteral[][]): ExpLiteral[] {
   }
 
   return [...lst.entries()] //! ASSERT: lstO.get(e[0]) != null
-    .map( e => { let d = lstO.get(e[0]); return new ExpLiteral({char: d!.char, index: d!.index, exp: e[1]})} );
+    .map( e => { let d = lstO.get(e[0]); return new ExpLiteral({char: d!.char, index: d!.index, exp: e[1]})} )
+    .filter( l => l.exp.n != 0 );
 }
