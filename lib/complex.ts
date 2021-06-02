@@ -17,7 +17,7 @@ import { ExpRational } from "./exprational";
 
 export class Complex implements Comparable<Complex>, UndEvaluable,
   Summable<Complex>, Opposable<Complex>,
-    Multiplicable<Complex>, Reciprocable<Complex> {
+    Multiplicable<Complex,never>, Reciprocable<Complex> {
 
   readonly a: RealPart;
   readonly b: ImaginaryPart;

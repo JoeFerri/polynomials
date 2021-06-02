@@ -16,7 +16,7 @@ import { Multiplicable, Opposable, Reciprocable, Summable } from "./math";
 
 export class ExpRational extends Rational implements 
   Comparable<ExpRational>, Summable<ExpRational>, Opposable<ExpRational>,
-    Multiplicable<ExpRational>, Reciprocable<ExpRational> {
+    Multiplicable<ExpRational,never>, Reciprocable<ExpRational> {
 
   readonly exp: Rational;
 

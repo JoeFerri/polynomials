@@ -18,7 +18,7 @@ import { Comparable } from "./utils";
 
 export class ImaginaryPart extends ExpRational implements
   Comparable<ImaginaryPart>, Summable<ImaginaryPart>,
-    Multiplicable<ImaginaryPart>, Reciprocable<ImaginaryPart> {
+    Multiplicable<ImaginaryPart,never>, Reciprocable<ImaginaryPart> {
 
   constructor(opt: {n: number, d?: number, s?: Sign, simplify?: boolean, exp?: Exp}) {
     super(opt);

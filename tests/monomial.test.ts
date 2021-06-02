@@ -133,7 +133,7 @@ describe(`Monomial`, function() {
     mono8.toString().should.to.be.equal("(2/3)xyz^(-2/3)");
   });
 
-  it.only(`#prod() #div() #recpr()`, function() {
+  it(`#prod() #div() #recpr()`, function() {
     let a: $$.Monomial, b: $$.Monomial;
     
     a = $$.Monomial.parse("1"); b = $$.Monomial.parse("1");

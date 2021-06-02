@@ -15,7 +15,7 @@ import { Comparable } from "./utils";
 
 export class RealPart extends ExpRational implements
   Comparable<RealPart>, Summable<RealPart>,
-    Multiplicable<RealPart>, Reciprocable<RealPart> {
+    Multiplicable<RealPart,never>, Reciprocable<RealPart> {
 
   constructor(opt: {n: number, d?: number, s?: Sign, simplify?: boolean, exp?: Exp}) {
     super(opt);

@@ -18,7 +18,7 @@ import { Comparable } from "./utils";
 
 
 export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<Monomial>,
-    Multiplicable<Monomial>, Reciprocable<Monomial> {
+    Multiplicable<Monomial,never>, Reciprocable<Monomial> {
 
   readonly z: Complex;
   private  _literals: ExpLiteral[];
@@ -220,7 +220,7 @@ export class Monomial implements Comparable<Monomial>, UndEvaluable, Opposable<M
 
       if (!isOne) {
         if ((sz.includes('/') || sz.includes('^') || (this.z.a.value() != 0 && this.z.b.value() != 0)) && track != '')
-          sz = '(' + sz + ')';
+          sz = (with_sign ? Sign.plus.sign : '') + '(' + sz + ')';
         tostring = sz + (track != '' ? Monomial.dotChar : '') + track;
       } else {
         if (track != '')

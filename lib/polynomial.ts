@@ -7,14 +7,16 @@
 
 import { charindexnum, charindexnumOpts, cinopt } from "./char";
 import { UndefinedError } from "./error";
-import { Opposable, Summable, UndEvaluable } from "./math";
+import { Multiplicable, Opposable, Reciprocable, Summable, UndEvaluable } from "./math";
 import { Monomial } from "./monomial";
-import { undnumber } from "./type";
+import { undnumber, Variable } from "./type";
 import { Comparable } from "./utils";
 
 
 
-export class Polynomial implements Comparable<Polynomial>, UndEvaluable, Summable<Polynomial>, Opposable<Polynomial> {
+export class Polynomial implements Comparable<Polynomial>, UndEvaluable,
+  Summable<Polynomial>, Opposable<Polynomial>,
+    Multiplicable<Polynomial,Variable>, Reciprocable<Polynomial> {
 
   readonly monomials: Monomial[] = [];
 
@@ -25,6 +27,25 @@ export class Polynomial implements Comparable<Polynomial>, UndEvaluable, Summabl
 
     if (this.monomials.length == 0)
       throw new UndefinedError();
+  }
+
+
+  recpr(): Polynomial {
+    throw new Error("Method not implemented.");
+  }
+
+
+  prod(t: Polynomial): Polynomial {
+    let monomials: Monomial[] = [];
+    for (let m1 of this.monomials)
+      for (let m2 of t.monomials)
+        monomials.push(m1.prod(m2));
+    return new Polynomial({monomials: monomials});
+  }
+
+
+  div(t: Polynomial, literal?: Variable): Polynomial {
+    throw new Error("Method not implemented.");
   }
 
 
@@ -91,13 +112,18 @@ export class Polynomial implements Comparable<Polynomial>, UndEvaluable, Summabl
     let
       monomials: Monomial[] = [],
       opt: RegExpMatchArray|null,
-      regexp: RegExp = /\s{1}([+-]){1}\b/g,
-      sx: number = 0;
+      // regexp: RegExp = /\s{1}([+-]){1}\b/g,
+      regexp: RegExp = /(\s{1}(\+){1}\()|(\s{1}([+-]){1}\b)/g,
+      sx: number = 0,
+      index: number = 0;
 
     // try {
       while ((opt = regexp.exec(str)) !== null) {
-        monomials.push(Monomial.parse(str.slice(sx,opt.index)));
-        sx = (opt.index)! +1; //! ASSERT: opt.index != undefined
+        index = opt.index!;
+        // monomials.push(Monomial.parse(str.slice(sx,opt.index)));
+        monomials.push(Monomial.parse(str.slice(sx,index)));
+        // sx = (opt.index)! +1; //! ASSERT: opt.index != undefined
+        sx = str[index+1] == '+' && str[index+2] == '(' ? index +2 : index +1; //! ASSERT: opt.index != undefined
       }
       monomials.push(Monomial.parse(str.slice(sx)));
     // } catch (error) {
@@ -149,5 +175,6 @@ function sumMonos(mss: Monomial[][]): Monomial[] {
     }
   }
 
-  return [...lst.values()];
+  let monomials: Monomial[] = [...lst.values()].filter( m => m.value() !== 0 );
+  return monomials.length == 0 ? [Monomial.zero] : monomials;
 }

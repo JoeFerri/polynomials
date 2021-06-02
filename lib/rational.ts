@@ -17,7 +17,7 @@ export type RationalOpt = {n: number, d?: number, s?: Sign, simplify?: boolean};
 
 export class Rational implements 
   Comparable<Rational>, Summable<Rational>, Opposable<Rational>,
-    Multiplicable<Rational>, Reciprocable<Rational> {
+    Multiplicable<Rational,never>, Reciprocable<Rational> {
 
   readonly n: number;
   readonly d: number;

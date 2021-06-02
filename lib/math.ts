@@ -112,7 +112,7 @@ export interface Opposable<T> {
 }
 
 
-export interface Multiplicable<T> {
+export interface Multiplicable<T,K> {
 
   /**
    * Implement the product operation.
@@ -122,7 +122,7 @@ export interface Multiplicable<T> {
   /**
    * Implement the division operation.
    */
-  div(t: T) : T;
+  div(t: T, k?: K) : T;
 }
 
 
