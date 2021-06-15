@@ -30,58 +30,58 @@ export class ImaginaryPart extends ExpRational implements
   }
 
 
-  normalize() : ImaginaryPart {
+  override normalize() : ImaginaryPart {
     if (this.exp.s == Sign.plus)
       return this;
     return new ImaginaryPart({n: this.d * this.s.value, d: this.n, exp: this.exp.opp()});
   }
 
 
-  recpr(): ImaginaryPart {
+  override recpr(): ImaginaryPart {
     return new ImaginaryPart({n: this.d * this.s.value, d: this.n, exp: this.exp});
   }
 
   
-  prod(t: ImaginaryPart): ImaginaryPart {
+  override prod(t: ImaginaryPart): ImaginaryPart {
     let prod = super.prod(t);
     return new ImaginaryPart({n: (prod.n * prod.s.value), d: prod.d, exp: prod.exp});
   }
 
   
-  div(t: ImaginaryPart): ImaginaryPart {
+  override div(t: ImaginaryPart): ImaginaryPart {
     let div = super.div(t);
     return new ImaginaryPart({n: (div.n * div.s.value), d: div.d, exp: div.exp});
   }
 
 
-  sum(t: ImaginaryPart): ImaginaryPart {
+  override sum(t: ImaginaryPart): ImaginaryPart {
     let sum = super.sum(t);
     return new ImaginaryPart({n: (sum.n * sum.s.value), d: sum.d, exp: sum.exp});
   }
 
 
-  subtr(t: ImaginaryPart): ImaginaryPart {
+  override subtr(t: ImaginaryPart): ImaginaryPart {
     return this.sum(t.opp());
   }
 
 
-  opp(): ImaginaryPart {
+  override opp(): ImaginaryPart {
     let opp = super.opp();
     return new ImaginaryPart({n: (opp.n * opp.s.value), d: opp.d, exp: opp.exp});
   }
 
 
-  equals(r: ImaginaryPart) : boolean {
+  override equals(r: ImaginaryPart) : boolean {
     return super.equals(r);
   }
 
 
-  compare(r: ImaginaryPart) : number {
+  override compare(r: ImaginaryPart) : number {
     return super.compare(r);
   }
 
 
-  static readonly expsStrict: RegExp[] = [
+  static override readonly expsStrict: RegExp[] = [
     /^\(\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)\)i$/,  //? ((-23/87)^(-66/78))i
     /^\(\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^(?<n_exp>\d+)\)i$/,                                         //? ((-23/87)^66)i
     /^\((?<s>[+-]?)(?<n>\d+)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)\)i$/,                      //? (-23^(-66/78))i
@@ -90,7 +90,7 @@ export class ImaginaryPart extends ExpRational implements
     /^\((?<s>[+-]?)(?<n>\d+)?i(?:\/(?<d>\d+))?\)$/                                                            //? (-23i)  (-23i/87) (-i)
   ];
 
-  static readonly exps: RegExp[] = [
+  static override readonly exps: RegExp[] = [
     /\(\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)\)i/,    //? ((-23/87)^(-66/78))i
     /\(\((?<s>[+-]?)(?<n>\d+)(?:\/(?<d>\d+))?\)\^(?<n_exp>\d+)\)i/,                                           //? ((-23/87)^66)i
     /\((?<s>[+-]?)(?<n>\d+)\^\((?<s_exp>[+-]?)(?<n_exp>\d+)(?:\/(?<d_exp>\d+))?\)\)i/,                        //? (-23^(-66/78))i
@@ -100,7 +100,7 @@ export class ImaginaryPart extends ExpRational implements
   ];
 
 
-  static parse(str: string) : ImaginaryPart {
+  static override parse(str: string) : ImaginaryPart {
     let
       opt: RegExpMatchArray|null,
       obj: ImaginaryPart|null = null;
@@ -167,7 +167,7 @@ export class ImaginaryPart extends ExpRational implements
   }
 
 
-  toString(with_sign: boolean = false) {
+  override toString(with_sign: boolean = false) {
     let i = ImaginaryPart.iChar;
 
     //! Rational
@@ -232,9 +232,9 @@ export class ImaginaryPart extends ExpRational implements
   
 
 
-  static readonly zero = new ImaginaryPart({n: 0});
-  static readonly one = new ImaginaryPart({n: 1});
-  static readonly mone = new ImaginaryPart({n: -1});
-  static readonly infinity = new ImaginaryPart({n: ComplexInfinity});
-  static readonly minfinity = new ImaginaryPart({n: -ComplexInfinity});
+  static override readonly zero = new ImaginaryPart({n: 0});
+  static override readonly one = new ImaginaryPart({n: 1});
+  static override readonly mone = new ImaginaryPart({n: -1});
+  static override readonly infinity = new ImaginaryPart({n: ComplexInfinity});
+  static override readonly minfinity = new ImaginaryPart({n: -ComplexInfinity});
 }

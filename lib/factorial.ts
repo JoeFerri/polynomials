@@ -28,22 +28,22 @@ export class Factorial extends ExpRational implements Comparable<Factorial> {
   }
 
 
-  value() : number {
+  override value() : number {
     return this.k;
   }
 
 
-  equals(f: Factorial) : boolean {
+  override equals(f: Factorial) : boolean {
     return this.k == f.k;
   }
 
 
-  compare(f: Factorial) : number {
+  override compare(f: Factorial) : number {
     return this.k - f.k;
   }
 
 
-  toString(with_sign: boolean = false) : string {
+  override toString(with_sign: boolean = false) : string {
     return `${with_sign ? Sign.plus.sign : ''}${this.k}!`;
   }
 }

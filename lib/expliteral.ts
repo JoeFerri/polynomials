@@ -33,7 +33,7 @@ export class ExpLiteral extends Literal implements Comparable<ExpLiteral> {
   }
 
 
-  value(cns: charindexnum[]|cinopt[] = []) : undnumber {
+  override value(cns: charindexnum[]|cinopt[] = []) : undnumber {
     cns = charindexnumOpts(cns);
     let
       v: undnumber = super.value(cns),
@@ -43,13 +43,13 @@ export class ExpLiteral extends Literal implements Comparable<ExpLiteral> {
   }
 
 
-  equals(l: ExpLiteral, cns: charindexnum[]|cinopt[] = []) : boolean {
+  override equals(l: ExpLiteral, cns: charindexnum[]|cinopt[] = []) : boolean {
     cns = charindexnumOpts(cns);
     return super.equals(l,cns) && this.exp.equals(l.exp);
   }
 
 
-  compare(l: ExpLiteral) : number {
+  override compare(l: ExpLiteral) : number {
     let superComp = super.compare(l);
 
     // x_1^3 != x_1^2 != x_1
@@ -70,7 +70,7 @@ export class ExpLiteral extends Literal implements Comparable<ExpLiteral> {
 
 
 
-  static parse(str: string) : ExpLiteral {
+  static override parse(str: string) : ExpLiteral {
     let
       opt: RegExpMatchArray|null,
       char: charlit,
@@ -99,7 +99,7 @@ export class ExpLiteral extends Literal implements Comparable<ExpLiteral> {
   private tostring: string|undefined = undefined;
 
 
-  toString() : string {
+  override toString() : string {
     if (this.tostring == undefined) {
       if (this.exp.equals(Rational.one))
         this.tostring = super.toString();
@@ -115,8 +115,8 @@ export class ExpLiteral extends Literal implements Comparable<ExpLiteral> {
   }
 
 
-  static readonly x = new ExpLiteral({char: 'x'});
-  static readonly y = new ExpLiteral({char: 'y'});
-  static readonly k = new ExpLiteral({char: 'k'});
-  static readonly z = new ExpLiteral({char: 'z'});
+  static override readonly x = new ExpLiteral({char: 'x'});
+  static override readonly y = new ExpLiteral({char: 'y'});
+  static override readonly k = new ExpLiteral({char: 'k'});
+  static override readonly z = new ExpLiteral({char: 'z'});
 }

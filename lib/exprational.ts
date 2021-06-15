@@ -140,12 +140,12 @@ export class ExpRational extends Rational implements
   }
 
 
-  recpr(): ExpRational {
+  override recpr(): ExpRational {
     return new ExpRational({n: this.d * this.s.value, d: this.n, exp: this.exp});
   }
 
 
-  prod(t: ExpRational): ExpRational {
+  override prod(t: ExpRational): ExpRational {
     let t1: ExpRational = this.normalize(), t2: ExpRational = t.normalize();
 
     if ((t1.n == Infinity && t2.n == 0) || (t2.n == Infinity && t1.n == 0))
@@ -199,7 +199,7 @@ export class ExpRational extends Rational implements
   }
 
 
-  div(t: ExpRational): ExpRational {
+  override div(t: ExpRational): ExpRational {
     if (this.n == t.n && this.d == t.d) { // same base before the inversion
       // return new ExpRational({n: this.s.value * t.s.value * this.n, d: this.d, exp: this.exp.subtr(t.exp)});
       let tt = new ExpRational({n: this.n, d: this.d, exp: this.exp.subtr(t.exp)});
@@ -213,7 +213,7 @@ export class ExpRational extends Rational implements
   }
 
 
-  sum(t: ExpRational): ExpRational {
+  override sum(t: ExpRational): ExpRational {
     let sum: Rational;
 
     if (this.exp.value() == 1 && t.exp.value() == 1) {
@@ -239,12 +239,12 @@ export class ExpRational extends Rational implements
   }
 
 
-  subtr(t: ExpRational): ExpRational {
+  override subtr(t: ExpRational): ExpRational {
     return this.sum(t.opp());
   }
 
 
-  opp(): ExpRational {
+  override opp(): ExpRational {
     let r: ExpRational = even(this);
     return new ExpRational({n: (r.n * r.s.value * (-1)), d: r.d, exp: r.exp});
 
@@ -263,7 +263,7 @@ export class ExpRational extends Rational implements
 /**
  * (-2)^(-2/3) = ((-2)^(-2))^(1/3) = cbrt(1/4)
  */
-  value() : number {
+  override value() : number {
     let
       exp = this.exp.s.value * this.exp.n,
       root = this.exp.d;
@@ -281,12 +281,12 @@ export class ExpRational extends Rational implements
    * @param r 
    * @returns true if internal structures equals 
    */
-  equals(r: ExpRational) : boolean {
+  override equals(r: ExpRational) : boolean {
     return super.equals(r) && this.exp.equals(r.exp);
   }
 
 
-  compare(r: ExpRational) : number {
+  override compare(r: ExpRational) : number {
     return this.value() - r.value();
   }
   
@@ -307,7 +307,7 @@ export class ExpRational extends Rational implements
 
 
 
-  static parse(str: string) : ExpRational {
+  static override parse(str: string) : ExpRational {
     let
       opt: RegExpMatchArray|null,
       obj: ExpRational|null = null;
@@ -372,7 +372,7 @@ export class ExpRational extends Rational implements
   }
 
 
-  toString(with_sign: boolean = false) : string {
+  override toString(with_sign: boolean = false) : string {
     if (this.exp.equals(Rational.one))
       return super.toString(with_sign);
 
@@ -387,11 +387,11 @@ export class ExpRational extends Rational implements
   }
 
 
-  static readonly zero = new ExpRational({n: 0});
-  static readonly one = new ExpRational({n: 1});
-  static readonly mone = new ExpRational({n: -1});
-  static readonly infinity = new ExpRational({n: Infinity});
-  static readonly minfinity = new ExpRational({n: -Infinity});
+  static override readonly zero = new ExpRational({n: 0});
+  static override readonly one = new ExpRational({n: 1});
+  static override readonly mone = new ExpRational({n: -1});
+  static override readonly infinity = new ExpRational({n: Infinity});
+  static override readonly minfinity = new ExpRational({n: -Infinity});
 }
 
 

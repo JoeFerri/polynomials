@@ -151,7 +151,7 @@ describe(`Polynomial`, function() {
     a.sum(b.conjugate()).toString().should.to.be.equal("(-2 + (-5i))xy -y");
   });
     
-  it.only(`#prod() #div() #recpr()`, function() {
+  it(`#prod() #div() #recpr()`, function() {
     let a: $$.Polynomial, b: $$.Polynomial;
     
     a = $$.Polynomial.parse("1"); b = $$.Polynomial.parse("1");
@@ -178,15 +178,15 @@ describe(`Polynomial`, function() {
     
     a = $$.Polynomial.parse("a +b -c"); b = $$.Polynomial.parse("a +b -c");
     a.prod(b).toString().should.to.be.equal("a^2 +2ab -2ac +b^2 -2bc +c^2");
-    a.prod(b).prod(b).toString().should.to.be.equal("a^3 +3a^2b -3a^2c +3ab^2 -6abc +3ac^2 +b^3 -3b^2c +3bc^2 -c^3"); //! da verificare
-    
+    a.prod(b).prod(b).toString().should.to.be.equal("a^3 +3a^2b -3a^2c +3ab^2 -6abc +3ac^2 +b^3 -3b^2c +3bc^2 -c^3");
+
     a = $$.Polynomial.parse("0"); b = $$.Polynomial.parse("a +b +2/3 +c");
     a.prod(b).toString().should.to.be.equal("0");
     
     a = $$.Polynomial.parse("(-23 + (-23i))xy"); b = $$.Polynomial.parse("1");
     a.prod(b).toString().should.to.be.equal("(-23 + (-23i))xy");
     
-    a = $$.Polynomial.parse("(-23 + (-23i))xy"); b = $$.Polynomial.parse("2"); //! da verificare
+    a = $$.Polynomial.parse("(-23 + (-23i))xy"); b = $$.Polynomial.parse("2");
     a.prod(b).toString().should.to.be.equal("(-46 + (-46i))xy");
     
     a = $$.Polynomial.parse("(-23 + (-23i))xy"); b = $$.Polynomial.parse("1 +1"); //! da verificare

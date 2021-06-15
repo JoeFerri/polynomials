@@ -27,60 +27,60 @@ export class RealPart extends ExpRational implements
   }
 
 
-  normalize() : RealPart {
+  override normalize() : RealPart {
     if (this.exp.s == Sign.plus)
       return this;
     return new RealPart({n: this.d * this.s.value, d: this.n, exp: this.exp.opp()});
   }
 
 
-  recpr(): RealPart {
+  override recpr(): RealPart {
     return new RealPart({n: this.d * this.s.value, d: this.n, exp: this.exp});
   }
 
   
-  prod(t: RealPart): RealPart {
+  override prod(t: RealPart): RealPart {
     let prod = super.prod(t);
     return new RealPart({n: (prod.n * prod.s.value), d: prod.d, exp: prod.exp});
   }
 
 
-  sum(t: RealPart): RealPart {
+  override sum(t: RealPart): RealPart {
     let sum = super.sum(t);
     return new RealPart({n: (sum.n * sum.s.value), d: sum.d, exp: sum.exp});
   }
 
 
-  subtr(t: RealPart): RealPart {
+  override subtr(t: RealPart): RealPart {
     return this.sum(t.opp());
   }
 
 
-  opp(): RealPart {
+  override opp(): RealPart {
     let opp = super.opp();
     return new RealPart({n: (opp.n * opp.s.value), d: opp.d, exp: opp.exp});
   }
 
 
-  equals(r: RealPart) : boolean {
+  override equals(r: RealPart) : boolean {
     return super.equals(r);
   }
 
 
-  compare(r: RealPart) : number {
+  override compare(r: RealPart) : number {
     return super.compare(r);
   }
   
 
-  static parse(str: string) : RealPart {
+  static override parse(str: string) : RealPart {
     let er: ExpRational = ExpRational.parse(str);
     return new RealPart({n: er.n, d: er.d, s: er.s, exp: er.exp});
   }
 
 
-  static readonly zero = new RealPart({n: 0});
-  static readonly one = new RealPart({n: 1});
-  static readonly mone = new RealPart({n: -1});
-  static readonly infinity = new RealPart({n: Infinity});
-  static readonly minfinity = new RealPart({n: -Infinity});
+  static override readonly zero = new RealPart({n: 0});
+  static override readonly one = new RealPart({n: 1});
+  static override readonly mone = new RealPart({n: -1});
+  static override readonly infinity = new RealPart({n: Infinity});
+  static override readonly minfinity = new RealPart({n: -Infinity});
 }
