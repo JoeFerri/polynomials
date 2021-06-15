@@ -90,7 +90,7 @@ export class ExpRational extends Rational implements
 
     if (exp != undefined) {
       let
-        r = new Rational({n: n, d: d, s: s, simplify: simplify}),
+        r = new Rational(s != undefined ? {n: n, d: d, s: s, simplify: simplify} : {n: n, d: d, simplify: simplify}),
         _exp = exp != undefined && r.n != 0 && r.n != Infinity ?
           (exp instanceof Rational ? exp : new Rational({n: exp})) : Rational.one;
 
@@ -104,7 +104,7 @@ export class ExpRational extends Rational implements
       }
     }
 
-    super({n: n, d: d, s: s, simplify: simplify});
+    super(s != undefined ? {n: n, d: d, s: s, simplify: simplify} : {n: n, d: d, simplify: simplify});
     
     if (exp != undefined && (
         (((exp instanceof Rational && exp.value() == 0) || exp == 0) && 

@@ -92,7 +92,7 @@ export class ExpLiteral extends Literal implements Comparable<ExpLiteral> {
     }
     else throw new UndefinedError();
 
-    return new ExpLiteral({char: char, index: index, exp: exp});
+    return new ExpLiteral(index != undefined ? {char: char, index: index, exp: exp} : {char: char, exp: exp});
   }
 
 
